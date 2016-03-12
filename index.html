@@ -81,32 +81,25 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/12/06/Ajax_Json_Jsonp/" title="Ajax&amp;Json__Jsonp" itemprop="url">Ajax&amp;Json__Jsonp</a>
+      <a href="/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" title="JS中的insertSort&amp;&amp;mergeSort算法实现" itemprop="url">JS中的insertSort&amp;&amp;mergeSort算法实现</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2015-12-06T05:37:59.000Z" itemprop="datePublished"> 发表于 2015-12-06</time>
+    <time datetime="2016-03-06T05:37:59.000Z" itemprop="datePublished"> 发表于 2016-03-06</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h1 id="Ajax-amp-Json-Jsonp"><a href="#Ajax-amp-Json-Jsonp" class="headerlink" title="Ajax&amp;Json__Jsonp"></a>Ajax&amp;Json__Jsonp</h1><h2 id="一-关于Ajax的基础知识"><a href="#一-关于Ajax的基础知识" class="headerlink" title="一.关于Ajax的基础知识"></a>一.关于Ajax的基础知识</h2><p>(1)Ajax是异步的JavaScript和XML，是无需重新加载整个网页的情况下能够更新部分网页的技术，用来进行局部交换。<br>(2)在没有Ajax之前，客户端的请求是同步的，也就是客户端发送请求到服务端，服务端进行处理、响应，然后发送给客户端，客户端再进行页面加载，在这个过程中客户端会一直等待。在Ajax出现之后，客户端请求变为异步，页面错误会实时显示。在客户端的后台与服务器进行交换数据。之所以有这种变化，是因为Ajax中定义了XMLHttpRequest对象。<br>(3)在Ajax出现后，实现客户端实时变化依赖于三个部分：  </p>
-<blockquote>
-<ul>
-<li>用HTML、CSS实现页面   </li>
-<li>用XMLHttpRequest和Web服务器进行异步数据交换    </li>
-<li>用JS操作DOM，实现动态局部刷新 </li>
-</ul>
-</blockquote>
+        <p>最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。<br>
         
         
         <p class="article-more-link">
           
-            <a href="/2015/12/06/Ajax_Json_Jsonp/#more">Read More</a>
+            <a href="/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/#more">Read More</a>
           
        </p>
     </div>
@@ -116,95 +109,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/js/">js</a><a href="/tags/json/">json</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/12/06/CSS核心的几个概念/" title="css的几个概念" itemprop="url">css的几个概念</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
-		
-  <p class="article-time">
-    <time datetime="2015-12-06T05:37:59.000Z" itemprop="datePublished"> 发表于 2015-12-06</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>本文介绍几个css常用的概念，包括：position、float等。这在初接触css时比较容易混乱。</p>
-<h2 id="元素类型"><a href="#元素类型" class="headerlink" title="元素类型"></a>元素类型</h2><p>  HTML的元素可以分为两种：     </p>
-<pre><code>- 块级元素（block level element）
-- 内联元素（inline element）    
-</code></pre><p>  两者区别在于：   </p>
-<pre><code>- 1.块级元素会独占一行（无法与其他元素显示在同一行内，除非显示修改元素的display属性），而内联元素会在一行内显示    
-- 2.块级元素可以设置width、height属性，而内联元素设置无效
-- 3.块级元素的width 默认为100%，而内联元素则是根据其自身的内容或子元素来决定其宽度。    
-</code></pre><p>   最常见的块级元素是 div，内联元素有span、a、img等等<br><strong>code:</strong></p>
-<pre><code>
-.example{
-    width:100px;
-    height:100px;
-}
-</code></pre>
-为div设置上面的样式，是有效果的，因为是块级元素，而对span设置上面的样式是没有用的。要想让span改变宽高，可以通过设置display:block;当display的值设置成block时，元素将以块级形式呈现；当display设置成inline时，元素将以内联形式呈现。
-若是想让元素在行内显示，又能设置宽高，可以设置：
-<pre><code>
- display:inline-block;
-</code></pre>        
-
-<p>inline-block:对外呈现内联元素，可以与其他元素共处于一行内，对内则让元素呈块级元素，可以改变宽高。</p>
-<h2 id="position"><a href="#position" class="headerlink" title="position"></a>position</h2><p>position 这个属性决定了元素将如何定位。它的值大概有以下五种：</p>
-<p><table calss="table table-striped"><br>    <tr><br>        <td>position值</td><br>        <td>如何定位</td><br>    </tr><br>    <tr><br>        <td>static</td><br>        <td>position的默认值。元素将定位到它的正常位置（上文提到过），其实也就相当于没有定位。元素在页面上占据位置。不能使用 top right bottom left 移动元素位置。</td><br>    </tr><br>    <tr><br>        <td>relative</td><br>        <td>相对定位，相对于元素的正常位置来进行定位。元素在页面占据位置。可以使用 top right bottom left 移动元素位置。</td><br>    </tr><br>    <tr><br>        <td>absolute</td><br>        <td>绝对定位，相对于最近一级的 定位不是 static 的父元素来进行定位。元素在页面不占据位置。 可以使用 top right bottom left 移动元素位置</td><br>    </tr><br>    <tr><br>        <td>fixed</td><br>        <td>绝对定位，相对于浏览器窗口来进行定位。其余和 absolute 一样，相当于一种特殊的 absolute。</td><br>    </tr><br>    <tr><br>        <td>inherite</td><br>        <td>从父元素继承 position 属性的值。</td><br>    </tr><br></table><br>每个网页都可以看成是由一层一层页面堆叠起来的，如下图所示。<br><img src="http://7b1evr.com1.z0.glb.clouddn.com/illustration%5Cthree_core_concepts_of_css2012-08-14-59d1deed94-70c5-48bb-b2ff-8421d516a981.gif" alt="z-layer"></p>
-<p>position 设置为 relative的时候，元素依然在普通流中，位置是正常位置，你可以通过 left right 等移动元素,会影响其他元素的位置。</p>
-<p>而当一个元素的 position 值为 absolute 或 fixed 的时候，会发生三件事：</p>
-<ul>
-<li>1.把该元素往 Z 轴方向移了一层，元素脱离了普通流，所以不再占据原来那层的空间，还会覆盖下层的元素。              </li>
-<li>2.该元素将变为块级元素，相当于给该元素设置了display:block（给一个内联元素，如 span ，设置 absolute之后发现它可以设置宽高了）。      </li>
-<li><p>3.如果该元素是块级元素，元素的宽度由原来的 width: 100%（占据一行），变为了 auto。<br>由此观之，当 position 设置为 absolute 或 fixed，就没必要设置 display 为 block 了。而且如果你不想覆盖下层的元素，可以设置 z-index 值 达到效果。</p>
-<h2 id="float"><a href="#float" class="headerlink" title="float"></a>float</h2><p>float 顾名思义，就是把元素浮动，它的取值一共有四个：left right none inherit.<br>这个以后再仔细去写吧。。。      </p>
-<p>原文作者：GeekPlux   <a href="http://geekplux.com/2014/04/25/several_core_concepts_of_css.html" target="_blank" rel="external">网址</a>      </p>
-</li>
-</ul>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/web/">web</a><a href="/tags/css/">css</a>
+  <span></span> <a href="/tags/js/">js</a><a href="/tags/algo/">algo</a>
   </div>
 
 </div>
@@ -283,6 +188,133 @@
 
 
 
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/11/06/CSS核心的几个概念/" title="css的几个概念" itemprop="url">css的几个概念</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-06T05:37:59.000Z" itemprop="datePublished"> 发表于 2015-11-06</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>本文介绍几个css常用的概念，包括：position、float等。这在初接触css时比较容易混乱。</p>
+<h2 id="元素类型"><a href="#元素类型" class="headerlink" title="元素类型"></a>元素类型</h2><p>  HTML的元素可以分为两种：     </p>
+<pre><code>- 块级元素（block level element）
+- 内联元素（inline element）    
+</code></pre><p>  两者区别在于：   </p>
+<pre><code>- 1.块级元素会独占一行（无法与其他元素显示在同一行内，除非显示修改元素的display属性），而内联元素会在一行内显示    
+- 2.块级元素可以设置width、height属性，而内联元素设置无效
+- 3.块级元素的width 默认为100%，而内联元素则是根据其自身的内容或子元素来决定其宽度。    
+</code></pre><p>   最常见的块级元素是 div，内联元素有span、a、img等等</p>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/11/06/CSS核心的几个概念/#more">Read More</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/web/">web</a><a href="/tags/css/">css</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/10/06/Ajax_Json_Jsonp/" title="Ajax&amp;Json__Jsonp" itemprop="url">Ajax&amp;Json__Jsonp</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-06T05:37:59.000Z" itemprop="datePublished"> 发表于 2015-10-06</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="Ajax-amp-Json-Jsonp"><a href="#Ajax-amp-Json-Jsonp" class="headerlink" title="Ajax&amp;Json__Jsonp"></a>Ajax&amp;Json__Jsonp</h1><h2 id="一-关于Ajax的基础知识"><a href="#一-关于Ajax的基础知识" class="headerlink" title="一.关于Ajax的基础知识"></a>一.关于Ajax的基础知识</h2><p>(1)Ajax是异步的JavaScript和XML，是无需重新加载整个网页的情况下能够更新部分网页的技术，用来进行局部交换。<br>(2)在没有Ajax之前，客户端的请求是同步的，也就是客户端发送请求到服务端，服务端进行处理、响应，然后发送给客户端，客户端再进行页面加载，在这个过程中客户端会一直等待。在Ajax出现之后，客户端请求变为异步，页面错误会实时显示。在客户端的后台与服务器进行交换数据。之所以有这种变化，是因为Ajax中定义了XMLHttpRequest对象。<br>(3)在Ajax出现后，实现客户端实时变化依赖于三个部分：  </p>
+<blockquote>
+<ul>
+<li>用HTML、CSS实现页面   </li>
+<li>用XMLHttpRequest和Web服务器进行异步数据交换    </li>
+<li>用JS操作DOM，实现动态局部刷新 </li>
+</ul>
+</blockquote>
+        
+        
+        <p class="article-more-link">
+          
+            <a href="/2015/10/06/Ajax_Json_Jsonp/#more">Read More</a>
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/js/">js</a><a href="/tags/json/">json</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
 
 </div>
       <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
@@ -302,7 +334,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/js/" title="js">js<sup>2</sup></a></li>
+				<li><a href="/tags/js/" title="js">js<sup>3</sup></a></li>
 			
 		
 			
@@ -319,6 +351,10 @@
 		
 			
 				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
 			
 		
 		</ul>

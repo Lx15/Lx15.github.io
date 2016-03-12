@@ -4,40 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>css的几个概念 | Lx15</title>
+    <title>JS中的insertSort&amp;&amp;mergeSort算法实现 | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="本文介绍几个css常用的概念，包括：position、float等。这在初接触css时比较容易混乱。
-元素类型  HTML的元素可以分为两种：     
-- 块级元素（block level element）
-- 内联元素（inline element）    
-  两者区别在于：   
-- 1.块级元素会独占一行（无法与其他元素显示在同一行内，除非显示修改元素的display属性），而内联元素会">
+    <meta name="description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="css的几个概念">
-<meta property="og:url" content="http://yoursite.com/2015/12/06/CSS核心的几个概念/index.html">
+<meta property="og:title" content="JS中的insertSort&&mergeSort算法实现">
+<meta property="og:url" content="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="本文介绍几个css常用的概念，包括：position、float等。这在初接触css时比较容易混乱。
-元素类型  HTML的元素可以分为两种：     
-- 块级元素（block level element）
-- 内联元素（inline element）    
-  两者区别在于：   
-- 1.块级元素会独占一行（无法与其他元素显示在同一行内，除非显示修改元素的display属性），而内联元素会">
-<meta property="og:image" content="http://7b1evr.com1.z0.glb.clouddn.com/illustration%5Cthree_core_concepts_of_css2012-08-14-59d1deed94-70c5-48bb-b2ff-8421d516a981.gif">
-<meta property="og:updated_time" content="2015-12-30T14:54:07.821Z">
+<meta property="og:description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
+<meta property="og:updated_time" content="2016-03-12T15:30:26.930Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="css的几个概念">
-<meta name="twitter:description" content="本文介绍几个css常用的概念，包括：position、float等。这在初接触css时比较容易混乱。
-元素类型  HTML的元素可以分为两种：     
-- 块级元素（block level element）
-- 内联元素（inline element）    
-  两者区别在于：   
-- 1.块级元素会独占一行（无法与其他元素显示在同一行内，除非显示修改元素的display属性），而内联元素会">
-<meta name="twitter:image" content="http://7b1evr.com1.z0.glb.clouddn.com/illustration%5Cthree_core_concepts_of_css2012-08-14-59d1deed94-70c5-48bb-b2ff-8421d516a981.gif">
+<meta name="twitter:title" content="JS中的insertSort&&mergeSort算法实现">
+<meta name="twitter:description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
 
     
     <link rel="alternative" href="/atom.xml" title="Lx15" type="application/atom+xml">
@@ -97,14 +80,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/12/06/CSS核心的几个概念/" title="css的几个概念" itemprop="url">css的几个概念</a>
+      <a href="/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" title="JS中的insertSort&amp;&amp;mergeSort算法实现" itemprop="url">JS中的insertSort&amp;&amp;mergeSort算法实现</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2015-12-06T05:37:59.000Z" itemprop="datePublished"> 发表于 2015-12-06</time>
+    <time datetime="2016-03-06T05:37:59.000Z" itemprop="datePublished"> 发表于 2016-03-06</time>
     
   </p>
 </header>
@@ -113,44 +96,43 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#元素类型"><span class="toc-number">1.</span> <span class="toc-text">元素类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#position"><span class="toc-number">2.</span> <span class="toc-text">position</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#float"><span class="toc-number">3.</span> <span class="toc-text">float</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mergeSort"><span class="toc-number">2.</span> <span class="toc-text">mergeSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">3.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
 		
 		</div>
 		
-		<p>本文介绍几个css常用的概念，包括：position、float等。这在初接触css时比较容易混乱。</p>
-<h2 id="元素类型"><a href="#元素类型" class="headerlink" title="元素类型"></a>元素类型</h2><p>  HTML的元素可以分为两种：     </p>
-<pre><code>- 块级元素（block level element）
-- 内联元素（inline element）    
-</code></pre><p>  两者区别在于：   </p>
-<pre><code>- 1.块级元素会独占一行（无法与其他元素显示在同一行内，除非显示修改元素的display属性），而内联元素会在一行内显示    
-- 2.块级元素可以设置width、height属性，而内联元素设置无效
-- 3.块级元素的width 默认为100%，而内联元素则是根据其自身的内容或子元素来决定其宽度。    
-</code></pre><p>   最常见的块级元素是 div，内联元素有span、a、img等等<br><strong>code:</strong></p>
-<pre><code>
-.example{
-    width:100px;
-    height:100px;
-}
-</code></pre>
-为div设置上面的样式，是有效果的，因为是块级元素，而对span设置上面的样式是没有用的。要想让span改变宽高，可以通过设置display:block;当display的值设置成block时，元素将以块级形式呈现；当display设置成inline时，元素将以内联形式呈现。
-若是想让元素在行内显示，又能设置宽高，可以设置：
-<pre><code>
- display:inline-block;
-</code></pre>        
-
-<p>inline-block:对外呈现内联元素，可以与其他元素共处于一行内，对内则让元素呈块级元素，可以改变宽高。</p>
-<h2 id="position"><a href="#position" class="headerlink" title="position"></a>position</h2><p>position 这个属性决定了元素将如何定位。它的值大概有以下五种：</p>
-<p><table calss="table table-striped"><br>    <tr><br>        <td>position值</td><br>        <td>如何定位</td><br>    </tr><br>    <tr><br>        <td>static</td><br>        <td>position的默认值。元素将定位到它的正常位置（上文提到过），其实也就相当于没有定位。元素在页面上占据位置。不能使用 top right bottom left 移动元素位置。</td><br>    </tr><br>    <tr><br>        <td>relative</td><br>        <td>相对定位，相对于元素的正常位置来进行定位。元素在页面占据位置。可以使用 top right bottom left 移动元素位置。</td><br>    </tr><br>    <tr><br>        <td>absolute</td><br>        <td>绝对定位，相对于最近一级的 定位不是 static 的父元素来进行定位。元素在页面不占据位置。 可以使用 top right bottom left 移动元素位置</td><br>    </tr><br>    <tr><br>        <td>fixed</td><br>        <td>绝对定位，相对于浏览器窗口来进行定位。其余和 absolute 一样，相当于一种特殊的 absolute。</td><br>    </tr><br>    <tr><br>        <td>inherite</td><br>        <td>从父元素继承 position 属性的值。</td><br>    </tr><br></table><br>每个网页都可以看成是由一层一层页面堆叠起来的，如下图所示。<br><img src="http://7b1evr.com1.z0.glb.clouddn.com/illustration%5Cthree_core_concepts_of_css2012-08-14-59d1deed94-70c5-48bb-b2ff-8421d516a981.gif" alt="z-layer"></p>
-<p>position 设置为 relative的时候，元素依然在普通流中，位置是正常位置，你可以通过 left right 等移动元素,会影响其他元素的位置。</p>
-<p>而当一个元素的 position 值为 absolute 或 fixed 的时候，会发生三件事：</p>
+		<p>最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。<br><a id="more"></a></p>
+<h2 id="insertSort"><a href="#insertSort" class="headerlink" title="insertSort"></a>insertSort</h2><p>  先来看一下如何使用call方法：<br>  <strong>code:</strong><br>  <pre><code><br>    function insertSort(arr){<br>        var l=arr.length;<br>        for(var j=1;j &lt; l ;j++){<br>            var key = arr[j];<br>             var i = j-1;<br>            while(  i&gt;=0 &amp;&amp; arr[i] &gt; key){<br>                 arr[i+1]=arr[i];<br>                 i–;<br>            }<br>            arr[i+1] =key;<br>        }<br>    }<br>  </code></pre>       </p>
 <ul>
-<li>1.把该元素往 Z 轴方向移了一层，元素脱离了普通流，所以不再占据原来那层的空间，还会覆盖下层的元素。              </li>
-<li>2.该元素将变为块级元素，相当于给该元素设置了display:block（给一个内联元素，如 span ，设置 absolute之后发现它可以设置宽高了）。      </li>
-<li><p>3.如果该元素是块级元素，元素的宽度由原来的 width: 100%（占据一行），变为了 auto。<br>由此观之，当 position 设置为 absolute 或 fixed，就没必要设置 display 为 block 了。而且如果你不想覆盖下层的元素，可以设置 z-index 值 达到效果。</p>
-<h2 id="float"><a href="#float" class="headerlink" title="float"></a>float</h2><p>float 顾名思义，就是把元素浮动，它的取值一共有四个：left right none inherit.<br>这个以后再仔细去写吧。。。      </p>
-<p>原文作者：GeekPlux   <a href="http://geekplux.com/2014/04/25/several_core_concepts_of_css.html" target="_blank" rel="external">网址</a>      </p>
-</li>
+<li>注释：注意哨兵key的使用      <h2 id="mergeSort"><a href="#mergeSort" class="headerlink" title="mergeSort"></a>mergeSort</h2></li>
 </ul>
+<p><strong>code:</strong></p>
+<pre><code>
+    function merge(arr,p,q,r){
+        var n1 = q-p+1;
+        var n2 = r-q;
+        var L=[],R=[];
+        for(var i=0;i < n1;i++){
+            L[i]=arr[p+i];
+        }
+        for(var j = 0;j < n2;j++){
+            R[j]=arr[q+j+1];
+        }
+        L[n1]=Infinity;
+        R[n2]=Infinity;
+        var i=0,j=0;
+        for(var k = p;k <= r;k++){="" if(l[i]="" <="R[j]){" arr[k]="L[i];" i++;="" }else{="" j++;="" }="" function="" mergesort(arr,p,r){="" if(p="" r){="" var="" q="Math.floor((p+r)/2);" mergesort(arr,p,q);="" mergesort(arr,q+1,r);="" merge(arr,p,q,r);="" code=""></=></code></pre>
+
+<ul>
+<li>在mergeSort中最需要注意的是函数中的局部作用域，在最初的代码中mergeSort 中的q,因为没有写var而变成全局变量，所以出错。</li>
+</ul>
+<h2 id="用到的其他知识点"><a href="#用到的其他知识点" class="headerlink" title="用到的其他知识点"></a>用到的其他知识点</h2><p>代码实现用的是html界面，所以设计一下几个知识点：<br>(1)对于数字型的字符串转化成相应的数组，数组转化成字符串<br><strong>code：</strong></p>
+<p><pre><code><br>      var string=$(“input[type=’text’]”).val();<br>      var arr=JSON.parse(“[“+string+”]”);<br>      arr.toString();<br></code></pre><br>(2)修改dom 文本节点的值：           </p>
+<ul>
+<li>$().text();</li>
+<li>$().innerHTML=”xx”;</li>
+<li>$().firstChild.nodeValue=”XX” ;但这种之前不能为空    </li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>   纸上得来终觉浅，绝知此事要躬行 。   </p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -159,7 +141,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/web/">web</a><a href="/tags/css/">css</a>
+  <span></span> <a href="/tags/js/">js</a><a href="/tags/algo/">algo</a>
   </div>
 
 </div>
@@ -168,7 +150,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2015/12/06/CSS核心的几个概念/" data-title="css的几个概念 | Lx15" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" data-title="JS中的insertSort&amp;&amp;mergeSort算法实现 | Lx15" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -181,14 +163,6 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/12/06/Ajax_Json_Jsonp/" title="Ajax&amp;Json__Jsonp">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Ajax&amp;Json__Jsonp</span>
-</a>
-</div>
-
 
 <div class="next">
 <a href="/2015/12/06/this/"  title="JS的this">
@@ -208,7 +182,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#元素类型"><span class="toc-number">1.</span> <span class="toc-text">元素类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#position"><span class="toc-number">2.</span> <span class="toc-text">position</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#float"><span class="toc-number">3.</span> <span class="toc-text">float</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mergeSort"><span class="toc-number">2.</span> <span class="toc-text">mergeSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">3.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
  
   </div>
 
@@ -227,7 +201,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/js/" title="js">js<sup>2</sup></a></li>
+				<li><a href="/tags/js/" title="js">js<sup>3</sup></a></li>
 			
 		
 			
@@ -244,6 +218,10 @@
 		
 			
 				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
 			
 		
 		</ul>
