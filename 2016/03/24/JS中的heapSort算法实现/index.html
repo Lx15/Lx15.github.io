@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>JS中的insertSort&amp;&amp;mergeSort算法实现 | Lx15</title>
+    <title>JS中的heapSort算法实现 | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
+    <meta name="description" content="最近在学习算法，所以将刚学的堆排序用js实现一下。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS中的insertSort&&mergeSort算法实现">
-<meta property="og:url" content="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/index.html">
+<meta property="og:title" content="JS中的heapSort算法实现">
+<meta property="og:url" content="http://yoursite.com/2016/03/24/JS中的heapSort算法实现/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
-<meta property="og:updated_time" content="2016-03-27T14:55:18.702Z">
+<meta property="og:description" content="最近在学习算法，所以将刚学的堆排序用js实现一下。">
+<meta property="og:updated_time" content="2016-03-27T14:25:33.440Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS中的insertSort&&mergeSort算法实现">
-<meta name="twitter:description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
+<meta name="twitter:title" content="JS中的heapSort算法实现">
+<meta name="twitter:description" content="最近在学习算法，所以将刚学的堆排序用js实现一下。">
 
     
     <link rel="alternative" href="/atom.xml" title="Lx15" type="application/atom+xml">
@@ -80,14 +80,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" title="JS中的insertSort&amp;&amp;mergeSort算法实现" itemprop="url">JS中的insertSort&amp;&amp;mergeSort算法实现</a>
+      <a href="/2016/03/24/JS中的heapSort算法实现/" title="JS中的heapSort算法实现" itemprop="url">JS中的heapSort算法实现</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-03-06T05:37:59.000Z" itemprop="datePublished"> 发表于 2016-03-06</time>
+    <time datetime="2016-03-23T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-03-24</time>
     
   </p>
 </header>
@@ -96,58 +96,12 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mergeSort"><span class="toc-number">2.</span> <span class="toc-text">mergeSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">3.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#heapSort"><span class="toc-number">1.</span> <span class="toc-text">heapSort</span></a></li></ol>
 		
 		</div>
 		
-		<p>最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。<br><a id="more"></a></p>
-<h2 id="insertSort"><a href="#insertSort" class="headerlink" title="insertSort"></a>insertSort</h2><p>  <strong>code:</strong><br>  <pre><code><br>    function insertSort(arr){<br>        var l=arr.length;<br>        for(var j=1;j &lt; l ;j++){<br>            var key = arr[j];<br>             var i = j-1;<br>            while(  i&gt;=0 &amp;&amp; arr[i] &gt; key){<br>                 arr[i+1]=arr[i];<br>                 i–;<br>            }<br>            arr[i+1] =key;<br>        }<br>    }<br>  </code></pre>       </p>
-<ul>
-<li>注释：注意哨兵key的使用      <h2 id="mergeSort"><a href="#mergeSort" class="headerlink" title="mergeSort"></a>mergeSort</h2></li>
-</ul>
-<p><strong>code:</strong>    </p>
-<pre><code>     
-
-  function merge(arr,p,q,r){
-     var n1 = q-p+1;
-     var n2 = r-q;
-     var L=[],R=[];
-     for(var i = 0;i < n1;i++){
-       L[i] = arr[p+i];
-      }
-    for(var j = 0;j < n2;j++){
-       R[j] = arr[q+j+1];
-    }
-     L[n1] = Infinity;
-     R[n2] = Infinity;
-     var i=0,j=0;
-     for(var k=p;k<= r;k++){="" if(l[i]="" <="R[j]){" arr[k]="L[i];" i++;="" }else{="" j++;="" }="" code=""></=></code></pre>    
-<pre><code>      
-
-  function  mergeSort(arr,p,r){
-    if(p < r){
-      // q=Number.parseInt((p+r)/2);
-      //.........
-      var q=Math.floor((p+r)/2); 
-      mergeSort(arr,p,q);
-      mergeSort(arr,q+1,r);
-      merge(arr,p,q,r);
-    }
-  }   
-
-</code></pre>
-
-<ul>
-<li>在mergeSort中最需要注意的是函数中的局部作用域，在最初的代码中mergeSort 中的q,因为没有写var而变成全局变量，所以出错。</li>
-</ul>
-<h2 id="用到的其他知识点"><a href="#用到的其他知识点" class="headerlink" title="用到的其他知识点"></a>用到的其他知识点</h2><p>代码实现用的是html界面，所以设计一下几个知识点：<br>(1)对于数字型的字符串转化成相应的数组，数组转化成字符串<br><strong>code：</strong></p>
-<p><pre><code><br>      var string=$(“input[type=’text’]”).val();<br>      var arr=JSON.parse(“[“+string+”]”);<br>      arr.toString();<br></code></pre><br>(2)修改dom 文本节点的值：           </p>
-<ul>
-<li>$().text();</li>
-<li>$().innerHTML=”xx”;</li>
-<li>$().firstChild.nodeValue=”XX” ;但这种之前不能为空    </li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>   纸上得来终觉浅，绝知此事要躬行 。   </p>
+		<p>最近在学习算法，所以将刚学的堆排序用js实现一下。<br><a id="more"></a></p>
+<h2 id="heapSort"><a href="#heapSort" class="headerlink" title="heapSort"></a>heapSort</h2><p>  <strong>code:</strong><br>  <pre><code><br>    function HEAPSORT(A){<br>        BUIDMAXHEAP(A);<br>        var heapsize=A.length;<br>        for(var i=A.length-1;i&gt;=1;i–){<br>            var temp=0;<br>            temp=A[0];<br>            A[0]=A[i];<br>            A[i]=temp;<br>           –heapsize;<br>           MAXHEAPIFY(A,0,heapsize);<br>        }<br>    }<br>        function BUIDMAXHEAP(A){<br>        var  heapsize= A.length;<br>        //从第一个非叶子节点进行构造堆<br>        var start=Math.floor(A.length/2-1);<br>        for(var i=start;i&gt;=0;i–){<br>            MAXHEAPIFY(A,i,heapsize);<br>        }<br>    }<br>    function MAXHEAPIFY(A,i,heaplength){<br>        var l=0,r=0;<br>         l=2<em>i+1;<br>         r=2</em>i+2;<br>        var largest=0;<br>        var temp;//用于交换<br>        var heapsize=heaplength;<br>        if(l&lt;=heapsize &amp;&amp; A[l]&gt;A[i]){<br>            largest=l;<br>        }else{<br>            largest=i;<br>        }<br>        if(r&lt;=heapsize &amp;&amp; A[r]&gt;A[largest]){<br>            largest=r;<br>        }<br>        if(largest!=i){<br>            temp=A[i];<br>            A[i]=A[largest];<br>            A[largest]=temp;<br>            MAXHEAPIFY(A,largest,A.length);<br>        }<br>    }<br>  </code></pre>       </p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -165,7 +119,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" data-title="JS中的insertSort&amp;&amp;mergeSort算法实现 | Lx15" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/03/24/JS中的heapSort算法实现/" data-title="JS中的heapSort算法实现 | Lx15" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -178,19 +132,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/03/24/JS中的heapSort算法实现/" title="JS中的heapSort算法实现">
-  <strong>上一篇：</strong><br/>
-  <span>
-  JS中的heapSort算法实现</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/12/06/this/"  title="JS的this">
+<a href="/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/"  title="JS中的insertSort&amp;&amp;mergeSort算法实现">
  <strong>下一篇：</strong><br/> 
- <span>JS的this
+ <span>JS中的insertSort&amp;&amp;mergeSort算法实现
 </span>
 </a>
 </div>
@@ -205,7 +151,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mergeSort"><span class="toc-number">2.</span> <span class="toc-text">mergeSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">3.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#heapSort"><span class="toc-number">1.</span> <span class="toc-text">heapSort</span></a></li></ol>
  
   </div>
 
