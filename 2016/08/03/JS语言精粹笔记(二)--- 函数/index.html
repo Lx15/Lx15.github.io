@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/08/03/JS语言精粹笔记(二)--- 函数/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="这里是关于自己看JS语言精粹函数与数组方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。所谓编程，就是将一组需求分解成一组函数与数据结构(的技能)。">
-<meta property="og:updated_time" content="2016-08-19T02:57:52.000Z">
+<meta property="og:updated_time" content="2016-08-19T03:19:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS语言精粹笔记(二)------函数&&数组">
 <meta name="twitter:description" content="这里是关于自己看JS语言精粹函数与数组方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。所谓编程，就是将一组需求分解成一组函数与数据结构(的技能)。">
@@ -94,12 +94,12 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数基础"><span class="toc-number">1.</span> <span class="toc-text">函数基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#递归"><span class="toc-number">2.</span> <span class="toc-text">递归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#柯里化（Curry）"><span class="toc-number">3.</span> <span class="toc-text">柯里化（Curry）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包"><span class="toc-number">4.</span> <span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块"><span class="toc-number">5.</span> <span class="toc-text">模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组"><span class="toc-number">6.</span> <span class="toc-text">数组</span></a></li></ol>
 		
 		</div>
 		
 		<p>这里是关于自己看JS语言精粹函数与数组方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。<br>所谓编程，就是将一组需求分解成一组函数与数据结构(的技能)。<br><a id="more"></a>  </p>
-<p>###函数基础<br> 1.对象字面量产生的对象连接到 Object.prototype;函数对象连接到Function.prototype(然后这个原型对象本身连接到Object.prototype)<br> 2.调用一个函数会暂停当前函数的执行，传递控制权和参数给新的函数。除了声明时定义的形式参数，每个函数还接收两个附加的参数：this 和 arguments。 关于this的解释见 <a href="../this.md">JS中的this总结</a><br> 3.<strong>arguments</strong>  函数可以通过此参数访问所有它被调用时传递给它的参数列表，包括那些没有被分配给函数声明时定义的形式参数的多余参数。这样就可以编写一个无须指定参数个数的函数成为可能。    </p>
+<h3 id="函数基础"><a href="#函数基础" class="headerlink" title="函数基础"></a>函数基础</h3><p> 1.对象字面量产生的对象连接到 Object.prototype;函数对象连接到Function.prototype(然后这个原型对象本身连接到Object.prototype)<br> 2.调用一个函数会暂停当前函数的执行，传递控制权和参数给新的函数。除了声明时定义的形式参数，每个函数还接收两个附加的参数：this 和 arguments。 关于this的解释见 <a href="../this.md">JS中的this总结</a><br> 3.<strong>arguments</strong>  函数可以通过此参数访问所有它被调用时传递给它的参数列表，包括那些没有被分配给函数声明时定义的形式参数的多余参数。这样就可以编写一个无须指定参数个数的函数成为可能。    </p>
 <pre><code>var sum = function(){
     var i,sum =0;
     for(i=0;i&lt;arguments.length;i+=1){
@@ -123,7 +123,7 @@ Number.method(&apos;integer&apos;,function(){
 Sting.method(&apos;trim&apos;,function(){
     return this.replace(/^\s+|\s$/g,&apos;&apos;);
 })
-</code></pre><p>###递归<br>1.递归函数可以高效的操作树形结构。       </p>
+</code></pre><h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><p>1.递归函数可以高效的操作树形结构。       </p>
 <pre><code>var walk_the_DOM = function walk(node,func){
     func(node);
     node = node.firstChild;
@@ -143,7 +143,7 @@ var getElementsByAttribute = function(att,value){
 return results;
 }
 </code></pre><p>2.尾递归 是一种在函数的最后执行递归调用语句的特殊形式的递归，这意味着如果一个函数返回自身递归调用的结果，那么调用的过程会被替换成一个循环。加速。     </p>
-<p>###柯里化（Curry）<br>1.柯里化 也为 “局部套用”，是把多参数函数转换成一系列单参数函数并进行调用的技术。柯里化允许我们把函数与传递给它的参数相结合，产生出一个新的函数。 </p>
+<h3 id="柯里化（Curry）"><a href="#柯里化（Curry）" class="headerlink" title="柯里化（Curry）"></a>柯里化（Curry）</h3><p>1.柯里化 也为 “局部套用”，是把多参数函数转换成一系列单参数函数并进行调用的技术。柯里化允许我们把函数与传递给它的参数相结合，产生出一个新的函数。 </p>
 <pre><code>var add1 = add.curry(1);
 console.log(add1(6));//7
 </code></pre><p>js并没有curry方法.    </p>
@@ -155,7 +155,7 @@ console.log(add1(6));//7
         return that.apply(null,args.concat(slice.apply(arguments)));
     }
 });
-</code></pre><p>###闭包<br>1.函数可以记住并访问所在的词法作用域，就产生了闭包，即使函数在当前词法作用域之外执行。<br>（* 词法作用域 是由写代码时将变量和块作用域写在哪里决定的，因此放词法分析器处理代码时会保持作用域不变，大部分情况如此）     </p>
+</code></pre><h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>1.函数可以记住并访问所在的词法作用域，就产生了闭包，即使函数在当前词法作用域之外执行。<br>（* 词法作用域 是由写代码时将变量和块作用域写在哪里决定的，因此放词法分析器处理代码时会保持作用域不变，大部分情况如此）     </p>
 <pre><code>function foo(){
     var a = 2;
     function bar(){
@@ -186,7 +186,7 @@ baz();//2
         },1000);
 }  //1,2,3,4,5
 </code></pre><p>let 使得变量每次迭代都会声明一次.  </p>
-<p>###模块<br>1.用函数与闭包来构造模块,模块是一个提供接口却隐藏状态与实现的函数或者对象.<br>2.给String增加一个方法 deentityify 方法，用来寻找字符串中的html字符实体并把它们替换成对应的字符，这就需要在一个对象中保存字符实体的名字和它们对应的字符。</p>
+<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>1.用函数与闭包来构造模块,模块是一个提供接口却隐藏状态与实现的函数或者对象.<br>2.给String增加一个方法 deentityify 方法，用来寻找字符串中的html字符实体并把它们替换成对应的字符，这就需要在一个对象中保存字符实体的名字和它们对应的字符。</p>
 <pre><code>String.method(&apos;deentityify&apos;,function(){
     var entity = {
         quot:&apos;&quot;&apos;,
@@ -202,26 +202,25 @@ return function(){
  }())
 </code></pre><p>这个entity 对象若是放在deentityfy函数中，每次执行时都会有损耗，因为每次执行该函数的时候该字面量都会被求值一次。<br>3.每个模块都有一个外部的封闭函数，该函数必须至少被调用一次，每次调用都会创建一个新的模块实例。 封闭函数必须返回至少一个内部函数，这样内部函数才能在私有作用域中形成闭包，并且可以访问或者修改私有的状态。     </p>
 <ol>
-<li><p>当只需要一个实例时，可以对这个模块进行简单的改进来实现单例模式。   </p>
-<p> var foo = (function cool(){</p>
-<pre><code>var something = &quot;ss&quot;;
-vr another = [1,2,3];
-function doSomething (){
-    console.log(something);
-}
-function doAnother (){
-    console.log(another.join(&quot;!&quot;));
-}
-return {
-    doSomething:doSomething,
-    doAnother:doAnother
-}
-})();   
-foo.doSomething();
-foo.doAnother();
-</code></pre></li>
+<li>当只需要一个实例时，可以对这个模块进行简单的改进来实现单例模式</li>
 </ol>
-<p>###数组<br>1.JS数组的length是没有上界的，不会发生越界错误。length属性的值是这个数组的最大整数属性名+1。并不一定等于数组里的属性个数。也可以设置length的值，设置更大的length不会给数组分配更多的空间，而把length设小将导致所有下标大于等于length的属性被删除。<br>2.判断一个对象是否为数组。     </p>
+<pre><code>var foo = (function cool(){
+    var something = &quot;ss&quot;;
+    var another = [1,2,3];
+    function doSomething (){
+        console.log(something);
+    }
+    function doAnother (){
+        console.log(another.join(&quot;!&quot;));
+    }
+    return {
+         doSomething:doSomething,
+         doAnother:doAnother
+    }
+    })(); 
+    foo.doSomething();
+    foo.doAnother();
+</code></pre><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>1.JS数组的length是没有上界的，不会发生越界错误。length属性的值是这个数组的最大整数属性名+1。并不一定等于数组里的属性个数。也可以设置length的值，设置更大的length不会给数组分配更多的空间，而把length设小将导致所有下标大于等于length的属性被删除。<br>2.判断一个对象是否为数组。     </p>
 <pre><code>var is_array = function (value){
     return Object.prototype.toString.apply(value) === &quot;[object Array]&quot;;
 }
@@ -293,7 +292,7 @@ string.split(separator,limit);//将字符串以这个separator分割成片段组
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数基础"><span class="toc-number">1.</span> <span class="toc-text">函数基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#递归"><span class="toc-number">2.</span> <span class="toc-text">递归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#柯里化（Curry）"><span class="toc-number">3.</span> <span class="toc-text">柯里化（Curry）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#闭包"><span class="toc-number">4.</span> <span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模块"><span class="toc-number">5.</span> <span class="toc-text">模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组"><span class="toc-number">6.</span> <span class="toc-text">数组</span></a></li></ol>
  
   </div>
 
