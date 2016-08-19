@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>JS中的insertSort&amp;&amp;mergeSort算法实现 | Lx15</title>
+    <title>Cesium 笔记 （一） | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
+    <meta name="description" content="1.Cesium 的API包括：给图形开发者使用的低级API，其主要针对 Primitive API；用于 数据驱动可视化的高级API，其主要针对于 Entity API 。2.Cesium的Camera对象提供了多种操控镜头的方法，可设置镜头的位置与指向3.实体可以用于组织多个可视化对象">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS中的insertSort&&mergeSort算法实现">
-<meta property="og:url" content="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/index.html">
+<meta property="og:title" content="Cesium 笔记 （一）">
+<meta property="og:url" content="http://yoursite.com/2016/08/12/2016-8-12-Cesium(1)/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
-<meta property="og:updated_time" content="2016-08-19T02:54:15.000Z">
+<meta property="og:description" content="1.Cesium 的API包括：给图形开发者使用的低级API，其主要针对 Primitive API；用于 数据驱动可视化的高级API，其主要针对于 Entity API 。2.Cesium的Camera对象提供了多种操控镜头的方法，可设置镜头的位置与指向3.实体可以用于组织多个可视化对象">
+<meta property="og:updated_time" content="2016-08-12T14:27:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS中的insertSort&&mergeSort算法实现">
-<meta name="twitter:description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
+<meta name="twitter:title" content="Cesium 笔记 （一）">
+<meta name="twitter:description" content="1.Cesium 的API包括：给图形开发者使用的低级API，其主要针对 Primitive API；用于 数据驱动可视化的高级API，其主要针对于 Entity API 。2.Cesium的Camera对象提供了多种操控镜头的方法，可设置镜头的位置与指向3.实体可以用于组织多个可视化对象">
 
     
     
@@ -78,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" title="JS中的insertSort&amp;&amp;mergeSort算法实现" itemprop="url">JS中的insertSort&amp;&amp;mergeSort算法实现</a>
+      <a href="/2016/08/12/2016-8-12-Cesium(1)/" title="Cesium 笔记 （一）" itemprop="url">Cesium 笔记 （一）</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-03-06T05:37:59.000Z" itemprop="datePublished"> 发表于 2016-03-06</time>
+    <time datetime="2016-08-11T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-08-12</time>
     
   </p>
 </header>
@@ -94,69 +94,11 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mergeSort"><span class="toc-number">2.</span> <span class="toc-text">mergeSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">3.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。<br><a id="more"></a></p>
-<h2 id="insertSort"><a href="#insertSort" class="headerlink" title="insertSort"></a>insertSort</h2><pre><code>function insertSort(arr){
-    var l=arr.length;
-    for(var j=1;j &lt; l ;j++){
-        var key = arr[j];
-         var i = j-1;
-        while(  i&gt;=0 &amp;&amp; arr[i] &gt; key){
-             arr[i+1]=arr[i];
-             i--;
-        }
-        arr[i+1] =key;
-    }
-}
-</code></pre><ul>
-<li><p>注释：注意哨兵key的使用          </p>
-<h2 id="mergeSort"><a href="#mergeSort" class="headerlink" title="mergeSort"></a>mergeSort</h2><p>  function merge(arr,p,q,r){</p>
-<pre><code> var n1 = q-p+1;
- var n2 = r-q;
- var L=[],R=[];
- for(var i = 0;i &lt; n1;i++){
-   L[i] = arr[p+i];
-  }
-for(var j = 0;j &lt; n2;j++){
-   R[j] = arr[q+j+1];
-}
- L[n1] = Infinity;
- R[n2] = Infinity;
- var i=0,j=0;
- for(var k=p;k&lt;= r;k++){     
-    if(L[i] &lt;= R[j]){     
-      arr[k] = L[i];
-      i++;
-    }else{
-      arr[k] = R[j];
-      j++;
-   }       
-</code></pre><p>  }<br>  function  mergeSort(arr,p,r){</p>
-<pre><code>if(p &lt; r){
-  // q=Number.parseInt((p+r)/2);
-  //.........
-  var q=Math.floor((p+r)/2); 
-  mergeSort(arr,p,q);         }
-
-  mergeSort(arr,q+1,r);
-  merge(arr,p,q,r);
-</code></pre><p>  }                      </p>
-</li>
-<li><p>在mergeSort中最需要注意的是函数中的局部作用域，在最初的代码中mergeSort 中的q,因为没有写var而变成全局变量，所以出错。</p>
-</li>
-</ul>
-<h2 id="用到的其他知识点"><a href="#用到的其他知识点" class="headerlink" title="用到的其他知识点"></a>用到的其他知识点</h2><p>代码实现用的是html界面，所以设计一下几个知识点：<br>(1)对于数字型的字符串转化成相应的数组，数组转化成字符串</p>
-<pre><code>var string=$(&quot;input[type=&apos;text&apos;]&quot;).val();
-var arr=JSON.parse(&quot;[&quot;+string+&quot;]&quot;);
-arr.toString();
-</code></pre><p>(2)修改dom 文本节点的值： </p>
-<pre><code>+ $().text();
-+ $().innerHTML=&quot;xx&quot;;
-+ $().firstChild.nodeValue=&quot;XX&quot; ;但这种之前不能为空 
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>   纸上得来终觉浅，绝知此事要躬行 。   </p>
+		<p>1.Cesium 的API包括：给图形开发者使用的低级API，其主要针对 Primitive API；用于 数据驱动可视化的高级API，其主要针对于 Entity API 。<br>2.Cesium的Camera对象提供了多种操控镜头的方法，可设置镜头的位置与指向<br>3.实体可以用于组织多个可视化对象</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -165,7 +107,7 @@ arr.toString();
 
   <div class="article-tags">
   
-  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/algo/">algo</a>
+  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/Cesium/">Cesium</a>
   </div>
 
 </div>
@@ -174,7 +116,7 @@ arr.toString();
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" data-title="JS中的insertSort&amp;&amp;mergeSort算法实现 | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/08/12/2016-8-12-Cesium(1)/" data-title="Cesium 笔记 （一） | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -188,18 +130,18 @@ arr.toString();
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/03/24/JS中的heapSort算法实现/" title="JS中的heapSort算法实现">
+ <a href="/2016/08/20/JS语言精粹笔记(三)-----继承/" title="JS语言精粹笔记(三)------继承">
   <strong>上一篇：</strong><br/>
   <span>
-  JS中的heapSort算法实现</span>
+  JS语言精粹笔记(三)------继承</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/11/06/CSS核心的几个概念/"  title="css的几个概念">
+<a href="/2016/08/03/JS语言精粹笔记(二)--- 函数/"  title="JS语言精粹笔记(二)------函数&amp;&amp;数组">
  <strong>下一篇：</strong><br/> 
- <span>css的几个概念
+ <span>JS语言精粹笔记(二)------函数&amp;&amp;数组
 </span>
 </a>
 </div>
@@ -208,7 +150,7 @@ arr.toString();
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" data-title="JS中的insertSort&&mergeSort算法实现" data-url="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/"></div>
+	<div class="ds-thread" data-thread-key="2016/08/12/2016-8-12-Cesium(1)/" data-title="Cesium 笔记 （一）" data-url="http://yoursite.com/2016/08/12/2016-8-12-Cesium(1)/"></div>
 </section>
 
 
@@ -218,7 +160,7 @@ arr.toString();
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mergeSort"><span class="toc-number">2.</span> <span class="toc-text">mergeSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">3.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+ 
  
   </div>
 

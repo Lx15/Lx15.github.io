@@ -28,7 +28,7 @@
   两者区别在于：   
 - 1.块级元素会独占一行（无法与其他元素显示在同一行内，除非显示修改元素的display属性），而内联元素会">
 <meta property="og:image" content="http://7b1evr.com1.z0.glb.clouddn.com/illustration%5Cthree_core_concepts_of_css2012-08-14-59d1deed94-70c5-48bb-b2ff-8421d516a981.gif">
-<meta property="og:updated_time" content="2016-03-12T15:01:46.000Z">
+<meta property="og:updated_time" content="2016-08-10T06:11:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css的几个概念">
 <meta name="twitter:description" content="本文介绍几个css常用的概念，包括：position、float等。这在初接触css时比较容易混乱。
@@ -139,8 +139,7 @@
 </code></pre>        
 
 <p>inline-block:对外呈现内联元素，可以与其他元素共处于一行内，对内则让元素呈块级元素，可以改变宽高。</p>
-<h2 id="position"><a href="#position" class="headerlink" title="position"></a>position</h2><p>position 这个属性决定了元素将如何定位。它的值大概有以下五种：</p>
-<p><table calss="table table-striped"><br>    <tr><br>        <td>position值</td><br>        <td>如何定位</td><br>    </tr><br>    <tr><br>        <td>static</td><br>        <td>position的默认值。元素将定位到它的正常位置（上文提到过），其实也就相当于没有定位。元素在页面上占据位置。不能使用 top right bottom left 移动元素位置。</td><br>    </tr><br>    <tr><br>        <td>relative</td><br>        <td>相对定位，相对于元素的正常位置来进行定位。元素在页面占据位置。可以使用 top right bottom left 移动元素位置。</td><br>    </tr><br>    <tr><br>        <td>absolute</td><br>        <td>绝对定位，相对于最近一级的 定位不是 static 的父元素来进行定位。元素在页面不占据位置。 可以使用 top right bottom left 移动元素位置</td><br>    </tr><br>    <tr><br>        <td>fixed</td><br>        <td>绝对定位，相对于浏览器窗口来进行定位。其余和 absolute 一样，相当于一种特殊的 absolute。</td><br>    </tr><br>    <tr><br>        <td>inherite</td><br>        <td>从父元素继承 position 属性的值。</td><br>    </tr><br></table><br>每个网页都可以看成是由一层一层页面堆叠起来的，如下图所示。<br><img src="http://7b1evr.com1.z0.glb.clouddn.com/illustration%5Cthree_core_concepts_of_css2012-08-14-59d1deed94-70c5-48bb-b2ff-8421d516a981.gif" alt="z-layer"></p>
+<h2 id="position"><a href="#position" class="headerlink" title="position"></a>position</h2><p>position 这个属性决定了元素将如何定位。它的值大概有以下五种:<br>  <table calss="table table-striped"><br>    <tr><br>        <td>position值</td><br>        <td>如何定位</td><br>    </tr><br>    <tr><br>        <td>static</td><br>        <td>position的默认值。元素将定位到它的正常位置（上文提到过），其实也就相当于没有定位。元素在页面上占据位置。不能使用 top right bottom left 移动元素位置。</td><br>    </tr><br>    <tr><br>        <td>relative</td><br>        <td>相对定位，相对于元素的正常位置来进行定位。元素在页面占据位置。可以使用 top right bottom left 移动元素位置。</td><br>    </tr><br>    <tr><br>        <td>absolute</td><br>        <td>绝对定位，相对于最近一级的 定位不是 static 的父元素来进行定位。元素在页面不占据位置。 可以使用 top right bottom left 移动元素位置</td><br>    </tr><br>    <tr><br>        <td>fixed</td><br>        <td>绝对定位，相对于浏览器窗口来进行定位。其余和 absolute 一样，相当于一种特殊的 absolute。</td><br>    </tr><br>    <tr><br>        <td>inherite</td><br>        <td>从父元素继承 position 属性的值。</td><br>    </tr><br>  </table><br>每个网页都可以看成是由一层一层页面堆叠起来的，如下图所示。<br><img src="http://7b1evr.com1.z0.glb.clouddn.com/illustration%5Cthree_core_concepts_of_css2012-08-14-59d1deed94-70c5-48bb-b2ff-8421d516a981.gif" alt="z-layer"></p>
 <p>position 设置为 relative的时候，元素依然在普通流中，位置是正常位置，你可以通过 left right 等移动元素,会影响其他元素的位置。</p>
 <p>而当一个元素的 position 值为 absolute 或 fixed 的时候，会发生三件事：</p>
 <ul>
@@ -182,10 +181,10 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/12/06/this/" title="JS的this">
+ <a href="/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" title="JS中的insertSort&amp;&amp;mergeSort算法实现">
   <strong>上一篇：</strong><br/>
   <span>
-  JS的this</span>
+  JS中的insertSort&amp;&amp;mergeSort算法实现</span>
 </a>
 </div>
 
@@ -238,7 +237,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>4</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>8</sup></a></li>
 			
 		
 			
@@ -259,6 +258,10 @@
 		
 			
 				<li><a href="/Tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 		</ul>

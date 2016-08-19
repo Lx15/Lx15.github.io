@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>JS中的insertSort&amp;&amp;mergeSort算法实现 | Lx15</title>
+    <title>JS语言精粹笔记(二)------函数&amp;&amp;数组 | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
+    <meta name="description" content="这里是关于自己看JS语言精粹函数与数组方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。所谓编程，就是将一组需求分解成一组函数与数据结构(的技能)。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS中的insertSort&&mergeSort算法实现">
-<meta property="og:url" content="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/index.html">
+<meta property="og:title" content="JS语言精粹笔记(二)------函数&&数组">
+<meta property="og:url" content="http://yoursite.com/2016/08/03/JS语言精粹笔记(二)--- 函数/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
-<meta property="og:updated_time" content="2016-08-19T02:54:15.000Z">
+<meta property="og:description" content="这里是关于自己看JS语言精粹函数与数组方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。所谓编程，就是将一组需求分解成一组函数与数据结构(的技能)。">
+<meta property="og:updated_time" content="2016-08-19T02:57:52.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS中的insertSort&&mergeSort算法实现">
-<meta name="twitter:description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
+<meta name="twitter:title" content="JS语言精粹笔记(二)------函数&&数组">
+<meta name="twitter:description" content="这里是关于自己看JS语言精粹函数与数组方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。所谓编程，就是将一组需求分解成一组函数与数据结构(的技能)。">
 
     
     
@@ -78,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" title="JS中的insertSort&amp;&amp;mergeSort算法实现" itemprop="url">JS中的insertSort&amp;&amp;mergeSort算法实现</a>
+      <a href="/2016/08/03/JS语言精粹笔记(二)--- 函数/" title="JS语言精粹笔记(二)------函数&amp;&amp;数组" itemprop="url">JS语言精粹笔记(二)------函数&amp;&amp;数组</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-03-06T05:37:59.000Z" itemprop="datePublished"> 发表于 2016-03-06</time>
+    <time datetime="2016-08-02T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-08-03</time>
     
   </p>
 </header>
@@ -94,70 +94,145 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mergeSort"><span class="toc-number">2.</span> <span class="toc-text">mergeSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">3.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。<br><a id="more"></a></p>
-<h2 id="insertSort"><a href="#insertSort" class="headerlink" title="insertSort"></a>insertSort</h2><pre><code>function insertSort(arr){
-    var l=arr.length;
-    for(var j=1;j &lt; l ;j++){
-        var key = arr[j];
-         var i = j-1;
-        while(  i&gt;=0 &amp;&amp; arr[i] &gt; key){
-             arr[i+1]=arr[i];
-             i--;
-        }
-        arr[i+1] =key;
+		<p>这里是关于自己看JS语言精粹函数与数组方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。<br>所谓编程，就是将一组需求分解成一组函数与数据结构(的技能)。<br><a id="more"></a>  </p>
+<p>###函数基础<br> 1.对象字面量产生的对象连接到 Object.prototype;函数对象连接到Function.prototype(然后这个原型对象本身连接到Object.prototype)<br> 2.调用一个函数会暂停当前函数的执行，传递控制权和参数给新的函数。除了声明时定义的形式参数，每个函数还接收两个附加的参数：this 和 arguments。 关于this的解释见 <a href="../this.md">JS中的this总结</a><br> 3.<strong>arguments</strong>  函数可以通过此参数访问所有它被调用时传递给它的参数列表，包括那些没有被分配给函数声明时定义的形式参数的多余参数。这样就可以编写一个无须指定参数个数的函数成为可能。    </p>
+<pre><code>var sum = function(){
+    var i,sum =0;
+    for(i=0;i&lt;arguments.length;i+=1){
+        sum+=arguments[i];
+    }
+    return sum;
+}
+console.log(sum(1,2,3,4,5)) 
+</code></pre><p>arguments只是一个类似数组的对象，只有一个length属性，但没有任何数组的方法。<br>4.调用一个函数会暂停当前函数的执行，传递控制权和参数给新的函数。当一个函数被调用时，它从第一个语句开始执行，并在遇到关闭函数的}结束，然后把控制权交还给调用该函数的程序。return 可提前返回。一个函数总会返回一个值，若没有指定返回值，则返回undefined。如果函数是通过new操作符进行调用的，且返回值不是一个对象，则返回this(该新对象)。<br>5.扩充功能      </p>
+<pre><code>Function.prototype.method = function (name,func){
+    if(!this.prototype[name]){
+        this.prototype[name] = func;
+    }
+    return this;
+}
+//添加一个方法提取数字中的整数部分
+Number.method(&apos;integer&apos;,function(){
+    return Math[this &lt; 0 ? &apos;ceil&apos; : &apos;floor&apos;](this);
+})
+//添加一个移除字符串首尾空白的方法。
+Sting.method(&apos;trim&apos;,function(){
+    return this.replace(/^\s+|\s$/g,&apos;&apos;);
+})
+</code></pre><p>###递归<br>1.递归函数可以高效的操作树形结构。       </p>
+<pre><code>var walk_the_DOM = function walk(node,func){
+    func(node);
+    node = node.firstChild;
+    while(node){
+        walk(node,func);
+        node = node.nextSibling;
     }
 }
-</code></pre><ul>
-<li><p>注释：注意哨兵key的使用          </p>
-<h2 id="mergeSort"><a href="#mergeSort" class="headerlink" title="mergeSort"></a>mergeSort</h2><p>  function merge(arr,p,q,r){</p>
-<pre><code> var n1 = q-p+1;
- var n2 = r-q;
- var L=[],R=[];
- for(var i = 0;i &lt; n1;i++){
-   L[i] = arr[p+i];
-  }
-for(var j = 0;j &lt; n2;j++){
-   R[j] = arr[q+j+1];
+var getElementsByAttribute = function(att,value){
+    var results = {};
+    walk_the_DOM(document.body,function(node){
+        var actual = node.nodeType ===1 &amp;&amp; node.getAttribute(att);
+        if(typeof actual === &apos;string&apos; &amp;&amp; (actual === value || typeof value !== &apos;string&apos;)){
+            results.push(node);
+        }
+    })
+return results;
 }
- L[n1] = Infinity;
- R[n2] = Infinity;
- var i=0,j=0;
- for(var k=p;k&lt;= r;k++){     
-    if(L[i] &lt;= R[j]){     
-      arr[k] = L[i];
-      i++;
-    }else{
-      arr[k] = R[j];
-      j++;
-   }       
-</code></pre><p>  }<br>  function  mergeSort(arr,p,r){</p>
-<pre><code>if(p &lt; r){
-  // q=Number.parseInt((p+r)/2);
-  //.........
-  var q=Math.floor((p+r)/2); 
-  mergeSort(arr,p,q);         }
-
-  mergeSort(arr,q+1,r);
-  merge(arr,p,q,r);
-</code></pre><p>  }                      </p>
-</li>
-<li><p>在mergeSort中最需要注意的是函数中的局部作用域，在最初的代码中mergeSort 中的q,因为没有写var而变成全局变量，所以出错。</p>
-</li>
-</ul>
-<h2 id="用到的其他知识点"><a href="#用到的其他知识点" class="headerlink" title="用到的其他知识点"></a>用到的其他知识点</h2><p>代码实现用的是html界面，所以设计一下几个知识点：<br>(1)对于数字型的字符串转化成相应的数组，数组转化成字符串</p>
-<pre><code>var string=$(&quot;input[type=&apos;text&apos;]&quot;).val();
-var arr=JSON.parse(&quot;[&quot;+string+&quot;]&quot;);
-arr.toString();
-</code></pre><p>(2)修改dom 文本节点的值： </p>
-<pre><code>+ $().text();
-+ $().innerHTML=&quot;xx&quot;;
-+ $().firstChild.nodeValue=&quot;XX&quot; ;但这种之前不能为空 
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>   纸上得来终觉浅，绝知此事要躬行 。   </p>
-  
+</code></pre><p>2.尾递归 是一种在函数的最后执行递归调用语句的特殊形式的递归，这意味着如果一个函数返回自身递归调用的结果，那么调用的过程会被替换成一个循环。加速。     </p>
+<p>###柯里化（Curry）<br>1.柯里化 也为 “局部套用”，是把多参数函数转换成一系列单参数函数并进行调用的技术。柯里化允许我们把函数与传递给它的参数相结合，产生出一个新的函数。 </p>
+<pre><code>var add1 = add.curry(1);
+console.log(add1(6));//7
+</code></pre><p>js并没有curry方法.    </p>
+<pre><code>Function.method(&apos;curry&apos;,function(){
+    var slice =Array.prototype.slice,
+        args = slice.apply(arguments),
+        that = this;
+    return function (){
+        return that.apply(null,args.concat(slice.apply(arguments)));
+    }
+});
+</code></pre><p>###闭包<br>1.函数可以记住并访问所在的词法作用域，就产生了闭包，即使函数在当前词法作用域之外执行。<br>（* 词法作用域 是由写代码时将变量和块作用域写在哪里决定的，因此放词法分析器处理代码时会保持作用域不变，大部分情况如此）     </p>
+<pre><code>function foo(){
+    var a = 2;
+    function bar(){
+        console.log(a);
+    }
+    return bar;
+}
+var baz = foo();
+baz();//2 
+</code></pre><p>在baz函数执行时，foo函数的内部作用域依然存在，并没有被回收。bar()依然持有对该作用域的引用。这个函数在定义时的词法作用域以外的地方被调用，闭包使得函数可以继续访问定义时的此法作用域。无论通过何种手段将内部函数传递到所在的词法作用域之外，它都会持有对原始定义作用域的引用，无论在何处执行这个函数都会使用闭包。<br>2.</p>
+<pre><code>for(var i=1;i&lt;5;i++){
+    setTimeout(function timer(){
+        console.log(i);
+        },1000);
+}//每隔1s输出6
+</code></pre><p>尽管循环中的五个函数是在各个迭代中分别定义的，但是这些都被封闭在一个共享的全局作用域中，因此只有一个i. 因此需要更多的闭包作用域。       </p>
+<pre><code>for(var i=1;i&lt;=5;i++){
+    (function(j){
+        setTimeout(function timer(){
+            console.log(j);
+            },1000);
+     })(i);
+}// 1,2,3,4,5
+</code></pre><p>在迭代内由于函数执行会为每个迭代都生成一个新的作用域，使得延迟函数的回调可以将新的作用域封闭在每个迭代内部。    </p>
+<pre><code>for(let i=1;i&lt;5;i++){
+    setTimeout(function timer(){
+        console.log(i);
+        },1000);
+}  //1,2,3,4,5
+</code></pre><p>let 使得变量每次迭代都会声明一次.  </p>
+<p>###模块<br>1.用函数与闭包来构造模块,模块是一个提供接口却隐藏状态与实现的函数或者对象.<br>2.给String增加一个方法 deentityify 方法，用来寻找字符串中的html字符实体并把它们替换成对应的字符，这就需要在一个对象中保存字符实体的名字和它们对应的字符。</p>
+<pre><code>String.method(&apos;deentityify&apos;,function(){
+    var entity = {
+        quot:&apos;&quot;&apos;,
+        lt:&apos;&lt;&apos;,
+        gt:&apos;&gt;&apos;
+    };
+return function(){
+       return this.place(/&amp;([^&amp;;]+)/g),function(a,b){
+            var r = entity[b];
+            return typeof r === &apos;string&apos; ? r :a;
+       }
+    }
+ }())
+</code></pre><p>这个entity 对象若是放在deentityfy函数中，每次执行时都会有损耗，因为每次执行该函数的时候该字面量都会被求值一次。<br>3.每个模块都有一个外部的封闭函数，该函数必须至少被调用一次，每次调用都会创建一个新的模块实例。 封闭函数必须返回至少一个内部函数，这样内部函数才能在私有作用域中形成闭包，并且可以访问或者修改私有的状态。     </p>
+<ol>
+<li><p>当只需要一个实例时，可以对这个模块进行简单的改进来实现单例模式。   </p>
+<p> var foo = (function cool(){</p>
+<pre><code>var something = &quot;ss&quot;;
+vr another = [1,2,3];
+function doSomething (){
+    console.log(something);
+}
+function doAnother (){
+    console.log(another.join(&quot;!&quot;));
+}
+return {
+    doSomething:doSomething,
+    doAnother:doAnother
+}
+})();   
+foo.doSomething();
+foo.doAnother();
+</code></pre></li>
+</ol>
+<p>###数组<br>1.JS数组的length是没有上界的，不会发生越界错误。length属性的值是这个数组的最大整数属性名+1。并不一定等于数组里的属性个数。也可以设置length的值，设置更大的length不会给数组分配更多的空间，而把length设小将导致所有下标大于等于length的属性被删除。<br>2.判断一个对象是否为数组。     </p>
+<pre><code>var is_array = function (value){
+    return Object.prototype.toString.apply(value) === &quot;[object Array]&quot;;
+}
+</code></pre><p>3.数组几个重要的方法      </p>
+<pre><code>array.join(separator);//将数组构造成字符串  
+array.slice(start,end);// 对数组的浅复制，返回一个新数组
+array.splice(start,deleteCount,item...);// 在原数组上进行 手术。。。
+</code></pre><p>4.字符串几个重要方法     </p>
+<pre><code>string.slice(start,end);// 同array
+string.split(separator,limit);//将字符串以这个separator分割成片段组成数组
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -165,7 +240,7 @@ arr.toString();
 
   <div class="article-tags">
   
-  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/algo/">algo</a>
+  <span></span> <a href="/Tags/js/">js</a>
   </div>
 
 </div>
@@ -174,7 +249,7 @@ arr.toString();
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" data-title="JS中的insertSort&amp;&amp;mergeSort算法实现 | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/08/03/JS语言精粹笔记(二)--- 函数/" data-title="JS语言精粹笔记(二)------函数&amp;&amp;数组 | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -188,18 +263,18 @@ arr.toString();
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/03/24/JS中的heapSort算法实现/" title="JS中的heapSort算法实现">
+ <a href="/2016/08/12/2016-8-12-Cesium(1)/" title="Cesium 笔记 （一）">
   <strong>上一篇：</strong><br/>
   <span>
-  JS中的heapSort算法实现</span>
+  Cesium 笔记 （一）</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/11/06/CSS核心的几个概念/"  title="css的几个概念">
+<a href="/2016/08/01/JS语言精粹笔记(一)--对象/"  title="JS语言精粹笔记(一)------对象">
  <strong>下一篇：</strong><br/> 
- <span>css的几个概念
+ <span>JS语言精粹笔记(一)------对象
 </span>
 </a>
 </div>
@@ -208,7 +283,7 @@ arr.toString();
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" data-title="JS中的insertSort&&mergeSort算法实现" data-url="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/"></div>
+	<div class="ds-thread" data-thread-key="2016/08/03/JS语言精粹笔记(二)--- 函数/" data-title="JS语言精粹笔记(二)------函数&&数组" data-url="http://yoursite.com/2016/08/03/JS语言精粹笔记(二)--- 函数/"></div>
 </section>
 
 
@@ -218,7 +293,7 @@ arr.toString();
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mergeSort"><span class="toc-number">2.</span> <span class="toc-text">mergeSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">3.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+ 
  
   </div>
 
