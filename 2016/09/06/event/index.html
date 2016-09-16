@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/09/06/event/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。目前跨浏览器的问题我在项目中涉及的很少，所以这方面知识很欠缺。">
-<meta property="og:updated_time" content="2016-09-16T13:36:45.000Z">
+<meta property="og:updated_time" content="2016-09-16T13:39:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS中原生的事件">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。目前跨浏览器的问题我在项目中涉及的很少，所以这方面知识很欠缺。">
@@ -108,10 +108,12 @@
 </li>
 <li><p><strong>IE事件处理程序</strong>IE 实现了两个方法，attachEvent()与detachEvent()。参数为事件处理程序名称与事件处理程序参数。 attachEvent添加的事件处理程序都会被添加到冒泡阶段。但此事件处理程序的作用域是全局。可以用来为一个元素添加多个事件处理程序。detachEvent用来移除事件。（onclick）</p>
 </li>
-<li><p><strong>跨浏览器的事件处理程序</strong>创建一个属于EventUtil对象的方法addHandler 与 removeHandler()。职责是根据情况分别使用DOM0级方法、DOM2级方法或ＩＥ方法来添加事件。３个参数：要操作的元素、事件名称和事件处理函数。　 
-　　　</p>
-<h2 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h2><p>所有浏览器都支持event对象。在触发DOM上的某个事件时，都会产生一个事件对象event.这个对象上面包含着所有与事件有关的信息。</p>
-</li>
+<li><p><strong>跨浏览器的事件处理程序</strong>创建一个属于EventUtil对象的方法addHandler 与 removeHandler()。职责是根据情况分别使用DOM0级方法、DOM2级方法或ＩＥ方法来添加事件。３个参数：要操作的元素、事件名称和事件处理函数。
+　 </p>
+<h2 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h2></li>
+</ol>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;所有浏览器都支持event对象。在触发DOM上的某个事件时，都会产生一个事件对象event.这个对象上面包含着所有与事件有关的信息。     </p>
+<ol>
 <li><p><strong>DOM中的事件对象</strong> event对象包含与创建他的特定时间有关的属性与方法。触发事件类型不一样，可用的属性与方法也不一样。this始终等于currentTarget的值，儿target则只包含的事件实际对象。要阻止事件的默认行为，可以使用preventDefault()方法，如阻止链接的默认行为（单击时会导航到其href指定的url）。stopPropagation()方法用于立即停止事件在DOM层次的传播，取消进一步的事件捕捉或冒泡。</p>
 </li>
 <li><p><strong>IE中的事件对象</strong>IE中的事件对象根据方法不同而不同。若采用的是DOM0级方法添加事件处理程序时，event对象作为window对象的一个属性存在。若是用attachEvent()添加的，则event会作为参数传入事件处理程序函数。event对象也会因为事件类型的不同而不同。 returnValue属性相当于prevaentDefault(),cancelBubble属性相当于stopPropagation().</p>
@@ -150,18 +152,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/09/13/C_变量/" title="C语言中变量的存储类别">
+ <a href="/2016/09/07/git操作/" title="日常常用git操作">
   <strong>上一篇：</strong><br/>
   <span>
-  C语言中变量的存储类别</span>
+  日常常用git操作</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/08/21/JS语言精粹笔记(四)---易错点/"  title="JS语言精粹笔记(四)----易错点">
+<a href="/2016/09/03/nativejs/"  title="原生JS操作">
  <strong>下一篇：</strong><br/> 
- <span>JS语言精粹笔记(四)----易错点
+ <span>原生JS操作
 </span>
 </a>
 </div>
@@ -206,7 +208,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>10</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/css/" title="css">css<sup>3</sup></a></li>
 			
 		
 			
@@ -222,10 +228,6 @@
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/Tags/this/" title="this">this<sup>1</sup></a></li>
 			
 		
@@ -235,6 +237,10 @@
 		
 			
 				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 		</ul>

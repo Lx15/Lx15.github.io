@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>JS中的insertSort&amp;&amp;mergeSort算法实现 | Lx15</title>
+    <title>原生JS操作 | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
+    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在做原生JS练习中一些自己不熟悉的小知识点，并不是系统的原生JS操作，目前这部分还在进行中，以后边练习边补充，算是查漏补缺。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS中的insertSort&&mergeSort算法实现">
-<meta property="og:url" content="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/index.html">
+<meta property="og:title" content="原生JS操作">
+<meta property="og:url" content="http://yoursite.com/2016/09/03/nativejs/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
-<meta property="og:updated_time" content="2016-08-19T02:54:15.000Z">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在做原生JS练习中一些自己不熟悉的小知识点，并不是系统的原生JS操作，目前这部分还在进行中，以后边练习边补充，算是查漏补缺。">
+<meta property="og:updated_time" content="2016-09-16T14:02:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS中的insertSort&&mergeSort算法实现">
-<meta name="twitter:description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
+<meta name="twitter:title" content="原生JS操作">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在做原生JS练习中一些自己不熟悉的小知识点，并不是系统的原生JS操作，目前这部分还在进行中，以后边练习边补充，算是查漏补缺。">
 
     
     
@@ -78,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" title="JS中的insertSort&amp;&amp;mergeSort算法实现" itemprop="url">JS中的insertSort&amp;&amp;mergeSort算法实现</a>
+      <a href="/2016/09/03/nativejs/" title="原生JS操作" itemprop="url">原生JS操作</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-03-06T05:37:59.000Z" itemprop="datePublished"> 发表于 2016-03-06</time>
+    <time datetime="2016-09-02T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-03</time>
     
   </p>
 </header>
@@ -94,69 +94,56 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mergeSort"><span class="toc-number">2.</span> <span class="toc-text">mergeSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">3.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。<br><a id="more"></a></p>
-<h2 id="insertSort"><a href="#insertSort" class="headerlink" title="insertSort"></a>insertSort</h2><pre><code>function insertSort(arr){
-    var l=arr.length;
-    for(var j=1;j &lt; l ;j++){
-        var key = arr[j];
-         var i = j-1;
-        while(  i&gt;=0 &amp;&amp; arr[i] &gt; key){
-             arr[i+1]=arr[i];
-             i--;
-        }
-        arr[i+1] =key;
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;这里记录的是在做原生JS练习中一些自己不熟悉的小知识点，并不是系统的原生JS操作，目前这部分还在进行中，以后边练习边补充，算是查漏补缺。</p>
+<a id="more"></a>
+<ol>
+<li><p>元素的id target.id</p>
+</li>
+<li><p>元素的标签名 target.nodeName</p>
+</li>
+<li><p>元素的兄弟元素节点 target.parentNode.children;</p>
+</li>
+<li><pre><code>function hasClass(element, className) {
+    return (new RegExp(&apos;(\\s|^)&apos; + className + &apos;(\\s|$)&apos;)).test(element.className);
+}
+
+function addClass(element, newClassName) {
+    if (!hasClass(element, newClassName)) {
+        element.className = element.className ? (element.className + &quot; &quot; + newClassName) : newClassName;
     }
 }
-</code></pre><ul>
-<li><p>注释：注意哨兵key的使用          </p>
-<h2 id="mergeSort"><a href="#mergeSort" class="headerlink" title="mergeSort"></a>mergeSort</h2><p>  function merge(arr,p,q,r){</p>
-<pre><code> var n1 = q-p+1;
- var n2 = r-q;
- var L=[],R=[];
- for(var i = 0;i &lt; n1;i++){
-   L[i] = arr[p+i];
-  }
-for(var j = 0;j &lt; n2;j++){
-   R[j] = arr[q+j+1];
-}
- L[n1] = Infinity;
- R[n2] = Infinity;
- var i=0,j=0;
- for(var k=p;k&lt;= r;k++){     
-    if(L[i] &lt;= R[j]){     
-      arr[k] = L[i];
-      i++;
-    }else{
-      arr[k] = R[j];
-      j++;
-   }       
-</code></pre><p>  }<br>  function  mergeSort(arr,p,r){</p>
-<pre><code>if(p &lt; r){
-  // q=Number.parseInt((p+r)/2);
-  //.........
-  var q=Math.floor((p+r)/2); 
-  mergeSort(arr,p,q);         }
 
-  mergeSort(arr,q+1,r);
-  merge(arr,p,q,r);
-</code></pre><p>  }                      </p>
+function removeClass(element, oldClassName) {
+    if (hasClass(element, oldClassName)) {
+        element.className = element.className.replace(new RegExp(&apos;(\\s|^)&apos;+ oldClassName + &apos;(\\s|$)&apos;), &quot; &quot;).trim();
+    }
+}
+</code></pre></li>
+<li><p>cursor:crosshair; 鼠标光标是十字;</p>
 </li>
-<li><p>在mergeSort中最需要注意的是函数中的局部作用域，在最初的代码中mergeSort 中的q,因为没有写var而变成全局变量，所以出错。</p>
+<li><p>label标签的用法：除了用for属性与指定的表单元素关联外，直接把表单元素包含在label里面也能实现关系。</p>
 </li>
+<li><p>事件的套路。。事件代理是挂在祖先元素上时，监听鼠标移入移出子元素时只能用mouseover和mouseout事件了</p>
+</li>
+<li><p>清除设置的属性   box.style.cssText =” “;</p>
+</li>
+<li><p>margin 折叠：</p>
+<ul>
+<li>发生折叠需要时相邻的非浮动元素</li>
+<li>折叠发生在垂直外边距上，即margin-top/margin-bottom;</li>
+<li>折叠后取其中最大的那个margin值作为最终值。</li>
+<li>定义了属性overflow且值不为visible（即创建了新的块级格式化上下文）的块元素，不与它的子元素发生margin 折叠；</li>
+<li>绝对定位元素的 margin 不与任何 margin 发生折叠。</li>
+<li>根元素的 margin 不与其它任何 margin 发生折叠；</li>
 </ul>
-<h2 id="用到的其他知识点"><a href="#用到的其他知识点" class="headerlink" title="用到的其他知识点"></a>用到的其他知识点</h2><p>代码实现用的是html界面，所以设计一下几个知识点：<br>(1)对于数字型的字符串转化成相应的数组，数组转化成字符串</p>
-<pre><code>var string=$(&quot;input[type=&apos;text&apos;]&quot;).val();
-var arr=JSON.parse(&quot;[&quot;+string+&quot;]&quot;);
-arr.toString();
-</code></pre><p>(2)修改dom 文本节点的值： </p>
-<pre><code>+ $().text();
-+ $().innerHTML=&quot;xx&quot;;
-+ $().firstChild.nodeValue=&quot;XX&quot; ;但这种之前不能为空 
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>   纸上得来终觉浅，绝知此事要躬行 。   </p>
+</li>
+<li><p>parent.childNodes 是所有的子元素<br>parent.child 是只有第一层子元素</p>
+</li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -165,7 +152,7 @@ arr.toString();
 
   <div class="article-tags">
   
-  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/algo/">algo</a>
+  <span></span> <a href="/Tags/js/">js</a>
   </div>
 
 </div>
@@ -174,7 +161,7 @@ arr.toString();
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" data-title="JS中的insertSort&amp;&amp;mergeSort算法实现 | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/09/03/nativejs/" data-title="原生JS操作 | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -188,18 +175,18 @@ arr.toString();
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/03/24/JS中的heapSort算法实现/" title="JS中的heapSort算法实现">
+ <a href="/2016/09/06/event/" title="JS中原生的事件">
   <strong>上一篇：</strong><br/>
   <span>
-  JS中的heapSort算法实现</span>
+  JS中原生的事件</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/11/06/CSS核心的几个概念/"  title="css的几个概念">
+<a href="/2016/08/21/JS语言精粹笔记(四)---易错点/"  title="JS语言精粹笔记(四)----易错点">
  <strong>下一篇：</strong><br/> 
- <span>css的几个概念
+ <span>JS语言精粹笔记(四)----易错点
 </span>
 </a>
 </div>
@@ -208,7 +195,7 @@ arr.toString();
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/03/06/JS 中的insertSort&&mergeSort 算法实现/" data-title="JS中的insertSort&&mergeSort算法实现" data-url="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/"></div>
+	<div class="ds-thread" data-thread-key="2016/09/03/nativejs/" data-title="原生JS操作" data-url="http://yoursite.com/2016/09/03/nativejs/"></div>
 </section>
 
 
@@ -218,7 +205,7 @@ arr.toString();
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mergeSort"><span class="toc-number">2.</span> <span class="toc-text">mergeSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">3.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+ 
  
   </div>
 
