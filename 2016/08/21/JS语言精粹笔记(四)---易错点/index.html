@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>JS语言精粹笔记(三)------继承 | Lx15</title>
+    <title>JS语言精粹笔记(四)----易错点 | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="以后再写吧，认识不深。还有正则表达式部分。">
+    <meta name="description" content="这里是关于自己看JS语言精粹附录知识点方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS语言精粹笔记(三)------继承">
-<meta property="og:url" content="http://yoursite.com/2016/08/20/JS语言精粹笔记(三)-----继承/index.html">
+<meta property="og:title" content="JS语言精粹笔记(四)----易错点">
+<meta property="og:url" content="http://yoursite.com/2016/08/21/JS语言精粹笔记(四)---易错点/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="以后再写吧，认识不深。还有正则表达式部分。">
-<meta property="og:updated_time" content="2016-08-19T03:02:09.000Z">
+<meta property="og:description" content="这里是关于自己看JS语言精粹附录知识点方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。">
+<meta property="og:updated_time" content="2016-08-20T01:33:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS语言精粹笔记(三)------继承">
-<meta name="twitter:description" content="以后再写吧，认识不深。还有正则表达式部分。">
+<meta name="twitter:title" content="JS语言精粹笔记(四)----易错点">
+<meta name="twitter:description" content="这里是关于自己看JS语言精粹附录知识点方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。">
 
     
     
@@ -78,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/08/20/JS语言精粹笔记(三)-----继承/" title="JS语言精粹笔记(三)------继承" itemprop="url">JS语言精粹笔记(三)------继承</a>
+      <a href="/2016/08/21/JS语言精粹笔记(四)---易错点/" title="JS语言精粹笔记(四)----易错点" itemprop="url">JS语言精粹笔记(四)----易错点</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-08-19T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-08-20</time>
+    <time datetime="2016-08-20T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-08-21</time>
     
   </p>
 </header>
@@ -94,11 +94,35 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#typeof"><span class="toc-number">1.</span> <span class="toc-text">typeof</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#parseInt"><span class="toc-number">2.</span> <span class="toc-text">parseInt</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#NaN"><span class="toc-number">3.</span> <span class="toc-text">NaN</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#假值-falsy-value"><span class="toc-number">4.</span> <span class="toc-text">假值(falsy value)</span></a></li></ol>
 		
 		</div>
 		
-		<p>以后再写吧，认识不深。还有正则表达式部分。</p>
+		<p>这里是关于自己看JS语言精粹附录知识点方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。<br><a id="more"></a></p>
+<h5 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h5><p>typeof 运算符返回一个用于识别其运算数类型的 字符串(就是字符串)。     </p>
+<pre><code>typeof null ;// &apos;object&apos;
+my_value === nulll;// 用于检测 null
+if(my_value &amp;&amp; typeof my_value ==== &apos;object&apos;){
+    // 不是null的对象
+}
+</code></pre><h5 id="parseInt"><a href="#parseInt" class="headerlink" title="parseInt"></a>parseInt</h5><ol>
+<li><p>parseInt 将字符串转换成整数，遇到非数字时会停止解析。  </p>
+<p> parseInt(“16”);// 16<br> parseInt(“16 kkk”);//16</p>
+</li>
+<li><p>若第一个字符是0,则会按照八进制来求值,parseInt 可以指定解析基数parseInt(“08”,10)</p>
+<h5 id="NaN"><a href="#NaN" class="headerlink" title="NaN"></a>NaN</h5></li>
+<li><p>NaN 表示 不是一个数字。NaN 会在试图把非数字形式的字符串转换成数字时产生的。</p>
+<p> +’0’;// 0<br> +’oops’;// NaN<br> typeof NaN === ‘number’//true </p>
+</li>
+<li><p>辨别数字与NaN     </p>
+<p> isNaN(NaN);// true<br> isNaN(0);//false<br> isNaN(“oo”);//true</p>
+</li>
+</ol>
+<p>isFinite 函数会筛除掉 NaN 和 Infinity .isFinite 会试图把运算数转换成一个数字。</p>
+<pre><code>var  isNumber = function(value){
+    return typeof value === &apos;number&apos; &amp;&amp; isFinite (value);
+}//用于验证是不是一个数字
+</code></pre><h5 id="假值-falsy-value"><a href="#假值-falsy-value" class="headerlink" title="假值(falsy value)"></a>假值(falsy value)</h5><p> 0 、 NaN 、’’、false、null、undefined 这些值全部等同于假，但它们是不可互换的。    </p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -116,7 +140,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/08/20/JS语言精粹笔记(三)-----继承/" data-title="JS语言精粹笔记(三)------继承 | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/08/21/JS语言精粹笔记(四)---易错点/" data-title="JS语言精粹笔记(四)----易错点 | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -130,18 +154,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/08/21/JS语言精粹笔记(四)---易错点/" title="JS语言精粹笔记(四)----易错点">
+ <a href="/2016/09/06/event/" title="JS中原生的事件">
   <strong>上一篇：</strong><br/>
   <span>
-  JS语言精粹笔记(四)----易错点</span>
+  JS中原生的事件</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/08/12/2016-8-12-Cesium(1)/"  title="Cesium 笔记 （一）">
+<a href="/2016/08/20/JS语言精粹笔记(三)-----继承/"  title="JS语言精粹笔记(三)------继承">
  <strong>下一篇：</strong><br/> 
- <span>Cesium 笔记 （一）
+ <span>JS语言精粹笔记(三)------继承
 </span>
 </a>
 </div>
@@ -150,7 +174,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/08/20/JS语言精粹笔记(三)-----继承/" data-title="JS语言精粹笔记(三)------继承" data-url="http://yoursite.com/2016/08/20/JS语言精粹笔记(三)-----继承/"></div>
+	<div class="ds-thread" data-thread-key="2016/08/21/JS语言精粹笔记(四)---易错点/" data-title="JS语言精粹笔记(四)----易错点" data-url="http://yoursite.com/2016/08/21/JS语言精粹笔记(四)---易错点/"></div>
 </section>
 
 
@@ -160,7 +184,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#typeof"><span class="toc-number">1.</span> <span class="toc-text">typeof</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#parseInt"><span class="toc-number">2.</span> <span class="toc-text">parseInt</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#NaN"><span class="toc-number">3.</span> <span class="toc-text">NaN</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#假值-falsy-value"><span class="toc-number">4.</span> <span class="toc-text">假值(falsy value)</span></a></li></ol>
  
   </div>
 
