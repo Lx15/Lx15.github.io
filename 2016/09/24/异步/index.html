@@ -1,0 +1,609 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>总算弄懂的关于异步的四个知识点 | Lx15</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="之前一直搞不懂异步、Promise之类的是怎么回事，今天认真看了一下，总算把自己以前迷糊的点弄清楚了。下面是这篇文章主要讲的四个问题，若是你看到这里，可以看一下下面几个问题是否你也同样存在，如果存在，那这篇文章应该也适合你….那就拿走不谢啦…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="总算弄懂的关于异步的四个知识点">
+<meta property="og:url" content="http://yoursite.com/2016/09/24/异步/index.html">
+<meta property="og:site_name" content="Lx15">
+<meta property="og:description" content="之前一直搞不懂异步、Promise之类的是怎么回事，今天认真看了一下，总算把自己以前迷糊的点弄清楚了。下面是这篇文章主要讲的四个问题，若是你看到这里，可以看一下下面几个问题是否你也同样存在，如果存在，那这篇文章应该也适合你….那就拿走不谢啦…">
+<meta property="og:image" content="http://yoursite.com/异步过程图">
+<meta property="og:updated_time" content="2016-09-25T08:06:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="总算弄懂的关于异步的四个知识点">
+<meta name="twitter:description" content="之前一直搞不懂异步、Promise之类的是怎么回事，今天认真看了一下，总算把自己以前迷糊的点弄清楚了。下面是这篇文章主要讲的四个问题，若是你看到这里，可以看一下下面几个问题是否你也同样存在，如果存在，那这篇文章应该也适合你….那就拿走不谢啦…">
+<meta name="twitter:image" content="http://yoursite.com/异步过程图">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15" title="Lx15"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15">Lx15</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/09/24/异步/" title="总算弄懂的关于异步的四个知识点" itemprop="url">总算弄懂的关于异步的四个知识点</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2016-09-23T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-24</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先是第一个问题："><span class="toc-number">1.</span> <span class="toc-text">首先是第一个问题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#然后是第二个问题："><span class="toc-number">2.</span> <span class="toc-text">然后是第二个问题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#那就第三个问题啦"><span class="toc-number">3.</span> <span class="toc-text">那就第三个问题啦</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后第四个问题"><span class="toc-number">4.</span> <span class="toc-text">最后第四个问题~~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+		
+		</div>
+		
+		<p>之前一直搞不懂异步、Promise之类的是怎么回事，今天认真看了一下，总算把自己以前迷糊的点弄清楚了。下面是这篇文章主要讲的四个问题，若是你看到这里，可以看一下下面几个问题是否你也同样存在，如果存在，那这篇文章应该也适合你….那就拿走不谢啦…</p>
+<a id="more"></a>
+<p>之前的迷糊点:</p>
+<ol>
+<li><p>Js是单线程，那异步执行时，执行主逻辑代码，谁来执行异步代码？？（呜呜…这个问题可不能笑我简单啊，这实在是困扰的我的最大的问题了）   </p>
+</li>
+<li><p>这个异步好像是和事件啊信号啊之类的有关，那这是个什么关系啊？</p>
+</li>
+<li><p>Promise究竟是怎么回事？发了那么多Ajax请求，总说那是promise的，可究竟是什么，里面机制是什么，怎么回事啊？还有那个CommonJs是个什么鬼？</p>
+</li>
+<li><p>Promise是怎样实现的？在常用的Jquery中是怎样实现的？</p>
+</li>
+</ol>
+<p>下面是弄懂这些文章主要参考的文章，列出来，以后若是再迷糊了可以再看看，若是有哪位读者看到了这里或许也会需要。</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000004322358" target="_blank" rel="external">JavaScript:彻底理解同步、异步和事件循环</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2012/12/asynchronous%EF%BC%BFjavascript.html" target="_blank" rel="external">Javascript异步编程的4种方法</a></li>
+<li><a href="https://blog.coding.net/blog/how-do-promises-work" target="_blank" rel="external">理解Promise的工作原理</a></li>
+<li><a href="http://cuipengfei.me/blog/2016/05/15/promise/" target="_blank" rel="external">自己动手实现Promises/A+规范</a></li>
+<li><a href="http://liubin.org/promises-book/" target="_blank" rel="external">JavaScript Promise迷你书（中文版）</a></li>
+</ul>
+<h3 id="首先是第一个问题："><a href="#首先是第一个问题：" class="headerlink" title="首先是第一个问题："></a>首先是第一个问题：</h3><p>   Js确实是单线程的，但是所谓的单线程 是指在JS引擎中负责解释和执行JavaScript的代码的线程只有一个，即主线程。但是实际上还存在其他的线程。包括： 处理Ajax请求的线程、处理DOM事件的线程、定时器线程、读写文件的线程（在node.js中）等等，这些线程可能存在于JS引擎中，也可能存在于JS引擎之外，即 “工作线程”。（呜呜呜….之前我还天真的以为所有的只有一个线程，怎么可能嘛…….）</p>
+<p>   so  easy. 第一个问题解决了。</p>
+<h3 id="然后是第二个问题："><a href="#然后是第二个问题：" class="headerlink" title="然后是第二个问题："></a>然后是第二个问题：</h3><p> 首先先明确几个概念：   </p>
+<ol>
+<li><p>异步函数：如果在函数A返回的时候，调用者还不能够得到预期结果，而是需要在将来通过一定的手段得到，那么这个函数就是异步函数,也可以叫异步过程的发起函数或者叫异步任务注册函数。主要形式是</p>
+<pre><code>A(args,...,callbackFn)
+</code></pre></li>
+<li><p>异步过程：异步函数实际上很快就调用完成了。但是后面还有工作线程执行异步任务、通知主线程、主线程调用回调函数等很多步骤。我们把整个过程叫做异步过程。即：主线程发起一个异步请求，相应的工作线程接收请求并告知主线程已收到(<strong>异步函数返回</strong>)；主线程可以继续执行后面的代码，同时工作线程执行异步任务；工作线程完成工作后，通知主线程；主线程收到通知后，执行一定的动作(<strong>调用回调函数</strong>)。</p>
+</li>
+<li><p>回调函数：回调函数与注册函数都是在主线程上调用的，其中注册函数发起异步请求，回调函数用来处理结果。</p>
+<p>那在这几个概念之后我们回到我的第二个问题：<br>异步过程中，工作线程在异步操作完成后需要通知主线程。那么这个通知机制是怎样实现的呢？答案是利用<strong>&gt;消息队列事件循环</strong>。</p>
+<p> 即 工作线程将消息放到消息队列，主线程通过事件循环过程去取消息。</p>
+</li>
+</ol>
+<p>实际上，主线程只会做一件事情，就是从消息队列里面取消息、执行消息，再取消息、再执行。当消息队列为空时，就会等待直到消息队列变成非空。而且主线程只有在将当前的消息执行完成后，才会去取下一个消息。这种机制就叫做事件循环机制，取一个消息并执行的过程叫做一次循环。</p>
+<p>事件循环用代码表示大概是这样的：</p>
+<pre><code>while(true) {
+    var message = queue.get();
+    execute(message);
+}
+</code></pre><p>那么，消息队列中放的消息具体是什么东西？消息的具体结构当然跟具体的实现有关，但是为了简单起见，我们可以认为：</p>
+<pre><code>消息就是注册异步任务时添加的回调函数。
+
+        // 消息队列中的消息就长这个样子
+        var message = function () {
+            callbackFn(response);
+        }
+</code></pre><p>主线程在执行完当前循环中的所有代码后，就会到消息队列取出这条消息(也就是message函数)，并执行它。到此为止，就完成了工作线程对主线程的通知，回调函数也就得到了执行。</p>
+<p>特别好的一个图用来说明上面的过程：<br>   <img src="异步过程图" alt="https://sfault-image.b0.upaiyun.com/325/916/3259161542-575018ce29d44_articlex"></p>
+<p>上面过程说了消息队列和事件循环，那什么是“事件”？事件在这里的概念实际上并不是必须的，事件机制实际上就是异步过程的通知机制。</p>
+<p>好了~~第二个问题也解决了….撒花….普天同庆….</p>
+<h3 id="那就第三个问题啦"><a href="#那就第三个问题啦" class="headerlink" title="那就第三个问题啦"></a>那就第三个问题啦</h3><p>首先来说这个CommomJs，CommonJS 是以在浏览器环境之外构建 JavaScript 生态系统为目标而产生的项目，比如在服务器和桌面环境中。这个CommonJS规范中有个Promise/A规范，注意啊这只是规范。何为规范就是一种约定俗成的模式，大家都遵守，这并没有具体的实现。所以才会有了各种库对于Promise/A的实现，如Jquery。</p>
+<p>各个语言平台都有相应的 Promise 实现</p>
+<pre><code>* Java&apos;s java.util.concurrent.Future
+* Python&apos;s Twisted deferreds and PEP-3148 futures
+* F#&apos;s Async
+* .Net&apos;s Task
+* C++ 11&apos;s std::future
+* Dart&apos;s Future
+* Javascript&apos;s Promises/A/B/D/A+
+* 
+</code></pre><p>这个CommonJS的Promise/A规范是用来解决回调金字塔的问题。异步的实现主要有四种方式，一种是回调的方式，回调层层嵌套时会产生回调金字塔的问题，Promise机制呢是为了解决这个问题的另一种异步方式。</p>
+<p>那Promise是什么呢？一个Promise是一个对象(注意是对象，以前我总是走眼不走心。。呜呜。。。是对象所以才有属性和方法啊，所以才会有经常出现的then方法)。</p>
+<p>一个 Promise 对象代表一个目前还不可用，但是在未来的某个时间点可以被解析的值。它允许你以一种同步的方式编写异步代码。例如，如果你想要使用 Promise API 异步调用一个远程的服务器，你需要创建一个代表数据将会在未来由 Web 服务返回的 Promise 对象。唯一的问题是目前数据还不可用。当请求完成并从服务器返回时数据将变为可用数据。在此期间，Promise 对象将扮演一个真实数据的代理角色。接下来，你可以在 Promise 对象上绑定一个回调函数，一旦真实数据变得可用这个回调函数将会被调用。而Promise的then方法中放的就是回调方法。</p>
+<p>promise 表示一个最终值，该值由一个操作完成时返回。<br>promise 有三种状态：<strong>未完成</strong> (unfulfilled)，<strong>完成</strong> (fulfilled) 和<strong>失败</strong> (failed)。<br>promise 的状态只能由<strong>未完成</strong>转换成完成，或者<strong>未完成</strong>转换成<strong>失败</strong> 。<br>promise 的状态转换只发生一次。<br>promise 有一个 then 方法，then 方法可以接受 3 个函数作为参数。前两个函数对应  promise 的两种状态 fulfilled 和 rejected  的回调函数。第三个函数用于处理进度信息（对进度回调的支持是可选的）。</p>
+<pre><code>promiseSomething().then(function(fulfilled){
+      //当promise状态变成fulfilled时，调用此函数
+  },function(rejected){
+      //当promise状态变成rejected时，调用此函数
+  },function(progress){
+      //当返回进度信息时，调用此函数
+  });
+</code></pre><p>下面是个例子然后是机制解释：</p>
+<pre><code>var p = ???();//首先以某种方式拿到一个promise,假设这时p是pending的状态
+var p1 = p.then(a,b);
+var p2 = p1.then(c,d);
+</code></pre><p>以上代码执行完之后,我们手里有3个promise:p,p1,p2.<br>这时,a,b,c,d都还没有执行。</p>
+<p>在未来某个不确定的时间,如果p的resolve方法被调用了,接下来会发生的事情是:</p>
+<ul>
+<li>p会把传给resolve方法的参数value记住,并把自己的状态标记为resolved (以后就再也不能变了),a会被调用到,其参数为value<ul>
+<li>如果a执行过程中不出错, p1的状态被变成resolved,p1会把a的返回值记住<br>c会被调用到,其参数为a的返回值<ul>
+<li>如果c执行过程中不出错, p2的状态被变成resolved,p2会把c的返回值记住</li>
+<li>如果c执行过程中出错, p2的状态被变成rejected,p2会把c抛出的异常记住</li>
+</ul>
+</li>
+<li>如果a执行过程中出错,p1的状态被变成rejected,p1会把a抛出的异常记,d被调用到,参数为a抛出的异常<ul>
+<li>如果d执行过程中不出错,p2的状态被变成resolved,p2会把d的返回值记住</li>
+<li>如果d执行过程中出错,p2的状态被变成rejected,p2会把d抛出的异常记住<br>这样,就看出递归的意思来了。不过b并没有在上面出现,这是因为p本身是被resolve的,b只有在p被reject的时候才会执行。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>在未来某个不确定的时间,如果p的reject方法被调用了,接下来会发生的事情是:<br>  。。。 。。。</p>
+<p>就不用写了,把上面的ａ替换为ｂ就好了。</p>
+<p>呐…..基本上第三个问题也解决啦…..</p>
+<h3 id="最后第四个问题"><a href="#最后第四个问题" class="headerlink" title="最后第四个问题~~"></a>最后第四个问题~~</h3><p>总算到最后一个问题啦，，，重中之重！！！既然Promise是规范，那怎样实现？上面说了那么多，实际是怎么样做啊？<br>根据上面执行机制的解释就很容易能看出递归来啦，所以实现肯定是用递归啦。。。</p>
+<p>这里有一个<a href="https://github.com/cuipengfei/Spikes/blob/master/js/promise/RWPromise.js" target="_blank" rel="external"> 只要88行的代码实现Promise</a></p>
+<p>那在常用的Jquery中异步是怎样实现的？<br>在Jquery中常用的异步主要就是ajax。那就是很常用的了。。。。。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以前发现自己做了很多无用功，问题出现了，甚至还没弄清楚问题具体是什么、根源究竟在哪里，就着急去解决，这肯定就会耗时长又不能解决问题。庆幸的是自己总算认识到了，估计以后的学习方法在我没有新的认识之前都会是这样的，先弄清楚自己的问题点在哪，然后对症下药。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/Tags/js/">js</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/09/24/异步/" data-title="总算弄懂的关于异步的四个知识点 | Lx15" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/09/20/sass/"  title="好文章收集">
+ <strong>下一篇：</strong><br/> 
+ <span>好文章收集
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/09/24/异步/" data-title="总算弄懂的关于异步的四个知识点" data-url="http://yoursite.com/2016/09/24/异步/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先是第一个问题："><span class="toc-number">1.</span> <span class="toc-text">首先是第一个问题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#然后是第二个问题："><span class="toc-number">2.</span> <span class="toc-text">然后是第二个问题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#那就第三个问题啦"><span class="toc-number">3.</span> <span class="toc-text">那就第三个问题啦</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后第四个问题"><span class="toc-number">4.</span> <span class="toc-text">最后第四个问题~~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="Lx15.github.io" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Tags/js/" title="js">js<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/css/" title="css">css<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="undefined" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=undefined&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/Lx15.github.io" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
