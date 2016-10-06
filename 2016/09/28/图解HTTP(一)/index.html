@@ -1,0 +1,595 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>图解HTTP笔记(一) | Lx15</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;《图解HTTP》的前五章笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图解HTTP笔记(一)">
+<meta property="og:url" content="http://yoursite.com/2016/09/28/图解HTTP(一)/index.html">
+<meta property="og:site_name" content="Lx15">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;《图解HTTP》的前五章笔记。">
+<meta property="og:updated_time" content="2016-10-06T13:11:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图解HTTP笔记(一)">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;《图解HTTP》的前五章笔记。">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15" title="Lx15"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15">Lx15</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/09/28/图解HTTP(一)/" title="图解HTTP笔记(一)" itemprop="url">图解HTTP笔记(一)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2016-09-27T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-28</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-web及网络基础"><span class="toc-number">1.</span> <span class="toc-text">一 web及网络基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-简单的Http协议"><span class="toc-number">2.</span> <span class="toc-text">二 简单的Http协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-HTTP报文内的HTTP信息"><span class="toc-number">3.</span> <span class="toc-text">三 HTTP报文内的HTTP信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-返回结果的HTTP状态码"><span class="toc-number">4.</span> <span class="toc-text">四 返回结果的HTTP状态码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五-与HTTP协作的web服务器"><span class="toc-number">5.</span> <span class="toc-text">五 与HTTP协作的web服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#用单台虚拟机实现多个域名"><span class="toc-number">5.1.</span> <span class="toc-text">用单台虚拟机实现多个域名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通信数据转发程序：代理、网关、隧道"><span class="toc-number">5.2.</span> <span class="toc-text">通信数据转发程序：代理、网关、隧道</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#代理"><span class="toc-number">5.2.1.</span> <span class="toc-text">代理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#网关"><span class="toc-number">5.2.2.</span> <span class="toc-text">网关</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#隧道"><span class="toc-number">5.2.3.</span> <span class="toc-text">隧道</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#保存资源的缓存"><span class="toc-number">5.3.</span> <span class="toc-text">保存资源的缓存</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;《图解HTTP》的前五章笔记。</p>
+<a id="more"></a>
+<h3 id="一-web及网络基础"><a href="#一-web及网络基础" class="headerlink" title="一 web及网络基础"></a>一 web及网络基础</h3><ol>
+<li>http 超文本传输协议 -&gt; 超文本转移协议。</li>
+<li>www构建技术： 把SGML（标准通用标记语言）作为页面的文本标记语言的HTML（超文本标记语言）作为 文档传递协议的 HTTP，指定文档所在地址的URL（统一资源定位符）</li>
+<li><p>4层 应用层、传输层、网络层和数据链路层     </p>
+<p>网络层：用来处理在网络上的流动的数据包，数据包是网络传输的最小的数据单位。该层规定了通过怎样的路径到达对方计算机，并把数据包传给对方。<br>发送端在层与层之间传输数据时，每经过一层时必定会被打上一个该层所属的首部信息。接收端层层消去。。。<br>这种把数据信息包装的做法：封装。</p>
+</li>
+<li><p>ARP协议（地址解析协议）:根据通信方的IP地址就可以反查出对应的MAC地址。 IP间的通信依赖MAC地址。</p>
+</li>
+<li><p>TCP:提供字节流服务，即为方便传输将大块的数据分割成报文段为单位的数据包进行管理。<br>三次握手：</p>
+</li>
+<li><p>DNS服务（应用层):域名与IP地址之间的解析。</p>
+</li>
+<li><p>URI中的协议方案：ftp、mailto、telnet、file。<br>http:// 协议方案名  user:pass登录信息（认证） @ www.example.jp（服务器地址）:80（服务器端口号） /dir/index.htm（带层次的文件路径）?uid=1（查询字符串）#ch1（片段标识符）</p>
+</li>
+</ol>
+<h3 id="二-简单的Http协议"><a href="#二-简单的Http协议" class="headerlink" title="二 简单的Http协议"></a>二 简单的Http协议</h3><ol>
+<li><p>http 不保存状态的协议，即对于发送过的请求或响应都不做持久化处理。后来为了实现期望的保持状态的功能，引入的Cookie技术。</p>
+</li>
+<li><p>PUT方法用来传输文件，但是http/1.1自身不带验证机制，存在安全问题，任何人都能上传。DELETE：删除文件     </p>
+<p>304 无更改   204 put发文件后的返回 无内容、</p>
+<p>OPTIONS:询问支持的方法<br>TRACE：追踪路径（可能会通过代理中转）可能会引发XST（跨站追踪）<br>CONNECT:用隧道协议连接代理 即 主要使用SSL（安全套接层）和TLS（传输层安全）协议把通信内容加密后经网络隧道传输。</p>
+</li>
+<li><p>为解决TCP连接问题，http有了 持久连接也称为HTTP keep-alive或HTTP connection reuse；即只要任意一端没有明确的提出断开连接，则保持TCP连接状态。</p>
+<p>在HTTP/1.1中所有的连接默认是持久连接。<br>持久连接也得是一个请求得到响应后另一个请求才能发出。。。<br>管线化（pipelining）可以并行发送多个请。。。      </p>
+</li>
+<li><p>Cookie: 服务器端的Set-Cookie的字段来通知客户端保存cookie。当下次客户端再往服务器发送请求时，客户端会自动在请求报文中加入Cookie值后发送出去，然后服务器端检查发过来的Cookie，对比服务器上的记录，最后得到之前的状态信息。</p>
+</li>
+</ol>
+<h3 id="三-HTTP报文内的HTTP信息"><a href="#三-HTTP报文内的HTTP信息" class="headerlink" title="三 HTTP报文内的HTTP信息"></a>三 HTTP报文内的HTTP信息</h3><ol>
+<li><p>HTTP通信过程包括从客户端发往服务器端的请求及从服务器端返回客户端的响应。</p>
+</li>
+<li><p>HTTP报文（message） 报文首部与报文主体用CR+LF 空行划分；<br>在不对传输实体进行编码的情况下 报文主体等于实体主体（entity）     </p>
+<p>HTTP的内容编码指明应用在实体内容上的编码格式，并保持实体信息的原样压缩。内容编码后的实体由客户端接收并负责解码。    </p>
+<p>常用的内容编码：</p>
+<ul>
+<li>gzip(GNU zip)       </li>
+<li>compress(UNIX系统的标准压缩)</li>
+<li>deflate(zlib)</li>
+<li>identity(不进行编码)</li>
+</ul>
+</li>
+</ol>
+<p>   在请求时 报文在传输结束 前不能进行显示，为了能够让浏览器逐步的显示页面，则把实体主体分块，这种功能称为“分块传输编码”。</p>
+<p>  分块传输编码会将实体主体分成多个块，每块都用十六进制来标记块的大小，并在最后一块用“0（CR+LF）标记”</p>
+<ol>
+<li><p>发送邮件时因为采用了MIME（多用途因特网邮件扩展）机制，可以处理多个不同类型的数据。，而在MIME扩展中会使用一种称为多部分对象集合的方法。HTTP中也采纳了多部分对象集合的方法，来容纳多份不同类型的数据。</p>
+</li>
+<li><p>获取部分内容的范围请求<br> 客户端请求首部：<br>   Range：bytes= 5001-10000<br> 服务器端响应首部：<br>   Content-Range:bytes 5001-10000/10000</p>
+</li>
+<li>内容协商返回最合适的内容：内容协商会以响应资源的语言、字符集、编码方式等作为判断的基准。</li>
+</ol>
+<h3 id="四-返回结果的HTTP状态码"><a href="#四-返回结果的HTTP状态码" class="headerlink" title="四 返回结果的HTTP状态码"></a>四 返回结果的HTTP状态码</h3><ol>
+<li>1XX接收请求正在处理 2XX 成功 3XX 重定向 4XX客户端错误 5XX服务器错误</li>
+</ol>
+<h3 id="五-与HTTP协作的web服务器"><a href="#五-与HTTP协作的web服务器" class="headerlink" title="五 与HTTP协作的web服务器"></a>五 与HTTP协作的web服务器</h3><p>一台web服务器可搭建多个独立域名的Web网站，也可以作为通信路径上的中转服务器提升传输效率。</p>
+<h4 id="用单台虚拟机实现多个域名"><a href="#用单台虚拟机实现多个域名" class="headerlink" title="用单台虚拟机实现多个域名"></a>用单台虚拟机实现多个域名</h4><p>  HTTP/1.1规范允许一台HTTP服务器搭建多个Web站点。如 提供Web托管服务（Web Hosting Service ）的供应商，可以用一台服务器为多位客户服务，也可以以每位客户持有的域名运次那个各自不同的网站，这是利用了虚拟主机（Virtual Host）的功能 。<br>若两个域名所在的服务器同时部署在同一个服务器上，那使用DNS解析域名后，两者访问的IP地址会相同。</p>
+<h4 id="通信数据转发程序：代理、网关、隧道"><a href="#通信数据转发程序：代理、网关、隧道" class="headerlink" title="通信数据转发程序：代理、网关、隧道"></a>通信数据转发程序：代理、网关、隧道</h4><p>这些应用程序和服务器可以将请求转发给通信线路上的下一站服务器，并且能接收从那台服务器发送的响应再转发给客户端。</p>
+<h5 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h5><ol>
+<li><p>代理不改变请求的URI,会直接发送给前方持有资源的目标服务器<br>持有资源实体的服务器被称为源服务器<br>在通信过程中，可级联多台代理服务器，转发时，需要附加via首部字段以标示出经过的主机信息。     </p>
+</li>
+<li><p>使用代理服务器的理由： 利用缓存技术减少网络带宽流量，组织内部针对特定网站的访问控制，以获取访问日志为主要目的等    </p>
+</li>
+<li><p>代理有多种使用方法，按两种基准分类。一是是否使用缓存 二是是否会修改报文</p>
+</li>
+</ol>
+<h5 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h5><ol>
+<li>网关的工作机制与代理十分相似，但是网关可以使通信线路上的服务器提供非HTTP协议服务。</li>
+</ol>
+<h5 id="隧道"><a href="#隧道" class="headerlink" title="隧道"></a>隧道</h5><ol>
+<li><p>隧道可以使用SSL等加密手段进行通信。隧道的目的是确保客户端能与服务器进行安全的通信。</p>
+</li>
+<li><p>隧道本身不会解析HTTP请求，接收之后会原样的转发给之后的服务器。</p>
+</li>
+</ol>
+<h4 id="保存资源的缓存"><a href="#保存资源的缓存" class="headerlink" title="保存资源的缓存"></a>保存资源的缓存</h4><ol>
+<li>缓存是指代理服务器或客户端本地磁盘内保存的资源副本。 缓存服务器是是代理服务器的一种。缓存不仅可以在缓存服务器中，还可以在客户端浏览器中。以IE为例，把客户端缓存称为临时网络文件（Temporary Internet File）</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/Tags/util/">util</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/09/28/图解HTTP(一)/" data-title="图解HTTP笔记(一) | Lx15" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/09/30/IFE笔记(三)/" title="IFE任务练习笔记(三)">
+  <strong>上一篇：</strong><br/>
+  <span>
+  IFE任务练习笔记(三)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/09/24/异步/"  title="总算弄懂的关于异步的四个知识点">
+ <strong>下一篇：</strong><br/> 
+ <span>总算弄懂的关于异步的四个知识点
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/09/28/图解HTTP(一)/" data-title="图解HTTP笔记(一)" data-url="http://yoursite.com/2016/09/28/图解HTTP(一)/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一-web及网络基础"><span class="toc-number">1.</span> <span class="toc-text">一 web及网络基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二-简单的Http协议"><span class="toc-number">2.</span> <span class="toc-text">二 简单的Http协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三-HTTP报文内的HTTP信息"><span class="toc-number">3.</span> <span class="toc-text">三 HTTP报文内的HTTP信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四-返回结果的HTTP状态码"><span class="toc-number">4.</span> <span class="toc-text">四 返回结果的HTTP状态码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五-与HTTP协作的web服务器"><span class="toc-number">5.</span> <span class="toc-text">五 与HTTP协作的web服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#用单台虚拟机实现多个域名"><span class="toc-number">5.1.</span> <span class="toc-text">用单台虚拟机实现多个域名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通信数据转发程序：代理、网关、隧道"><span class="toc-number">5.2.</span> <span class="toc-text">通信数据转发程序：代理、网关、隧道</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#代理"><span class="toc-number">5.2.1.</span> <span class="toc-text">代理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#网关"><span class="toc-number">5.2.2.</span> <span class="toc-text">网关</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#隧道"><span class="toc-number">5.2.3.</span> <span class="toc-text">隧道</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#保存资源的缓存"><span class="toc-number">5.3.</span> <span class="toc-text">保存资源的缓存</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="Lx15.github.io" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Tags/js/" title="js">js<sup>12</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/css/" title="css">css<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/util/" title="util">util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="undefined" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=undefined&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/Lx15.github.io" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

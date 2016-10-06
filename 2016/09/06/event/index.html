@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>JS中原生的事件 | Lx15</title>
+    <title>JS中的事件（一） | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。目前跨浏览器的问题我在项目中涉及的很少，所以这方面知识很欠缺。">
+    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。我主要使用的DOM2级方法，并且为了浏览器的兼容性基本上都设置在冒泡阶段捕获。这里主要是原生事件的基本知识，具体属性问题在实际使用时一查就知道了，所以也不全哈~~~">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JS中原生的事件">
+<meta property="og:title" content="JS中的事件（一）">
 <meta property="og:url" content="http://yoursite.com/2016/09/06/event/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。目前跨浏览器的问题我在项目中涉及的很少，所以这方面知识很欠缺。">
-<meta property="og:updated_time" content="2016-09-16T13:39:59.000Z">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。我主要使用的DOM2级方法，并且为了浏览器的兼容性基本上都设置在冒泡阶段捕获。这里主要是原生事件的基本知识，具体属性问题在实际使用时一查就知道了，所以也不全哈~~~">
+<meta property="og:updated_time" content="2016-09-28T08:19:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JS中原生的事件">
-<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。目前跨浏览器的问题我在项目中涉及的很少，所以这方面知识很欠缺。">
+<meta name="twitter:title" content="JS中的事件（一）">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。我主要使用的DOM2级方法，并且为了浏览器的兼容性基本上都设置在冒泡阶段捕获。这里主要是原生事件的基本知识，具体属性问题在实际使用时一查就知道了，所以也不全哈~~~">
 
     
     
@@ -78,7 +78,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/09/06/event/" title="JS中原生的事件" itemprop="url">JS中原生的事件</a>
+      <a href="/2016/09/06/event/" title="JS中的事件（一）" itemprop="url">JS中的事件（一）</a>
   </h1>
   <p class="article-author">By
        
@@ -94,31 +94,37 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件流"><span class="toc-number">1.</span> <span class="toc-text">事件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件处理程序"><span class="toc-number">2.</span> <span class="toc-text">事件处理程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件对象"><span class="toc-number">3.</span> <span class="toc-text">事件对象</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件流"><span class="toc-number">1.</span> <span class="toc-text">事件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件处理程序"><span class="toc-number">2.</span> <span class="toc-text">事件处理程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件对象"><span class="toc-number">3.</span> <span class="toc-text">事件对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
 		
 		</div>
 		
-		<p>&nbsp;&nbsp;&nbsp;&nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。目前跨浏览器的问题我在项目中涉及的很少，所以这方面知识很欠缺。</p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。我主要使用的DOM2级方法，并且为了浏览器的兼容性基本上都设置在冒泡阶段捕获。这里主要是原生事件的基本知识，具体属性问题在实际使用时一查就知道了，所以也不全哈~~~</p>
 <a id="more"></a>
-<h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><p>事件流是页面中接收事件的顺序：冒泡（IE）与捕捉（网景）。 </p>
+<h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><p>事件流是页面中接收事件的顺序：冒泡（IE）与捕捉（网景）。 现在高版本的浏览器这两种都会支持，在”DOM2级事件”中将事件流包括三个阶段：事件捕获阶段、处于目标阶段和事件冒泡阶段。</p>
 <h2 id="事件处理程序"><a href="#事件处理程序" class="headerlink" title="事件处理程序"></a>事件处理程序</h2><ol>
-<li><p><strong>DOM0 级事件处理程序</strong>每个元素都有自己的事件处理程序属性，这些属性通常小写，将这种属性值设置成一个函数，就可以指定事件处理程序。这时候的事件处理程序是在元素的作用域中运行， 即程序中的this 指向当前元素。(onclick) </p>
-</li>
-<li><p><strong>DOM2 级事件处理程序</strong>DOM2级事件定义了两个方法，用于指定和删除事件处理程序的操作，addEventListener()和removeEventListener()。所有DOM节点都包含着两个方法，并且有3个参数：要处理的事件名、作为事件处理程序的函数和一个布尔值。true:表示在捕获阶段调用事件处理程序。false:在冒泡阶段调用事件处理程序（建议用false）. DOM2 好处是可以添加多个事件处理程序。 用addEventListener()添加的事件处理函数必须用removeEventListener()才能移除。对于匿名函数无法处理。这时候的事件处理程序是在元素的作用域中运行， 即程序中的this 指向当前元素。  （click）</p>
-</li>
-<li><p><strong>IE事件处理程序</strong>IE 实现了两个方法，attachEvent()与detachEvent()。参数为事件处理程序名称与事件处理程序参数。 attachEvent添加的事件处理程序都会被添加到冒泡阶段。但此事件处理程序的作用域是全局。可以用来为一个元素添加多个事件处理程序。detachEvent用来移除事件。（onclick）</p>
+<li><strong>DOM0 级事件处理程序</strong>每个元素都有自己的事件处理程序属性（onclick等属性），这些属性通常小写，将这种属性值设置成一个函数，就可以指定事件处理程序。这时候的事件处理程序是在元素的作用域中运行， 即程序中的this 指向当前元素。(onclick)(这是肯定的啊，这个事件处理程序是这个元素对象的一个属性方法，this自然指向自己~~~~)，注意：这种方法添加的事件处理程序会在事件流的冒泡阶段被处理。<br>删除事件处理程序： btn.onclick = null;</li>
+</ol>
+<ol>
+<li><strong>DOM2 级事件处理程序</strong>DOM2级事件定义了两个方法，用于指定和删除事件处理程序的操作，addEventListener()和removeEventListener()。所有DOM节点都包含着两个方法，并且有3个参数：要处理的事件名、作为事件处理程序的函数和一个布尔值。true:表示在捕获阶段调用事件处理程序。false:在冒泡阶段调用事件处理程序（建议用false）.</li>
+</ol>
+<p>DOM2 好处是可以添加多个事件处理程序。 用addEventListener()添加的事件处理函数必须用removeEventListener()才能移除。对于匿名函数无法处理。这时候的事件处理程序是在元素的作用域中运行， 即程序中的this 指向当前元素。  （click）</p>
+<ol>
+<li><p><strong>IE事件处理程序</strong>IE 实现了两个方法，attachEvent()与detachEvent()。参数为事件处理程序名称与事件处理程序参数。 attachEvent添加的事件处理程序都会被添加到冒泡阶段。但此事件处理程序的作用域是全局。可以用来为一个元素添加多个事件处理程序。detachEvent用来移除事件。（onclick）.<br>与DOM0级方法与DOM2级方法不一样的是 :这个attachEvent()中的事件处理程序是在全局作用域中运行。  </p>
+<p>btn.attachEvent(‘onclick’,function(){<br>  alert(this == window);// true    !!! 很重要<br>  })</p>
+<p>另外： 添加多个事件处理程序时 这些事件处理程序不是以添加他们的顺序执行，而是以相反的顺序触发!!!!!!!!</p>
 </li>
 <li><p><strong>跨浏览器的事件处理程序</strong>创建一个属于EventUtil对象的方法addHandler 与 removeHandler()。职责是根据情况分别使用DOM0级方法、DOM2级方法或ＩＥ方法来添加事件。３个参数：要操作的元素、事件名称和事件处理函数。
-　 </p>
+　</p>
 <h2 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h2></li>
 </ol>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;所有浏览器都支持event对象。在触发DOM上的某个事件时，都会产生一个事件对象event.这个对象上面包含着所有与事件有关的信息。     </p>
 <ol>
-<li><p><strong>DOM中的事件对象</strong> event对象包含与创建他的特定时间有关的属性与方法。触发事件类型不一样，可用的属性与方法也不一样。this始终等于currentTarget的值，儿target则只包含的事件实际对象。要阻止事件的默认行为，可以使用preventDefault()方法，如阻止链接的默认行为（单击时会导航到其href指定的url）。stopPropagation()方法用于立即停止事件在DOM层次的传播，取消进一步的事件捕捉或冒泡。</p>
+<li><p><strong>DOM中的事件对象</strong> event对象包含与创建他的特定事件有关的属性与方法。触发事件类型不一样，可用的属性与方法也不一样。this始终等于currentTarget的值，而target则只包含的事件（作用的）实际对象。要阻止事件的默认行为，可以使用preventDefault()方法，如阻止链接的默认行为（单击时会导航到其href指定的url）。stopPropagation()方法用于立即停止事件在DOM层次的传播，取消进一步的事件捕捉或冒泡。</p>
 </li>
 <li><p><strong>IE中的事件对象</strong>IE中的事件对象根据方法不同而不同。若采用的是DOM0级方法添加事件处理程序时，event对象作为window对象的一个属性存在。若是用attachEvent()添加的，则event会作为参数传入事件处理程序函数。event对象也会因为事件类型的不同而不同。 returnValue属性相当于prevaentDefault(),cancelBubble属性相当于stopPropagation().</p>
 </li>
 <li><p><strong>跨浏览器的事件对象</strong></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我还不知道在重用的库中事件的实现机制是什么，，，还有在AngularJS 中的实现机制是什么，等—-JS中的事件(二) 吧…..<br>你以为总结会是什么？哈哈哈…..</p>
 </li>
 </ol>
   
@@ -138,7 +144,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/09/06/event/" data-title="JS中原生的事件 | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/09/06/event/" data-title="JS中的事件（一） | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -172,7 +178,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/09/06/event/" data-title="JS中原生的事件" data-url="http://yoursite.com/2016/09/06/event/"></div>
+	<div class="ds-thread" data-thread-key="2016/09/06/event/" data-title="JS中的事件（一）" data-url="http://yoursite.com/2016/09/06/event/"></div>
 </section>
 
 
@@ -182,7 +188,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件流"><span class="toc-number">1.</span> <span class="toc-text">事件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件处理程序"><span class="toc-number">2.</span> <span class="toc-text">事件处理程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件对象"><span class="toc-number">3.</span> <span class="toc-text">事件对象</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件流"><span class="toc-number">1.</span> <span class="toc-text">事件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件处理程序"><span class="toc-number">2.</span> <span class="toc-text">事件处理程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件对象"><span class="toc-number">3.</span> <span class="toc-text">事件对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
  
   </div>
 
@@ -212,7 +218,7 @@
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>3</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>4</sup></a></li>
 			
 		
 			
@@ -244,9 +250,11 @@
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/util/" title="util">util<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			

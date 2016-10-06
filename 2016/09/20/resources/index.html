@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>日常常用git操作 | Lx15</title>
+    <title>好文章收集 | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。">
+    <meta name="description" content="有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="日常常用git操作">
-<meta property="og:url" content="http://yoursite.com/2016/09/07/git操作/index.html">
+<meta property="og:title" content="好文章收集">
+<meta property="og:url" content="http://yoursite.com/2016/09/20/resources/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。">
-<meta property="og:updated_time" content="2016-09-16T13:56:45.000Z">
+<meta property="og:description" content="有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。">
+<meta property="og:updated_time" content="2016-10-06T13:15:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="日常常用git操作">
-<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。">
+<meta name="twitter:title" content="好文章收集">
+<meta name="twitter:description" content="有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。">
 
     
     
@@ -78,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/09/07/git操作/" title="日常常用git操作" itemprop="url">日常常用git操作</a>
+      <a href="/2016/09/20/resources/" title="好文章收集" itemprop="url">好文章收集</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-09-06T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-07</time>
+    <time datetime="2016-09-19T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-20</time>
     
   </p>
 </header>
@@ -94,35 +94,20 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具类"><span class="toc-number">1.</span> <span class="toc-text">工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Js学习"><span class="toc-number">2.</span> <span class="toc-text">Js学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css学习"><span class="toc-number">3.</span> <span class="toc-text">css学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#心灵鸡汤"><span class="toc-number">4.</span> <span class="toc-text">心灵鸡汤</span></a></li></ol>
 		
 		</div>
 		
-		<p>&nbsp;&nbsp;&nbsp;&nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。</p>
+		<p>有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。</p>
 <a id="more"></a>
-<ol>
-<li><p>从远程pull一个分支dev到本地分支dev-test<br>git pull origin dev:dev-test<br>这样会直接创建一个新的分支dev-test。</p>
-</li>
-<li><p>在本地Dev分支创建分支dev-test<br>git branch dev-test<br>这个dev-test分支会直接从dev中复制过来内容，而（1）中的dev-test则在创建时为空。</p>
-</li>
-<li><p>切换到dev分支<br>git checkout dev</p>
-</li>
-<li><p>合并dev-test到dev<br>git merge dev-test</p>
-</li>
-<li><p>删除dev-test分支<br>git branch -d dev-test<br>强制删除dev-test分支<br>git branch -D dev-test</p>
-</li>
-<li><p>推送本地分支dev-test到远程dev<br>git push origin dev-test:dev</p>
-</li>
-<li><p>coding.net 的邮箱 938266124@qq.com</p>
-</li>
-<li><p>从一个现有的本地仓库 clone到本地的另一个仓库<br>git clone /e/aaanow/remote/testGit.git</p>
-</li>
-<li><p>从现有仓库连接这个刚刚clone的仓库<br>git remote add <name> /e/aaanow/remote/testGit/.git</name></p>
-</li>
-<li><p>git fetch origin master<br>git log -p master..origin/master<br>git merge origin/master<br>以上命令的含义：<br>  首先从远程的origin的master主分支下载最新的版本到origin/master分支上<br>  然后比较本地的master分支和origin/master分支的差别<br>  最后进行合并<br>  上述过程其实可以用以下更清晰的方式来进行：<br>  git fetch origin master:tmp<br>  git diff tmp<br>  git merge tmp</p>
-</li>
+<h3 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h3><ol>
+<li><a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" target="_blank" rel="external">SASS用法指南</a></li>
+<li><a href="http://www.cnblogs.com/vajoy/p/5341664.html" target="_blank" rel="external">浅谈浏览器http的缓存机制</a></li>
 </ol>
-  
+<h3 id="Js学习"><a href="#Js学习" class="headerlink" title="Js学习"></a>Js学习</h3><ol>
+<li><a href="https://github.com/ericdum/mujiang.info/issues/6/" target="_blank" rel="external">npm的package.json中文文档</a></li>
+</ol>
+<h3 id="css学习"><a href="#css学习" class="headerlink" title="css学习"></a>css学习</h3><h3 id="心灵鸡汤"><a href="#心灵鸡汤" class="headerlink" title="心灵鸡汤"></a>心灵鸡汤</h3>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -130,7 +115,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/Tags/git/">git</a>
+  <span></span> <a href="/Tags/工具集/">工具集</a>
   </div>
 
 </div>
@@ -139,7 +124,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/09/07/git操作/" data-title="日常常用git操作 | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/09/20/resources/" data-title="好文章收集 | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -153,18 +138,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/09/11/IFE笔记(一)/" title="IFE任务练习笔记(一)">
+ <a href="/2016/09/24/异步/" title="总算弄懂的关于异步的四个知识点">
   <strong>上一篇：</strong><br/>
   <span>
-  IFE任务练习笔记(一)</span>
+  总算弄懂的关于异步的四个知识点</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/09/06/event/"  title="JS中的事件（一）">
+<a href="/2016/09/15/IFE笔记(二)/"  title="IFE任务练习笔记(二)">
  <strong>下一篇：</strong><br/> 
- <span>JS中的事件（一）
+ <span>IFE任务练习笔记(二)
 </span>
 </a>
 </div>
@@ -173,7 +158,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/09/07/git操作/" data-title="日常常用git操作" data-url="http://yoursite.com/2016/09/07/git操作/"></div>
+	<div class="ds-thread" data-thread-key="2016/09/20/resources/" data-title="好文章收集" data-url="http://yoursite.com/2016/09/20/resources/"></div>
 </section>
 
 
@@ -183,7 +168,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具类"><span class="toc-number">1.</span> <span class="toc-text">工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Js学习"><span class="toc-number">2.</span> <span class="toc-text">Js学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css学习"><span class="toc-number">3.</span> <span class="toc-text">css学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#心灵鸡汤"><span class="toc-number">4.</span> <span class="toc-text">心灵鸡汤</span></a></li></ol>
  
   </div>
 

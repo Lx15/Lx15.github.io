@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>好文章收集 | Lx15</title>
+    <title>IFE任务练习笔记(三) | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。">
+    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="好文章收集">
-<meta property="og:url" content="http://yoursite.com/2016/09/20/sass/index.html">
+<meta property="og:title" content="IFE任务练习笔记(三)">
+<meta property="og:url" content="http://yoursite.com/2016/09/30/IFE笔记(三)/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。">
-<meta property="og:updated_time" content="2016-09-25T08:36:34.000Z">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
+<meta property="og:updated_time" content="2016-09-30T08:53:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="好文章收集">
-<meta name="twitter:description" content="有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。">
+<meta name="twitter:title" content="IFE任务练习笔记(三)">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
 
     
     
@@ -78,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/09/20/sass/" title="好文章收集" itemprop="url">好文章收集</a>
+      <a href="/2016/09/30/IFE笔记(三)/" title="IFE任务练习笔记(三)" itemprop="url">IFE任务练习笔记(三)</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-09-19T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-20</time>
+    <time datetime="2016-09-29T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-30</time>
     
   </p>
 </header>
@@ -94,16 +94,86 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具类"><span class="toc-number">1.</span> <span class="toc-text">工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Js学习"><span class="toc-number">2.</span> <span class="toc-text">Js学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css学习"><span class="toc-number">3.</span> <span class="toc-text">css学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#心灵鸡汤"><span class="toc-number">4.</span> <span class="toc-text">心灵鸡汤</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。</p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。</p>
 <a id="more"></a>
-<h3 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h3><ol>
-<li><a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" target="_blank" rel="external">SASS用法指南</a></li>
+<ol>
+<li><p>左侧固定右侧自适应</p>
+<pre><code>.left{
+   width:200px;
+   float:left;
+}
+.right{
+   margin-left:200px;
+}
+</code></pre></li>
+<li><p>右侧固定左侧自适应</p>
+<pre><code>.left{
+    margin-right:200px;
+}
+.right{
+  position:absolute;
+  top:0;
+  right:0;
+  width:200px;
+}
+</code></pre></li>
+<li><p>清除浮动—1<br><a href="http://zh.learnlayout.com/clearfix.html" target="_blank" rel="external">浮动</a><br>子元素因为浮动使得子元素的高度大于父元素的高度，即造成父元素塌陷。      </p>
+<p>方法一： 在父元素上添加</p>
+<pre><code>.clear{
+   overflow:auto;
+   zoom:1;//兼容 IE6
+}
+</code></pre><p>清除浮动后原来在父容器上面添加的padding margin 对于子元素仍是适用的。<br>这种方法当子元素中的子元素变大时会使得父元素出现滚动条</p>
+<p>清除浮动—2</p>
+<pre><code>.clearfix{
+  &amp;:after{
+    content: &quot;&quot;;
+    display: block;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+  }
+}
+</code></pre><p>这种方法不会出现滚动条，但当子元素的子元素变大的时也可能会破坏布局</p>
+</li>
+<li><p>首字母大写 :first-letter{ font-size:22px;}<br>font: 多个属性一起使用是有顺序的。<br>字体倾斜：font-style:italic; 对于没有斜体变量的特殊字体应使用 oblique;<br>实现首字母大写并下沉样式：</p>
+<pre><code>&amp;:first-letter{
+  font-size:70px;
+  margin:30px 10px 20px 0;
+  float:left;
+}
+</code></pre><p> 通过设置字号，float并配合margin来进行定位。</p>
+</li>
+<li><p>伪类设置双引号 content:open-quote;配合定位;</p>
+<pre><code>&amp;::before{
+      content: open-quote;
+        position:relative;
+      left:20px;
+      top:20px;
+    }
+</code></pre></li>
+<li><p>水平导航目录: ul+inline-block+absolute;</p>
+</li>
+<li><p>多个元素使用inline-block 布局时，当内部元素变大时，其他兄弟元素会错位，这个问题使用float:left;解决(问题见原生JS–110.html)</p>
+</li>
+<li><p>只在父元素上使用mouseover 与mouseout事件就想使得子元素出现和消失的结果，这会出现鼠标在子元素上移动时会闪个不停。。。<br>因为这会在连续触发父元素（问题见 原生js-110.html）<br>解决办法： 在父元素上使用 mouseover使得 子元素一进入就出现，在 子元素上使用mouseout 使得子元素消失。若是这时子元素内容变大使得子元素不能再触发，可以将子元素内容设置成背景图片（针对图片的情形），这时应考虑好DOM结构。</p>
+</li>
+<li><p>原生JS关于事件处理的套路：<br>在父元素上添加事件监听，在点击子元素时，会有事件冒泡，所以父元素上的事件监听肯定会监听到，然后在父元素的事件监听处理函数中判断是否是在子元素上，这时当然会用到event.target。</p>
+<pre><code>function delegateEvent(delegateElement, targetTag, eventName, handler) {
+  delegateElement.addEventListener(eventName, function(event) {
+    var target = event.target;
+    if (targetTag.toLowerCase() === target.nodeName.toLowerCase()) {
+      return handler(event);
+    }
+  }, false);
+}
+</code></pre></li>
 </ol>
-<h3 id="Js学习"><a href="#Js学习" class="headerlink" title="Js学习"></a>Js学习</h3><h3 id="css学习"><a href="#css学习" class="headerlink" title="css学习"></a>css学习</h3><h3 id="心灵鸡汤"><a href="#心灵鸡汤" class="headerlink" title="心灵鸡汤"></a>心灵鸡汤</h3>  
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -111,7 +181,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/Tags/工具集/">工具集</a>
+  <span></span> <a href="/Tags/css/">css</a>
   </div>
 
 </div>
@@ -120,7 +190,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/09/20/sass/" data-title="好文章收集 | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/09/30/IFE笔记(三)/" data-title="IFE任务练习笔记(三) | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -133,19 +203,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/09/24/异步/" title="总算弄懂的关于异步的四个知识点">
-  <strong>上一篇：</strong><br/>
-  <span>
-  总算弄懂的关于异步的四个知识点</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/09/15/IFE笔记(二)/"  title="IFE任务练习笔记(二)">
+<a href="/2016/09/28/图解HTTP(一)/"  title="图解HTTP笔记(一)">
  <strong>下一篇：</strong><br/> 
- <span>IFE任务练习笔记(二)
+ <span>图解HTTP笔记(一)
 </span>
 </a>
 </div>
@@ -154,7 +216,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/09/20/sass/" data-title="好文章收集" data-url="http://yoursite.com/2016/09/20/sass/"></div>
+	<div class="ds-thread" data-thread-key="2016/09/30/IFE笔记(三)/" data-title="IFE任务练习笔记(三)" data-url="http://yoursite.com/2016/09/30/IFE笔记(三)/"></div>
 </section>
 
 
@@ -164,7 +226,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具类"><span class="toc-number">1.</span> <span class="toc-text">工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Js学习"><span class="toc-number">2.</span> <span class="toc-text">Js学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css学习"><span class="toc-number">3.</span> <span class="toc-text">css学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#心灵鸡汤"><span class="toc-number">4.</span> <span class="toc-text">心灵鸡汤</span></a></li></ol>
+ 
  
   </div>
 
@@ -194,7 +256,7 @@
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>3</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>4</sup></a></li>
 			
 		
 			
@@ -226,9 +288,11 @@
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/util/" title="util">util<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
