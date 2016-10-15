@@ -1,0 +1,624 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>表单基础知识 | Lx15</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;有时候真觉得欠缺的东西没有及时补充就会造成很大的麻烦而且之后还是要补上，其实也就是欠了的迟早要还啊。。。表单就是让我有深刻体验的一个。。。呜呜呜。。。。。。以前的时候我看表单的操作，总感觉有各种属性，总是记不住，也不明白为什么，甚至是常有的DOM操作也总感觉是莫名其妙，今天在喝水的时候突然豁然开朗。。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="表单基础知识">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/表单/index.html">
+<meta property="og:site_name" content="Lx15">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;有时候真觉得欠缺的东西没有及时补充就会造成很大的麻烦而且之后还是要补上，其实也就是欠了的迟早要还啊。。。表单就是让我有深刻体验的一个。。。呜呜呜。。。。。。以前的时候我看表单的操作，总感觉有各种属性，总是记不住，也不明白为什么，甚至是常有的DOM操作也总感觉是莫名其妙，今天在喝水的时候突然豁然开朗。。。">
+<meta property="og:updated_time" content="2016-10-15T02:04:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="表单基础知识">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;有时候真觉得欠缺的东西没有及时补充就会造成很大的麻烦而且之后还是要补上，其实也就是欠了的迟早要还啊。。。表单就是让我有深刻体验的一个。。。呜呜呜。。。。。。以前的时候我看表单的操作，总感觉有各种属性，总是记不住，也不明白为什么，甚至是常有的DOM操作也总感觉是莫名其妙，今天在喝水的时候突然豁然开朗。。。">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15" title="Lx15"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15">Lx15</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/10/09/表单/" title="表单基础知识" itemprop="url">表单基础知识</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2016-10-08T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-10-09</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#表单基础知识"><span class="toc-number">1.</span> <span class="toc-text">表单基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文本框脚本"><span class="toc-number">2.</span> <span class="toc-text">文本框脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择框脚本"><span class="toc-number">3.</span> <span class="toc-text">选择框脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#表单序列化"><span class="toc-number">4.</span> <span class="toc-text">表单序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#富文本编辑"><span class="toc-number">5.</span> <span class="toc-text">富文本编辑</span></a></li></ol>
+		
+		</div>
+		
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;有时候真觉得欠缺的东西没有及时补充就会造成很大的麻烦而且之后还是要补上，其实也就是欠了的迟早要还啊。。。表单就是让我有深刻体验的一个。。。呜呜呜。。。。。。<br>以前的时候我看表单的操作，总感觉有各种属性，总是记不住，也不明白为什么，甚至是常有的DOM操作也总感觉是莫名其妙，今天在喝水的时候突然豁然开朗。。。</p>
+<a id="more"></a>
+<p>以前我总是只看重DOM，没有真的理解DOM是个对象，对于表单也是这样，既然是这样那肯定是有属性的，也肯定是可以有方法的，所以可以像简单的对象一样去操作这些对象的属性，也就是这些对象比较大，有些自己内置的属性与方法。而且通过对这些对象的部分属性的赋值就可以产生自己想要的效果。总之就是要理解，DOM是个对象，form也是个对象。</p>
+<h2 id="表单基础知识"><a href="#表单基础知识" class="headerlink" title="表单基础知识"></a>表单基础知识</h2><ol>
+<li>form 是 HTMLFormElement类型，是继承HTMLElement的对象。所以除了正常HTML具有的属性之外，还有一些自己的属性。包括： action、elements、length、reset()、submit()、target等。<ul>
+<li>elements: 是表单中所有控件的集合。  </li>
+<li>length: 表单中控件的数量。</li>
+</ul>
+</li>
+<li><p>获取表单方法：  </p>
+<ul>
+<li>和其他节点一样的方法</li>
+<li> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> forms = <span class="built_in">document</span>.forms;<span class="comment">//获取所有表单</span></div><div class="line"><span class="keyword">var</span> form =  <span class="built_in">document</span>.forms[<span class="string">"name"</span>];<span class="comment">//获取页面中名称是name的表单</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>表单元素（表单字段）</code>,可以像访问页面中的其他元素一样，使用原生DOM方法去访问表单元素。每个表单都有elements属性，该属性是表单中所有表单字元素的集合，这个elements集合是一个有序列表，其中包含着表单中的所有元素，顺序与在标记中的顺序相同，</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> form= <span class="built_in">document</span>.getElementById(<span class="string">"form1"</span>);</div><div class="line"><span class="comment">//取得表单中的第一个元素</span></div><div class="line"><span class="keyword">var</span> field1 = form.elements[<span class="number">0</span>];</div><div class="line"><span class="comment">//取得name ="a"的字段</span></div><div class="line"><span class="keyword">var</span> a = form.elements[<span class="string">"a"</span>];</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>共有的表单元素的属性</code></p>
+<ul>
+<li>disabled:当前字段是否禁用</li>
+<li>form : 当前字段所属表单的指针，只读</li>
+<li>name</li>
+<li>tabIndex:当前字段的切换序号</li>
+<li>type: 类型</li>
+<li>value: 当前字段将被提交给服务器的值</li>
+</ul>
+</li>
+<li><p><code>共有的表单元素的方法</code>  </p>
+<ul>
+<li>focus() 用于将浏览器的焦点设置到表单字段，即激活表单元素，使其可以响应键盘事件。在HTML5中autofocus字段可以自动把焦点自动移动到相应字段。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//将焦点设置到当前字段</span></div><div class="line">a.focus();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>共有的表单元素事件</code></p>
+<ul>
+<li>blur: 当前字段失去焦点时触发</li>
+<li>change: input、textarea,在失去焦点并value值改变时触发，对于select，在其选项改变时触发。</li>
+<li>focus </li>
+</ul>
+</li>
+</ol>
+<h2 id="文本框脚本"><a href="#文本框脚本" class="headerlink" title="文本框脚本"></a>文本框脚本</h2><ol>
+<li>input 元素 size 属性可以指定文本框中能够显示的字符数，maxlength 能接收的最大字符数；另一个文本框脚本是textarea;</li>
+<li>选择文本<ul>
+<li>select() :用于选择文本框中所有文本。在调用select()方法时也会触发select事件。</li>
+<li>取得选择的文本 : selectionStart 、selectionEnd两个属性</li>
+<li>选择部分文本：setSelectionRange()方法</li>
+</ul>
+</li>
+<li><p>屏蔽字符</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">EventUtil.addHandler(textbox,<span class="string">'keypress'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</div><div class="line">  <span class="comment">// event = EventUtil.getEvent(event);</span></div><div class="line">  <span class="keyword">var</span> target = EventUtil.getTarget(event);</div><div class="line">  <span class="keyword">var</span> charCode = EventUtil.getCharCode(event);</div><div class="line">  <span class="comment">//在firefox中吗，所有由非字符键触发的keypress事件对应的字符编码为0,在Safari3之前的版本对应的字符编码全部为8</span></div><div class="line">  <span class="keyword">if</span>(!<span class="regexp">/\d/</span>.test(<span class="built_in">String</span>.fromCharCode(charCode))&amp;&amp;charCode &gt; <span class="number">9</span> &amp;&amp; !event.ctrlKey)&#123;</div><div class="line">    EventUtil.preventDefault(event);</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<ol>
+<li>操作剪贴板</li>
+<li>自动切换焦点：当用户填写完当前字段时，自动将焦点切换到下一个字段。由于keyup事件会在用户输入了新字符之后触发，所以此时是检测文本框中内容长度的最佳时机。</li>
+<li>HTML5约束验证</li>
+</ol>
+<ul>
+<li><p>required : 必填字段</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> isRequired = <span class="built_in">document</span>.forms[<span class="number">0</span>].elements[<span class="string">"username"</span>].required;</div><div class="line"><span class="comment">//用来判断是否支持required属性</span></div><div class="line"><span class="keyword">var</span> isRequiredSupported = <span class="string">'required'</span> <span class="keyword">in</span> <span class="built_in">document</span>.createElement(<span class="string">"input"</span>);</div></pre></td></tr></table></figure>
+</li>
+<li><p>其他输入类型 type=”email” type=”url”、 number、range、datetime、datetime-local、date、month、week、time.后面这几个支持并不怎么好。除此之外还有 min、max、step(刻度差值)。</p>
+</li>
+<li>输入模式 pattern=”\d+”,正则 ，不用写^与$.</li>
+<li>检测有效性 checkValidity()方法可以检测表单中的某个字段是否有效，所有表单都有这个方法。还有各种判断哪种属性是否有效的方法。</li>
+<li>禁用验证 novalidate</li>
+</ul>
+</li>
+</ol>
+<h2 id="选择框脚本"><a href="#选择框脚本" class="headerlink" title="选择框脚本"></a>选择框脚本</h2><ol>
+<li>选择框是通过select与option创建的，HTMLSelectElement还有下面的属性与方法。<ul>
+<li>add(newoption,reloption)</li>
+<li>multiple:是否允许多项选择</li>
+<li>options</li>
+<li>remove(index)</li>
+<li>selectedIndex: 索引号，多项时只保存第一项<br>HTMLOptionElement 对象的下列属性：</li>
+<li>index: 当前选项在options集合中的索引</li>
+<li>label</li>
+<li>selected:</li>
+<li>text</li>
+<li>value</li>
+</ul>
+</li>
+<li><p>选择选项</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//单选</span></div><div class="line"><span class="keyword">var</span> selectedOption = selectbox.options[selectbox.selectedIndex];</div><div class="line"><span class="comment">//多选时遍历</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>添加选项</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> newoption = <span class="keyword">new</span> Option(<span class="string">"Option text"</span>,<span class="string">"Option value"</span>);</div><div class="line">selectbox.add(newoption,index);<span class="comment">//index = undefined 时插在最后</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>移除选项 remove(index)</p>
+</li>
+<li>移动和重排选项:将第一个选择框中的选项直接移动到第二个选择框中<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> selectbox1 = <span class="built_in">document</span>.getElementById(<span class="string">"select1"</span>);</div><div class="line"><span class="keyword">var</span> selectbox2 = <span class="built_in">document</span>.getElementById(<span class="string">"select2"</span>);</div><div class="line">selectbox2.appendChild(selectbox1.options[<span class="number">0</span>]);</div><div class="line"><span class="comment">//还有insertBefore方法</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="表单序列化"><a href="#表单序列化" class="headerlink" title="表单序列化"></a>表单序列化</h2><ul>
+<li>对表单元素的名称和值进行URL编码，使用&amp;分离</li>
+<li>只发送勾选的复选框和单选按钮</li>
+<li>不发送type 为”reset”和”button”按钮</li>
+<li>禁用的不发</li>
+</ul>
+<h2 id="富文本编辑"><a href="#富文本编辑" class="headerlink" title="富文本编辑"></a>富文本编辑</h2><ol>
+<li>富文本编辑：所见即所得</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/Tags/js/">js</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/10/09/表单/" data-title="表单基础知识 | Lx15" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/10/12/ES6(1)/" title="ES6学习笔记(一)">
+  <strong>上一篇：</strong><br/>
+  <span>
+  ES6学习笔记(一)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/10/05/css3基本属性/"  title="CSS3基本属性">
+ <strong>下一篇：</strong><br/> 
+ <span>CSS3基本属性
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/10/09/表单/" data-title="表单基础知识" data-url="http://yoursite.com/2016/10/09/表单/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#表单基础知识"><span class="toc-number">1.</span> <span class="toc-text">表单基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文本框脚本"><span class="toc-number">2.</span> <span class="toc-text">文本框脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择框脚本"><span class="toc-number">3.</span> <span class="toc-text">选择框脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#表单序列化"><span class="toc-number">4.</span> <span class="toc-text">表单序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#富文本编辑"><span class="toc-number">5.</span> <span class="toc-text">富文本编辑</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="Lx15.github.io" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/util/" title="util">util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="undefined" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=undefined&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/Lx15.github.io" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

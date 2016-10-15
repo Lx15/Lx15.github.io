@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/09/06/event/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。我主要使用的DOM2级方法，并且为了浏览器的兼容性基本上都设置在冒泡阶段捕获。这里主要是原生事件的基本知识，具体属性问题在实际使用时一查就知道了，所以也不全哈~~~">
-<meta property="og:updated_time" content="2016-09-28T08:19:15.000Z">
+<meta property="og:updated_time" content="2016-10-15T01:51:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS中的事件（一）">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。我主要使用的DOM2级方法，并且为了浏览器的兼容性基本上都设置在冒泡阶段捕获。这里主要是原生事件的基本知识，具体属性问题在实际使用时一查就知道了，所以也不全哈~~~">
@@ -102,7 +102,7 @@
 <a id="more"></a>
 <h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><p>事件流是页面中接收事件的顺序：冒泡（IE）与捕捉（网景）。 现在高版本的浏览器这两种都会支持，在”DOM2级事件”中将事件流包括三个阶段：事件捕获阶段、处于目标阶段和事件冒泡阶段。</p>
 <h2 id="事件处理程序"><a href="#事件处理程序" class="headerlink" title="事件处理程序"></a>事件处理程序</h2><ol>
-<li><strong>DOM0 级事件处理程序</strong>每个元素都有自己的事件处理程序属性（onclick等属性），这些属性通常小写，将这种属性值设置成一个函数，就可以指定事件处理程序。这时候的事件处理程序是在元素的作用域中运行， 即程序中的this 指向当前元素。(onclick)(这是肯定的啊，这个事件处理程序是这个元素对象的一个属性方法，this自然指向自己~~~~)，注意：这种方法添加的事件处理程序会在事件流的冒泡阶段被处理。<br>删除事件处理程序： btn.onclick = null;</li>
+<li><strong>DOM0 级事件处理程序</strong>每个元素都有自己的事件处理程序属性（onclick等属性），这些属性通常小写，将这种属性值设置成一个函数，就可以指定事件处理程序。这时候的事件处理程序是在元素的作用域中运行， 即程序中的this 指向当前元素。(onclick)(这是肯定的啊，这个事件处理程序是这个元素对象的一个属性方法，this自然指向自己…)，注意：这种方法添加的事件处理程序会在事件流的冒泡阶段被处理。<br>删除事件处理程序： btn.onclick = null;</li>
 </ol>
 <ol>
 <li><strong>DOM2 级事件处理程序</strong>DOM2级事件定义了两个方法，用于指定和删除事件处理程序的操作，addEventListener()和removeEventListener()。所有DOM节点都包含着两个方法，并且有3个参数：要处理的事件名、作为事件处理程序的函数和一个布尔值。true:表示在捕获阶段调用事件处理程序。false:在冒泡阶段调用事件处理程序（建议用false）.</li>
@@ -124,9 +124,10 @@
 <li><p><strong>IE中的事件对象</strong>IE中的事件对象根据方法不同而不同。若采用的是DOM0级方法添加事件处理程序时，event对象作为window对象的一个属性存在。若是用attachEvent()添加的，则event会作为参数传入事件处理程序函数。event对象也会因为事件类型的不同而不同。 returnValue属性相当于prevaentDefault(),cancelBubble属性相当于stopPropagation().</p>
 </li>
 <li><p><strong>跨浏览器的事件对象</strong></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我还不知道在重用的库中事件的实现机制是什么，，，还有在AngularJS 中的实现机制是什么，等—-JS中的事件(二) 吧…..<br>你以为总结会是什么？哈哈哈…..</p>
 </li>
 </ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//事件处理程序</span></div><div class="line"><span class="keyword">var</span> EventUtil = &#123;</div><div class="line">        addHandler: <span class="function"><span class="keyword">function</span>(<span class="params">element, type, handler</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (element.addEventListener) &#123;</div><div class="line">                element.addEventListener(type, handler, <span class="literal">false</span>);</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (element.attachEvent) &#123;</div><div class="line">                element.attachEvent(<span class="string">"on"</span> + type, handler);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                elemenr[<span class="string">"on"</span> + type] = handler;</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        <span class="comment">//跨浏览器的事件对象</span></div><div class="line">        getEvent: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> event ? event : <span class="built_in">window</span>.event;</div><div class="line">        &#125;,</div><div class="line">        getTarget: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> event.target || event.srcElement;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>其实说了那么多，不过是在解释这几行代码，用时直接粘贴啊。。。这就是城市人的套路啊……<br>我还不知道在重用的库中事件的实现机制是什么，，，还有在AngularJS 中的实现机制是什么，等—-JS中的事件(二) 吧…..</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -214,11 +215,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>12</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>4</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
 			
 		
 			
@@ -226,7 +227,7 @@
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
 			
 		
 			
@@ -247,6 +248,10 @@
 		
 			
 				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
 			
 		
 			

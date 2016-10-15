@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>C语言中变量的存储类别 | Lx15</title>
+    <title>CSS3基本属性 | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;新学期跟着导师去学以前没修的linux 课程，发现以前学过的C语言中有些并不清楚，所以借此机会回顾一下。">
+    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;关于CSS3常用的基本属性。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C语言中变量的存储类别">
-<meta property="og:url" content="http://yoursite.com/2016/09/13/C_变量/index.html">
+<meta property="og:title" content="CSS3基本属性">
+<meta property="og:url" content="http://yoursite.com/2016/10/05/css3基本属性/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;新学期跟着导师去学以前没修的linux 课程，发现以前学过的C语言中有些并不清楚，所以借此机会回顾一下。">
-<meta property="og:updated_time" content="2016-09-16T13:19:00.000Z">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;关于CSS3常用的基本属性。">
+<meta property="og:updated_time" content="2016-10-15T02:50:17.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C语言中变量的存储类别">
-<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;新学期跟着导师去学以前没修的linux 课程，发现以前学过的C语言中有些并不清楚，所以借此机会回顾一下。">
+<meta name="twitter:title" content="CSS3基本属性">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;关于CSS3常用的基本属性。">
 
     
     
@@ -78,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/09/13/C_变量/" title="C语言中变量的存储类别" itemprop="url">C语言中变量的存储类别</a>
+      <a href="/2016/10/05/css3基本属性/" title="CSS3基本属性" itemprop="url">CSS3基本属性</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-09-12T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-13</time>
+    <time datetime="2016-10-04T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-10-05</time>
     
   </p>
 </header>
@@ -94,58 +94,37 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#静态存储方式"><span class="toc-number">1.</span> <span class="toc-text">静态存储方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态存储方式"><span class="toc-number">2.</span> <span class="toc-text">动态存储方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#自动变量auto"><span class="toc-number">2.1.</span> <span class="toc-text">自动变量auto</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#static-声明局部变量"><span class="toc-number">2.2.</span> <span class="toc-text">static 声明局部变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#用extern-声明外部变量"><span class="toc-number">2.3.</span> <span class="toc-text">用extern 声明外部变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#用static-声明外部变量"><span class="toc-number">2.4.</span> <span class="toc-text">用static 声明外部变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#声明与是定义"><span class="toc-number">2.5.</span> <span class="toc-text">声明与是定义</span></a></li></ol></li></ol>
+			
 		
 		</div>
 		
-		<p>&nbsp;&nbsp;&nbsp;&nbsp;新学期跟着导师去学以前没修的linux 课程，发现以前学过的C语言中有些并不清楚，所以借此机会回顾一下。</p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;关于CSS3常用的基本属性。</p>
 <a id="more"></a>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;C语言中每一个变量和属性有两个属性：数据类型与数据的存储类别。存储类别是指数据在内存中的存储的方式。即静态存储方式与动态存储方式。具体又包括：auto（自动的）、静态的（static）、寄存器的（register）。外部的（extern）。<br>&nbsp;&nbsp;&nbsp;&nbsp;按照变量值存在的时间可以分成 静态存储方式和动态存储方式。<br>&nbsp;&nbsp;&nbsp;&nbsp;静态存储方式是在程序运行期间分配固定的存储空间的方式，而动态存储刚好是是在程序运行期间根据需要进行动态的分配存储空间的方式。<br>&nbsp;&nbsp;&nbsp;&nbsp;内存中供用户使用的存储空间可以分成三部分：程序区、静态存储区、动态存储区。数据分别放在静态存储区与动态存储区。        </p>
-<h4 id="静态存储方式"><a href="#静态存储方式" class="headerlink" title="静态存储方式"></a>静态存储方式</h4><ul>
-<li>全局变量全部存放在静态存储区中，在程序开始执行时给全局变量分配存储区，程序执行完毕就释放。在程序执行过程中它们占据固定的存储单元，而不是动态的进行分配和释放。     </li>
-</ul>
-<h4 id="动态存储方式"><a href="#动态存储方式" class="headerlink" title="动态存储方式"></a>动态存储方式</h4><ul>
-<li>在动态存储区中存放：1. 函数形参 2 自动变量（未加static声明的局部变量）3.函数调用时的现成保护和返回地址。对于这些数据，函数调用开始时分配动态存储空间，函数结束时释放这些空间。     </li>
-</ul>
-<h5 id="自动变量auto"><a href="#自动变量auto" class="headerlink" title="自动变量auto"></a>自动变量auto</h5><ul>
-<li>不加static声明的函数中的局部变量。 auto int a= 3;     </li>
-</ul>
-<h5 id="static-声明局部变量"><a href="#static-声明局部变量" class="headerlink" title="static 声明局部变量"></a>static 声明局部变量</h5><ul>
-<li>静态局部变量： 函数中的局部变量在函数调用结束后不消失而保留原值，即其占用的存储单元不释放，在下一次该函数调用时，该变量已经有值，就是上一次函数调用结束时的值。</li>
-<li>静态局部变量属于静态存储类别，在静态存储区内分配存储单元。在程序的整个运行期间都不释放。自动变量属于动态存储类别，占动态存储空间，函数调用结束后释放。</li>
-<li>对静态局部变量是在编译时赋初始值的，即只赋初始值一次，在程序执行时它已经有初值。 </li>
-<li><p>如在定义局部变量时不赋初值的话，对于静态局部变量来说，编译时自动赋初始值为0 或者空字符（对于字符变量），而对于自动变量，若是不赋初始值则它的值是个不确定的值。</p>
-<pre><code>int fac(int n){
-    static int f=1;
-     f = f*n;
-     return f;
-}
-main(){
-  int i;
-  for(i=1;i&lt;=5;i++){
-      printf(&quot;%d！ = %d\n&quot;,i,fac(i))
-  }
-}
+<ol>
+<li><code>边框</code>：<br>输入框 实现圆角框<br>border-radius:xpx;<br>矩形框 实现边框阴影<br>border-shadow:<br>用图片做背景<br>border-image</li>
+<li><p><code>背景</code>：<br>背景图片的尺寸，拉伸 background-size<br>背景图片相对于盒子的位置 background-origin</p>
+</li>
+<li><p><code>文本</code>：<br>文本阴影<br>text-shadow:水平阴影、垂直阴影、模糊距离，以及阴影的颜色;<br>长单词拆分换行：<br>word-wrap:break-word;</p>
+</li>
+<li><p><code>字体</code>：<br>字体: Firefox、Chrome、Safari 以及 Opera 支持 .ttf (True Type Fonts) 和 .otf (OpenType Fonts) 类型的字体。<br>Internet Explorer 9+ 支持新的 @font-face 规则，但是仅支持 .eot 类型的字体 (Embedded OpenType)。<br>在新的 @font-face 规则中，必须首先定义字体的名称（比如 myFirstFont），然后指向该字体文件。<br>如需为 HTML 元素使用字体，请通过 font-family 属性来引用字体的名称 (myFirstFont)：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@font-face</div><div class="line">&#123;</div><div class="line">font-family: myFirstFont;</div><div class="line">src: url('Sansation_Light.ttf'),</div><div class="line">     url('Sansation_Light.eot'); //IE9+</div><div class="line">&#125;</div><div class="line"></div><div class="line">div</div><div class="line">&#123;</div><div class="line">font-family:myFirstFont;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>2D 转换</code><br> translate()<br> rotate()<br> scale()<br> skew()<br> matrix()</p>
+</li>
+<li><p><code>3D转换</code><br>rotateX<br>rotateY</p>
+</li>
+<li><p><code>过渡</code>： 从一种样式到另一种样式中间的效果<br>transition: width 2s;<br>要实现这一点，必须规定两项内容：</p>
+<pre><code>规定您希望把效果添加到哪个 CSS 属性上
+规定效果的时长
 </code></pre></li>
-</ul>
-<h5 id="用extern-声明外部变量"><a href="#用extern-声明外部变量" class="headerlink" title="用extern 声明外部变量"></a>用extern 声明外部变量</h5><ul>
-<li>外部变量（即全局变量）是在函数的外部定义的，它的作用域为从变量定义处开始，到本程序文件的末尾。</li>
-<li>在一个文件中声明外部变量：<ul>
-<li>如果某个函数想在变量定义之前使用该外部变量，应该先使用关键字extern对该变量进行声明 ：extern A;</li>
-</ul>
+<li><p><code>动画</code><br> 在 @keyframes 中创建动画时，请把它捆绑到某个选择器，否则不会产生动画效果。<br> 通过规定至少以下两项 CSS3 动画属性，即可将动画绑定到选择器：</p>
+<p>   -规定动画的名称<br>   -规定动画的时长      </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"> @keyframes myfirst</div><div class="line">   &#123;</div><div class="line">   from &#123;background: red;&#125;</div><div class="line">   to &#123;background: yellow;&#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   @-moz-keyframes myfirst</div><div class="line">   &#123;</div><div class="line">   from &#123;background: red;&#125;</div><div class="line">   to &#123;background: yellow;&#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   @-webkit-keyframes myfirst</div><div class="line">   &#123;</div><div class="line">   from &#123;background: red;&#125;</div><div class="line">   to &#123;background: yellow;&#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   @-o-keyframes myfirst</div><div class="line">   &#123;</div><div class="line">   from &#123;background: red;&#125;</div><div class="line">   to &#123;background: yellow;&#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">div&#123;</div><div class="line"> animation: myfirst 5s;</div><div class="line"> -moz-animation: myfirst 5s;	// Firefox</div><div class="line"> -webkit-animation: myfirst 5s;	// Safari 和 Chrome</div><div class="line"> -o-animation: myfirst 5s;	// Opera</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
 </li>
-<li>在多个文件的程序中声明外部变量：<ul>
-<li>如果一个程序包含两个文件，在两个文件中都要用到同一个外部变量Num，不能分别在两个文件中各自定义一个外部变量 Num，否则会在程序进行连接时出现“重复定义”的错误。 </li>
-<li>出现上面的情况，应该在其中一个文件进行定义，在另一个文件中使用extern对Num进行 外部变量声明。      </li>
-</ul>
+<li><p><code>多列</code><br> Firefox 需要前缀 -moz-。<br> Chrome 和 Safari 需要前缀 -webkit-。<br> column-count<br> column-gap<br> column-rule</p>
 </li>
-</ul>
-<h5 id="用static-声明外部变量"><a href="#用static-声明外部变量" class="headerlink" title="用static 声明外部变量"></a>用static 声明外部变量</h5><ul>
-<li>某些外部变量只限于在本文件中使用，而不能被其他文件使用，这时可以在定义外部变量时加一个 static声明。      </li>
-</ul>
-<h5 id="声明与是定义"><a href="#声明与是定义" class="headerlink" title="声明与是定义"></a>声明与是定义</h5><ul>
-<li>进行空间分配的声明是定义，而不需要进行空间分配的声明是声明。       </li>
-</ul>
+<li><code>其他</code><br>resize：允许用户自动调整元素尺寸<br>box-sizing<br>outline-offset</li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -154,7 +133,7 @@ main(){
 
   <div class="article-tags">
   
-  <span></span> <a href="/Tags/C/">C</a>
+  <span></span> <a href="/Tags/css/">css</a>
   </div>
 
 </div>
@@ -163,7 +142,7 @@ main(){
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/09/13/C_变量/" data-title="C语言中变量的存储类别 | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/10/05/css3基本属性/" data-title="CSS3基本属性 | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -177,18 +156,18 @@ main(){
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/09/15/IFE笔记(二)/" title="IFE任务练习笔记(二)">
+ <a href="/2016/10/09/表单/" title="表单基础知识">
   <strong>上一篇：</strong><br/>
   <span>
-  IFE任务练习笔记(二)</span>
+  表单基础知识</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/09/11/IFE笔记(一)/"  title="IFE任务练习笔记(一)">
+<a href="/2016/09/30/IFE笔记(三)/"  title="IFE任务练习笔记(三)">
  <strong>下一篇：</strong><br/> 
- <span>IFE任务练习笔记(一)
+ <span>IFE任务练习笔记(三)
 </span>
 </a>
 </div>
@@ -197,7 +176,7 @@ main(){
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/09/13/C_变量/" data-title="C语言中变量的存储类别" data-url="http://yoursite.com/2016/09/13/C_变量/"></div>
+	<div class="ds-thread" data-thread-key="2016/10/05/css3基本属性/" data-title="CSS3基本属性" data-url="http://yoursite.com/2016/10/05/css3基本属性/"></div>
 </section>
 
 
@@ -207,7 +186,7 @@ main(){
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#静态存储方式"><span class="toc-number">1.</span> <span class="toc-text">静态存储方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态存储方式"><span class="toc-number">2.</span> <span class="toc-text">动态存储方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#自动变量auto"><span class="toc-number">2.1.</span> <span class="toc-text">自动变量auto</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#static-声明局部变量"><span class="toc-number">2.2.</span> <span class="toc-text">static 声明局部变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#用extern-声明外部变量"><span class="toc-number">2.3.</span> <span class="toc-text">用extern 声明外部变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#用static-声明外部变量"><span class="toc-number">2.4.</span> <span class="toc-text">用static 声明外部变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#声明与是定义"><span class="toc-number">2.5.</span> <span class="toc-text">声明与是定义</span></a></li></ol></li></ol>
+ 
  
   </div>
 
