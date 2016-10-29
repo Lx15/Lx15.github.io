@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/10/09/表单/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;有时候真觉得欠缺的东西没有及时补充就会造成很大的麻烦而且之后还是要补上，其实也就是欠了的迟早要还啊。。。表单就是让我有深刻体验的一个。。。呜呜呜。。。。。。以前的时候我看表单的操作，总感觉有各种属性，总是记不住，也不明白为什么，甚至是常有的DOM操作也总感觉是莫名其妙，今天在喝水的时候突然豁然开朗。。。">
-<meta property="og:updated_time" content="2016-10-15T02:04:25.000Z">
+<meta property="og:updated_time" content="2016-10-29T01:59:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="表单基础知识">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;有时候真觉得欠缺的东西没有及时补充就会造成很大的麻烦而且之后还是要补上，其实也就是欠了的迟早要还啊。。。表单就是让我有深刻体验的一个。。。呜呜呜。。。。。。以前的时候我看表单的操作，总感觉有各种属性，总是记不住，也不明白为什么，甚至是常有的DOM操作也总感觉是莫名其妙，今天在喝水的时候突然豁然开朗。。。">
@@ -102,85 +102,64 @@
 <a id="more"></a>
 <p>以前我总是只看重DOM，没有真的理解DOM是个对象，对于表单也是这样，既然是这样那肯定是有属性的，也肯定是可以有方法的，所以可以像简单的对象一样去操作这些对象的属性，也就是这些对象比较大，有些自己内置的属性与方法。而且通过对这些对象的部分属性的赋值就可以产生自己想要的效果。总之就是要理解，DOM是个对象，form也是个对象。</p>
 <h2 id="表单基础知识"><a href="#表单基础知识" class="headerlink" title="表单基础知识"></a>表单基础知识</h2><ol>
-<li>form 是 HTMLFormElement类型，是继承HTMLElement的对象。所以除了正常HTML具有的属性之外，还有一些自己的属性。包括： action、elements、length、reset()、submit()、target等。<ul>
-<li>elements: 是表单中所有控件的集合。  </li>
-<li>length: 表单中控件的数量。</li>
-</ul>
+<li><p>form 是 HTMLFormElement类型，是继承HTMLElement的对象。所以除了正常HTML具有的属性之外，还有一些自己的属性。包括： action、elements、length、reset()、submit()、target等。</p>
+<blockquote>
+<p>elements: 是表单中所有控件的集合。<br>length: 表单中控件的数量。</p>
+</blockquote>
 </li>
 <li><p>获取表单方法：  </p>
-<ul>
-<li>和其他节点一样的方法</li>
-<li> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> forms = <span class="built_in">document</span>.forms;<span class="comment">//获取所有表单</span></div><div class="line"><span class="keyword">var</span> form =  <span class="built_in">document</span>.forms[<span class="string">"name"</span>];<span class="comment">//获取页面中名称是name的表单</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>和其他节点一样的方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> forms = <span class="built_in">document</span>.forms;<span class="comment">//获取所有表单</span></div><div class="line"><span class="keyword">var</span> form =  <span class="built_in">document</span>.forms[<span class="string">"name"</span>];<span class="comment">//获取页面中名称是name的表单</span></div></pre></td></tr></table></figure>
+</blockquote>
 </li>
-</ul>
-</li>
-<li><p><code>表单元素（表单字段）</code>,可以像访问页面中的其他元素一样，使用原生DOM方法去访问表单元素。每个表单都有elements属性，该属性是表单中所有表单字元素的集合，这个elements集合是一个有序列表，其中包含着表单中的所有元素，顺序与在标记中的顺序相同，</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> form= <span class="built_in">document</span>.getElementById(<span class="string">"form1"</span>);</div><div class="line"><span class="comment">//取得表单中的第一个元素</span></div><div class="line"><span class="keyword">var</span> field1 = form.elements[<span class="number">0</span>];</div><div class="line"><span class="comment">//取得name ="a"的字段</span></div><div class="line"><span class="keyword">var</span> a = form.elements[<span class="string">"a"</span>];</div></pre></td></tr></table></figure>
+<li><p><code>表单元素（表单字段）</code>,可以像访问页面中的其他元素一样，使用原生DOM方法去访问表单元素。每个表单都有elements属性，该属 性是表单中所有表单字元素的集合，这个elements集合是一个有序列表，其中包含着表单中的所有元素，顺序与在标记中的顺序相同，</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> form= <span class="built_in">document</span>.getElementById(<span class="string">"form1"</span>);</div><div class="line"><span class="comment">//取得表单中的第一个元素</span></div><div class="line"><span class="keyword">var</span> field1 = form.elements[<span class="number">0</span>];</div><div class="line"><span class="comment">//取得name ="a"的字段</span></div><div class="line"><span class="keyword">var</span> a = form.elements[<span class="string">"a"</span>];</div></pre></td></tr></table></figure>
 </li>
 <li><p><code>共有的表单元素的属性</code></p>
-<ul>
-<li>disabled:当前字段是否禁用</li>
-<li>form : 当前字段所属表单的指针，只读</li>
-<li>name</li>
-<li>tabIndex:当前字段的切换序号</li>
-<li>type: 类型</li>
-<li>value: 当前字段将被提交给服务器的值</li>
-</ul>
+<blockquote>
+<p>disabled:当前字段是否禁用<br>form : 当前字段所属表单的指针，只读<br>name<br>tabIndex:当前字段的切换序号<br>type: 类型<br>value: 当前字段将被提交给服务器的值</p>
+</blockquote>
 </li>
-<li><p><code>共有的表单元素的方法</code>  </p>
-<ul>
-<li>focus() 用于将浏览器的焦点设置到表单字段，即激活表单元素，使其可以响应键盘事件。在HTML5中autofocus字段可以自动把焦点自动移动到相应字段。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//将焦点设置到当前字段</span></div><div class="line">a.focus();</div></pre></td></tr></table></figure>
-</li>
-</ul>
+<li><p><code>共有的表单元素的方法</code><br>focus() 用于将浏览器的焦点设置到表单字段，即激活表单元素，使其可以响应键盘事件。在HTML5中autofocus字段可以自动把焦点 自动移动到相应字段。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//将焦点设置到当前字段</span></div><div class="line">a.focus();</div></pre></td></tr></table></figure>
 </li>
 <li><p><code>共有的表单元素事件</code></p>
-<ul>
-<li>blur: 当前字段失去焦点时触发</li>
-<li>change: input、textarea,在失去焦点并value值改变时触发，对于select，在其选项改变时触发。</li>
-<li>focus </li>
-</ul>
+<blockquote>
+<p>blur: 当前字段失去焦点时触发<br>change: input、textarea,在失去焦点并value值改变时触发，对于select，在其选项改变时触发。<br>focus</p>
+</blockquote>
 </li>
 </ol>
 <h2 id="文本框脚本"><a href="#文本框脚本" class="headerlink" title="文本框脚本"></a>文本框脚本</h2><ol>
 <li>input 元素 size 属性可以指定文本框中能够显示的字符数，maxlength 能接收的最大字符数；另一个文本框脚本是textarea;</li>
-<li>选择文本<ul>
-<li>select() :用于选择文本框中所有文本。在调用select()方法时也会触发select事件。</li>
-<li>取得选择的文本 : selectionStart 、selectionEnd两个属性</li>
-<li>选择部分文本：setSelectionRange()方法</li>
-</ul>
+<li><p>选择文本</p>
+<blockquote>
+<p>select() :用于选择文本框中所有文本。在调用select()方法时也会触发select事件。<br>取得选择的文本 : selectionStart 、selectionEnd两个属性<br>选择部分文本：setSelectionRange()方法</p>
+</blockquote>
 </li>
 <li><p>屏蔽字符</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">EventUtil.addHandler(textbox,<span class="string">'keypress'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</div><div class="line">  <span class="comment">// event = EventUtil.getEvent(event);</span></div><div class="line">  <span class="keyword">var</span> target = EventUtil.getTarget(event);</div><div class="line">  <span class="keyword">var</span> charCode = EventUtil.getCharCode(event);</div><div class="line">  <span class="comment">//在firefox中吗，所有由非字符键触发的keypress事件对应的字符编码为0,在Safari3之前的版本对应的字符编码全部为8</span></div><div class="line">  <span class="keyword">if</span>(!<span class="regexp">/\d/</span>.test(<span class="built_in">String</span>.fromCharCode(charCode))&amp;&amp;charCode &gt; <span class="number">9</span> &amp;&amp; !event.ctrlKey)&#123;</div><div class="line">    EventUtil.preventDefault(event);</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<ol>
-<li>操作剪贴板</li>
+</li>
+<li><p>操作剪贴板</p>
+</li>
 <li>自动切换焦点：当用户填写完当前字段时，自动将焦点切换到下一个字段。由于keyup事件会在用户输入了新字符之后触发，所以此时是检测文本框中内容长度的最佳时机。</li>
-<li>HTML5约束验证</li>
-</ol>
-<ul>
-<li><p>required : 必填字段</p>
+<li><p>HTML5约束验证</p>
+<blockquote>
+<p>required : 必填字段</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> isRequired = <span class="built_in">document</span>.forms[<span class="number">0</span>].elements[<span class="string">"username"</span>].required;</div><div class="line"><span class="comment">//用来判断是否支持required属性</span></div><div class="line"><span class="keyword">var</span> isRequiredSupported = <span class="string">'required'</span> <span class="keyword">in</span> <span class="built_in">document</span>.createElement(<span class="string">"input"</span>);</div></pre></td></tr></table></figure>
-</li>
-<li><p>其他输入类型 type=”email” type=”url”、 number、range、datetime、datetime-local、date、month、week、time.后面这几个支持并不怎么好。除此之外还有 min、max、step(刻度差值)。</p>
-</li>
-<li>输入模式 pattern=”\d+”,正则 ，不用写^与$.</li>
-<li>检测有效性 checkValidity()方法可以检测表单中的某个字段是否有效，所有表单都有这个方法。还有各种判断哪种属性是否有效的方法。</li>
-<li>禁用验证 novalidate</li>
-</ul>
+</blockquote>
+<p>(1) 其他输入类型 type=”email” type=”url”、 number、range、datetime、datetime local、date、month、week、time.后面这几个支持并不怎么好。除此之外还有 min、max、step(刻度差值)。<br>(2) 输入模式 pattern=”\d+”,正则 ，不用写^与$.<br>(3) 检测有效性 checkValidity()方法可以检测表单中的某个字段是否有效，所有表单都有这个方法。还有各种判断哪种属性是否有效的方法。<br>(4) 禁用验证 novalidate</p>
 </li>
 </ol>
 <h2 id="选择框脚本"><a href="#选择框脚本" class="headerlink" title="选择框脚本"></a>选择框脚本</h2><ol>
-<li>选择框是通过select与option创建的，HTMLSelectElement还有下面的属性与方法。<ul>
-<li>add(newoption,reloption)</li>
-<li>multiple:是否允许多项选择</li>
-<li>options</li>
-<li>remove(index)</li>
-<li>selectedIndex: 索引号，多项时只保存第一项<br>HTMLOptionElement 对象的下列属性：</li>
-<li>index: 当前选项在options集合中的索引</li>
-<li>label</li>
-<li>selected:</li>
-<li>text</li>
-<li>value</li>
-</ul>
+<li><p>选择框是通过select与option创建的，HTMLSelectElement还有下面的属性与方法。</p>
+<blockquote>
+<p>add(newoption,reloption)<br>multiple:是否允许多项选择<br>options<br>remove(index)<br>selectedIndex: 索引号，多项时只保存第一项</p>
+</blockquote>
+<p>HTMLOptionElement 对象的下列属性：</p>
+<blockquote>
+<p>index: 当前选项在options集合中的索引<br>label<br>selected:<br>text<br>value      </p>
+</blockquote>
 </li>
 <li><p>选择选项</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//单选</span></div><div class="line"><span class="keyword">var</span> selectedOption = selectbox.options[selectbox.selectedIndex];</div><div class="line"><span class="comment">//多选时遍历</span></div></pre></td></tr></table></figure>
@@ -190,16 +169,15 @@
 </li>
 <li><p>移除选项 remove(index)</p>
 </li>
-<li>移动和重排选项:将第一个选择框中的选项直接移动到第二个选择框中<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> selectbox1 = <span class="built_in">document</span>.getElementById(<span class="string">"select1"</span>);</div><div class="line"><span class="keyword">var</span> selectbox2 = <span class="built_in">document</span>.getElementById(<span class="string">"select2"</span>);</div><div class="line">selectbox2.appendChild(selectbox1.options[<span class="number">0</span>]);</div><div class="line"><span class="comment">//还有insertBefore方法</span></div></pre></td></tr></table></figure>
+<li><p>移动和重排选项:将第一个选择框中的选项直接移动到第二个选择框中</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> selectbox1 = <span class="built_in">document</span>.getElementById(<span class="string">"select1"</span>);</div><div class="line"><span class="keyword">var</span> selectbox2 = <span class="built_in">document</span>.getElementById(<span class="string">"select2"</span>);</div><div class="line">selectbox2.appendChild(selectbox1.options[<span class="number">0</span>]);</div><div class="line"><span class="comment">//还有insertBefore方法</span></div></pre></td></tr></table></figure>
 </li>
 </ol>
-<h2 id="表单序列化"><a href="#表单序列化" class="headerlink" title="表单序列化"></a>表单序列化</h2><ul>
-<li>对表单元素的名称和值进行URL编码，使用&amp;分离</li>
-<li>只发送勾选的复选框和单选按钮</li>
-<li>不发送type 为”reset”和”button”按钮</li>
-<li>禁用的不发</li>
-</ul>
-<h2 id="富文本编辑"><a href="#富文本编辑" class="headerlink" title="富文本编辑"></a>富文本编辑</h2><ol>
+<h2 id="表单序列化"><a href="#表单序列化" class="headerlink" title="表单序列化"></a>表单序列化</h2><pre><code>&gt; 对表单元素的名称和值进行URL编码，使用&amp;分离
+&gt; 只发送勾选的复选框和单选按钮
+&gt; 不发送type 为&quot;reset&quot;和&quot;button&quot;按钮
+&gt; 禁用的不发
+</code></pre><h2 id="富文本编辑"><a href="#富文本编辑" class="headerlink" title="富文本编辑"></a>富文本编辑</h2><ol>
 <li>富文本编辑：所见即所得</li>
 </ol>
   
@@ -289,11 +267,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
 			
 		
 			
@@ -301,7 +279,7 @@
 			
 		
 			
-				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
 			
 		
 			
@@ -313,11 +291,11 @@
 			
 		
 			
-				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
@@ -325,7 +303,7 @@
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 			
@@ -333,7 +311,11 @@
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			

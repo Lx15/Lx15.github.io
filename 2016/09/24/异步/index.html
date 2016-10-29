@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="之前一直搞不懂异步、Promise之类的是怎么回事，今天认真看了一下，总算把自己以前迷糊的点弄清楚了。下面是这篇文章主要讲的四个问题，若是你看到这里，可以看一下下面几个问题是否你也同样存在，如果存在，那这篇文章应该也适合你….那就拿走不谢啦…">
 <meta property="og:image" content="http://yoursite.com/异步过程图">
-<meta property="og:updated_time" content="2016-09-25T08:06:12.000Z">
+<meta property="og:updated_time" content="2016-10-28T09:19:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="总算弄懂的关于异步的四个知识点">
 <meta name="twitter:description" content="之前一直搞不懂异步、Promise之类的是怎么回事，今天认真看了一下，总算把自己以前迷糊的点弄清楚了。下面是这篇文章主要讲的四个问题，若是你看到这里，可以看一下下面几个问题是否你也同样存在，如果存在，那这篇文章应该也适合你….那就拿走不谢啦…">
@@ -154,15 +154,16 @@
 <p>好了~~第二个问题也解决了….撒花….普天同庆….</p>
 <h3 id="那就第三个问题啦"><a href="#那就第三个问题啦" class="headerlink" title="那就第三个问题啦"></a>那就第三个问题啦</h3><p>首先来说这个CommomJs，CommonJS 是以在浏览器环境之外构建 JavaScript 生态系统为目标而产生的项目，比如在服务器和桌面环境中。这个CommonJS规范中有个Promise/A规范，注意啊这只是规范。何为规范就是一种约定俗成的模式，大家都遵守，这并没有具体的实现。所以才会有了各种库对于Promise/A的实现，如Jquery。</p>
 <p>各个语言平台都有相应的 Promise 实现</p>
-<pre><code>* Java&apos;s java.util.concurrent.Future
-* Python&apos;s Twisted deferreds and PEP-3148 futures
-* F#&apos;s Async
-* .Net&apos;s Task
-* C++ 11&apos;s std::future
-* Dart&apos;s Future
-* Javascript&apos;s Promises/A/B/D/A+
-* 
-</code></pre><p>这个CommonJS的Promise/A规范是用来解决回调金字塔的问题。异步的实现主要有四种方式，一种是回调的方式，回调层层嵌套时会产生回调金字塔的问题，Promise机制呢是为了解决这个问题的另一种异步方式。</p>
+<ul>
+<li>Java’s java.util.concurrent.Future</li>
+<li>Python’s Twisted deferreds and PEP-3148 futures</li>
+<li>F#’s Async</li>
+<li>.Net’s Task</li>
+<li>C++ 11’s std::future</li>
+<li>Dart’s Future</li>
+<li>Javascript’s Promises/A/B/D/A+<br>*</li>
+</ul>
+<p>这个CommonJS的Promise/A规范是用来解决回调金字塔的问题。异步的实现主要有四种方式，一种是回调的方式，回调层层嵌套时会产生回调金字塔的问题，Promise机制呢是为了解决这个问题的另一种异步方式。</p>
 <p>那Promise是什么呢？一个Promise是一个对象(注意是对象，以前我总是走眼不走心。。呜呜。。。是对象所以才有属性和方法啊，所以才会有经常出现的then方法)。</p>
 <p>一个 Promise 对象代表一个目前还不可用，但是在未来的某个时间点可以被解析的值。它允许你以一种同步的方式编写异步代码。例如，如果你想要使用 Promise API 异步调用一个远程的服务器，你需要创建一个代表数据将会在未来由 Web 服务返回的 Promise 对象。唯一的问题是目前数据还不可用。当请求完成并从服务器返回时数据将变为可用数据。在此期间，Promise 对象将扮演一个真实数据的代理角色。接下来，你可以在 Promise 对象上绑定一个回调函数，一旦真实数据变得可用这个回调函数将会被调用。而Promise的then方法中放的就是回调方法。</p>
 <p>promise 表示一个最终值，该值由一个操作完成时返回。<br>promise 有三种状态：<strong>未完成</strong> (unfulfilled)，<strong>完成</strong> (fulfilled) 和<strong>失败</strong> (failed)。<br>promise 的状态只能由<strong>未完成</strong>转换成完成，或者<strong>未完成</strong>转换成<strong>失败</strong> 。<br>promise 的状态转换只发生一次。<br>promise 有一个 then 方法，then 方法可以接受 3 个函数作为参数。前两个函数对应  promise 的两种状态 fulfilled 和 rejected  的回调函数。第三个函数用于处理进度信息（对进度回调的支持是可选的）。</p>
@@ -180,19 +181,21 @@ var p2 = p1.then(c,d);
 </code></pre><p>以上代码执行完之后,我们手里有3个promise:p,p1,p2.<br>这时,a,b,c,d都还没有执行。</p>
 <p>在未来某个不确定的时间,如果p的resolve方法被调用了,接下来会发生的事情是:</p>
 <ul>
-<li>p会把传给resolve方法的参数value记住,并把自己的状态标记为resolved (以后就再也不能变了),a会被调用到,其参数为value<ul>
-<li>如果a执行过程中不出错, p1的状态被变成resolved,p1会把a的返回值记住<br>c会被调用到,其参数为a的返回值<ul>
+<li>p会把传给resolve方法的参数value记住,并把自己的状态标记为resolved (以后就再也不能变了),a会被调用到,其参数为value</li>
+</ul>
+<ul>
+<li>如果a执行过程中不出错, p1的状态被变成resolved,p1会把a的返回值记住<pre><code>c会被调用到,其参数为a的返回值
+</code></pre></li>
+</ul>
+<ul>
 <li>如果c执行过程中不出错, p2的状态被变成resolved,p2会把c的返回值记住</li>
 <li>如果c执行过程中出错, p2的状态被变成rejected,p2会把c抛出的异常记住</li>
 </ul>
-</li>
-<li>如果a执行过程中出错,p1的状态被变成rejected,p1会把a抛出的异常记,d被调用到,参数为a抛出的异常<ul>
-<li>如果d执行过程中不出错,p2的状态被变成resolved,p2会把d的返回值记住</li>
+<ul>
+<li>如果a执行过程中出错,p1的状态被变成rejected,p1会把a抛出的异常记,d被调用到,参数为a抛出的异常  - 如果d执行过程中不出错,p2的状态被变成resolved,p2会把d的返回值记住</li>
+</ul>
+<ul>
 <li>如果d执行过程中出错,p2的状态被变成rejected,p2会把d抛出的异常记住<br>这样,就看出递归的意思来了。不过b并没有在上面出现,这是因为p本身是被resolve的,b只有在p被reject的时候才会执行。</li>
-</ul>
-</li>
-</ul>
-</li>
 </ul>
 <p>在未来某个不确定的时间,如果p的reject方法被调用了,接下来会发生的事情是:<br>  。。。 。。。</p>
 <p>就不用写了,把上面的ａ替换为ｂ就好了。</p>
@@ -288,11 +291,11 @@ var p2 = p1.then(c,d);
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
 			
 		
 			
@@ -300,7 +303,7 @@ var p2 = p1.then(c,d);
 			
 		
 			
-				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
 			
 		
 			
@@ -312,11 +315,11 @@ var p2 = p1.then(c,d);
 			
 		
 			
-				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
@@ -324,7 +327,7 @@ var p2 = p1.then(c,d);
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 			
@@ -332,7 +335,11 @@ var p2 = p1.then(c,d);
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			

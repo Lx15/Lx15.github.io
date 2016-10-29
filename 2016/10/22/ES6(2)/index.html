@@ -1,0 +1,565 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>ES6学习笔记(一) | Lx15</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;根据阮一峰老师《ECMAScript 6入门》的ES6学习笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6学习笔记(一)">
+<meta property="og:url" content="http://yoursite.com/2016/10/22/ES6(2)/index.html">
+<meta property="og:site_name" content="Lx15">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;根据阮一峰老师《ECMAScript 6入门》的ES6学习笔记。">
+<meta property="og:updated_time" content="2016-10-28T09:36:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6学习笔记(一)">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;根据阮一峰老师《ECMAScript 6入门》的ES6学习笔记。">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15" title="Lx15"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15">Lx15</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/10/22/ES6(2)/" title="ES6学习笔记(一)" itemprop="url">ES6学习笔记(一)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2016-10-21T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-10-22</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串的扩展"><span class="toc-number">1.</span> <span class="toc-text">字符串的扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组"><span class="toc-number">2.</span> <span class="toc-text">数组</span></a></li></ol>
+		
+		</div>
+		
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;根据阮一峰老师《ECMAScript 6入门》的ES6学习笔记。</p>
+<a id="more"></a>
+<h2 id="字符串的扩展"><a href="#字符串的扩展" class="headerlink" title="字符串的扩展"></a>字符串的扩展</h2><ol>
+<li>ES6之前，对于4个字节的字符，js不能正确处理，字符串长度会误判为2， <code>charAt</code>无法读取整个字符<br>ES6提供了<code>codePointAt</code>方法，能够正确处理4个字节储存的字符，返回一个字符的码点</li>
+<li><code>codePointAt</code>方法用于 for…of 循环时 能正确识别4字节码长度</li>
+<li><p>测试一个字符是两个字节还是四个字节的最简单的方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a= <span class="string">"好"</span>;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">let</span> ch <span class="keyword">of</span> a)&#123;</div><div class="line">  <span class="built_in">console</span>.log(ch.codePointAt(<span class="number">0</span>).toString(<span class="number">16</span>));</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">is32Bit</span>(<span class="params">c</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> c.codePointAt(<span class="number">0</span>) &gt; <span class="number">0xFFFF</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>ES5提供String.fromCharCode方法，用于从码点返回对应字符，但是这个方法不能识别32位的UTF-16字符（Unicode编号大于0xFFFF）。<br>ES6提供了String.fromCodePoint方法，可以识别大于0xFFFF的字符</p>
+</li>
+<li>ES5对字符串对象提供charAt方法，返回字符串给定位置的字符。该方法不能识别码点大于0xFFFF的字符。<br>ES6提供了at方法，可以返回大于0xFFFF的字符。</li>
+<li>除了之前的<code>indexOf()</code> 方法 新增<code>includes()</code> <code>startsWith()</code> <code>endsWith()</code> 方法。</li>
+<li><p><code>padStart</code>与<code>padEnd</code>多用于不全指定位数，或提箱字符串格式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="string">'1'</span>.padStart(<span class="number">10</span>, <span class="string">'0'</span>) <span class="comment">// "0000000001"</span></div><div class="line"><span class="string">'12'</span>.padStart(<span class="number">10</span>, <span class="string">'0'</span>) <span class="comment">// "0000000012"</span></div><div class="line"><span class="string">'123456'</span>.padStart(<span class="number">10</span>, <span class="string">'0'</span>) <span class="comment">// "0000123456"</span></div><div class="line"></div><div class="line"><span class="string">'12'</span>.padStart(<span class="number">10</span>, <span class="string">'YYYY-MM-DD'</span>) <span class="comment">// "YYYY-MM-12"</span></div><div class="line"><span class="string">'09-12'</span>.padStart(<span class="number">10</span>, <span class="string">'YYYY-MM-DD'</span>) <span class="comment">// "YYYY-09-12"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>模板字符串</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">'#result'</span>).append(<span class="string">`</span></div><div class="line">   There are &lt;b&gt;<span class="subst">$&#123;basket.count&#125;</span>&lt;/b&gt; items</div><div class="line">    in your basket, &lt;em&gt;<span class="subst">$&#123;basket.onSale&#125;</span>&lt;/em&gt;</div><div class="line">   are on sale!</div><div class="line">`);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><ol>
+<li><p><code>Array.from</code>方法用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象（包括ES6新增的数据结构Set和Map）;<br><code>Array.from</code>可以有第二个参数，作用类似于map方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Array</span>.from([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], (x) =&gt; x * x)</div><div class="line"><span class="comment">// [1, 4, 9]</span></div></pre></td></tr></table></figure>
+<p>ES5的写法: var a= [].slice.call(array-like);      </p>
+<p>另外 扩展运算符(…)也可以将某些数据结构转为数组。     </p>
+</li>
+<li><p><code>Array.of()</code>将一组值转化为数组 ，弥补构造函数<code>Array()</code>的不足</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Array</span>.of(<span class="number">3</span>, <span class="number">11</span>, <span class="number">8</span>) <span class="comment">// [3,11,8]</span></div><div class="line"><span class="built_in">Array</span>.of(<span class="number">3</span>) <span class="comment">// [3]</span></div><div class="line"><span class="built_in">Array</span>.of(<span class="number">3</span>).length <span class="comment">// 1</span></div><div class="line"><span class="built_in">Array</span>() <span class="comment">// []</span></div><div class="line"><span class="built_in">Array</span>(<span class="number">3</span>) <span class="comment">// [, , ,]</span></div><div class="line"><span class="built_in">Array</span>(<span class="number">3</span>, <span class="number">11</span>, <span class="number">8</span>) <span class="comment">// [3, 11, 8]</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>copyWithin()</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 将3号位复制到0号位</span></div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].copyWithin(<span class="number">0</span>, <span class="number">3</span>, <span class="number">4</span>)</div><div class="line"><span class="comment">// [4, 2, 3, 4, 5]</span></div><div class="line"></div><div class="line"><span class="comment">// -2相当于3号位，-1相当于4号位</span></div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>].copyWithin(<span class="number">0</span>, <span class="number">-2</span>, <span class="number">-1</span>)</div><div class="line"><span class="comment">// [4, 2, 3, 4, 5]</span></div><div class="line"></div><div class="line"><span class="comment">// 将3号位复制到0号位</span></div><div class="line">[].copyWithin.call(&#123;length: <span class="number">5</span>, <span class="number">3</span>: <span class="number">1</span>&#125;, <span class="number">0</span>, <span class="number">3</span>)</div><div class="line"><span class="comment">// &#123;0: 1, 3: 1, length: 5&#125;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>find()</code>用于找出第一个符合条件的数组成员</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[<span class="number">1</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>].find(<span class="function"><span class="keyword">function</span>(<span class="params">value, index, arr</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> value &gt; <span class="number">9</span>;</div><div class="line">&#125;) <span class="comment">// 10</span></div></pre></td></tr></table></figure>
+<p>数组实例的findIndex方法的用法与find方法非常类似，返回第一个符合条件的数组成员的位置，如果所有成员都不符合条件，则返回-1。<code>includes()</code> 表示某个数组是否包含给定的值,这三个方法都能比较好的处理NaN 的问题。</p>
+</li>
+<li><p><code>entries()</code>,<code>keys()</code>,<code>values()</code>keys()是对键名的遍历、values()是对键值的遍历，entries()是对键值对的遍历。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> index <span class="keyword">of</span> [<span class="string">'a'</span>, <span class="string">'b'</span>].keys()) &#123;</div><div class="line">  <span class="built_in">console</span>.log(index);</div><div class="line">&#125;</div><div class="line"><span class="comment">// 0</span></div><div class="line"><span class="comment">// 1</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> elem <span class="keyword">of</span> [<span class="string">'a'</span>, <span class="string">'b'</span>].values()) &#123;</div><div class="line">  <span class="built_in">console</span>.log(elem);</div><div class="line">&#125;</div><div class="line"><span class="comment">// 'a'</span></div><div class="line"><span class="comment">// 'b'</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> [index, elem] <span class="keyword">of</span> [<span class="string">'a'</span>, <span class="string">'b'</span>].entries()) &#123;</div><div class="line">  <span class="built_in">console</span>.log(index, elem);</div><div class="line">&#125;</div><div class="line"><span class="comment">// 0 "a"</span></div><div class="line"><span class="comment">// 1 "b"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>注意数组的空位问题，即[,,,]多个函数对空位的处理都不同</p>
+</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/Tags/ES6/">ES6</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/10/22/ES6(2)/" data-title="ES6学习笔记(一) | Lx15" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/10/25/dom基础(一)/" title="DOM基础(一)">
+  <strong>上一篇：</strong><br/>
+  <span>
+  DOM基础(一)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/10/15/IFE笔记(四)/"  title="IFE任务练习笔记(四)">
+ <strong>下一篇：</strong><br/> 
+ <span>IFE任务练习笔记(四)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/10/22/ES6(2)/" data-title="ES6学习笔记(一)" data-url="http://yoursite.com/2016/10/22/ES6(2)/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串的扩展"><span class="toc-number">1.</span> <span class="toc-text">字符串的扩展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组"><span class="toc-number">2.</span> <span class="toc-text">数组</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="Lx15.github.io" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/util/" title="util">util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="undefined" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=undefined&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/Lx15.github.io" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

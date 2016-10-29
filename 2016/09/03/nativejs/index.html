@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/09/03/nativejs/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在做原生JS练习中一些自己不熟悉的小知识点，并不是系统的原生JS操作，目前这部分还在进行中，以后边练习边补充，算是查漏补缺。">
-<meta property="og:updated_time" content="2016-09-30T08:25:13.000Z">
+<meta property="og:updated_time" content="2016-10-29T02:11:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="原生JS操作">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在做原生JS练习中一些自己不熟悉的小知识点，并不是系统的原生JS操作，目前这部分还在进行中，以后边练习边补充，算是查漏补缺。">
@@ -107,22 +107,8 @@
 </li>
 <li><p>元素的兄弟元素节点 target.parentNode.children;</p>
 </li>
-<li><pre><code>function hasClass(element, className) {
-    return (new RegExp(&apos;(\\s|^)&apos; + className + &apos;(\\s|$)&apos;)).test(element.className);
-}
-
-function addClass(element, newClassName) {
-    if (!hasClass(element, newClassName)) {
-        element.className = element.className ? (element.className + &quot; &quot; + newClassName) : newClassName;
-    }
-}
-
-function removeClass(element, oldClassName) {
-    if (hasClass(element, oldClassName)) {
-        element.className = element.className.replace(new RegExp(&apos;(\\s|^)&apos;+ oldClassName + &apos;(\\s|$)&apos;), &quot; &quot;).trim();
-    }
-}
-</code></pre></li>
+<li><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">hasClass</span>(<span class="params">element, className</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'(\\s|^)'</span> + className + <span class="string">'(\\s|$)'</span>)).test(element.className);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">addClass</span>(<span class="params">element, newClassName</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!hasClass(element, newClassName)) &#123;</div><div class="line">        element.className = element.className ? (element.className + <span class="string">" "</span> + newClassName) : newClassName;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeClass</span>(<span class="params">element, oldClassName</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (hasClass(element, oldClassName)) &#123;</div><div class="line">        element.className = element.className.replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'(\\s|^)'</span>+ oldClassName + <span class="string">'(\\s|$)'</span>), <span class="string">" "</span>).trim();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
 <li><p>cursor:crosshair; 鼠标光标是十字;</p>
 </li>
 <li><p>label标签的用法：除了用for属性与指定的表单元素关联外，直接把表单元素包含在label里面也能实现关系。</p>
@@ -130,14 +116,9 @@ function removeClass(element, oldClassName) {
 <li><p>清除设置的属性   box.style.cssText =” “;</p>
 </li>
 <li><p>margin 折叠：</p>
-<ul>
-<li>发生折叠需要时相邻的非浮动元素</li>
-<li>折叠发生在垂直外边距上，即margin-top/margin-bottom;</li>
-<li>折叠后取其中最大的那个margin值作为最终值。</li>
-<li>定义了属性overflow且值不为visible（即创建了新的块级格式化上下文）的块元素，不与它的子元素发生margin 折叠；</li>
-<li>绝对定位元素的 margin 不与任何 margin 发生折叠。</li>
-<li>根元素的 margin 不与其它任何 margin 发生折叠；</li>
-</ul>
+<blockquote>
+<p>发生折叠需要时相邻的非浮动元素<br>折叠发生在垂直外边距上，即margin-top/margin-bottom;<br>折叠后取其中最大的那个margin值作为最终值。<br>定义了属性overflow且值不为visible（即创建了新的块级格式化上下文）的块元素，不与它的子元素发生margin 折叠；<br>绝对定位元素的 margin 不与任何 margin 发生折叠。<br>根元素的 margin 不与其它任何 margin 发生折叠；</p>
+</blockquote>
 </li>
 <li><p>parent.childNodes 是所有的子元素<br>parent.child 是只有第一层子元素</p>
 </li>
@@ -229,11 +210,11 @@ function removeClass(element, oldClassName) {
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
 			
 		
 			
@@ -241,7 +222,7 @@ function removeClass(element, oldClassName) {
 			
 		
 			
-				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
 			
 		
 			
@@ -253,11 +234,11 @@ function removeClass(element, oldClassName) {
 			
 		
 			
-				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
@@ -265,7 +246,7 @@ function removeClass(element, oldClassName) {
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 			
@@ -273,7 +254,11 @@ function removeClass(element, oldClassName) {
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			

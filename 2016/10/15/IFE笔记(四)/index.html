@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/10/15/IFE笔记(四)/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
-<meta property="og:updated_time" content="2016-10-15T03:05:47.000Z">
+<meta property="og:updated_time" content="2016-10-28T09:24:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IFE任务练习笔记(四)">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
@@ -100,11 +100,9 @@
 		
 		<p>&nbsp;&nbsp;&nbsp;&nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。</p>
 <a id="more"></a>
+<p>1.<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;link rel="stylesheet" media="screen and (min-width:768px)" href="css/task_1_8_1_min-768.css"&gt;</div><div class="line">  @media screen and (min-width: 768px)&#123;&#125;</div><div class="line"></div><div class="line">            [class*='col-md-']&#123;</div><div class="line">          		float: left;</div><div class="line">          		min-height: 1px;</div><div class="line">          		width: 8.33%;</div><div class="line">          		padding:10px;</div><div class="line">          	&#125;</div></pre></td></tr></table></figure></p>
 <ol>
-<li><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;link rel="stylesheet" media="screen and (min-width:768px)" href="css/task_1_8_1_min-768.css"&gt;</div><div class="line">  @media screen and (min-width: 768px)&#123;&#125;</div><div class="line"></div><div class="line">            [class*='col-md-']&#123;</div><div class="line">          		float: left;</div><div class="line">          		min-height: 1px;</div><div class="line">          		width: 8.33%;</div><div class="line">          		padding:10px;</div><div class="line">          	&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>键盘输入 onkeyup   event.keyCode ===13</p>
-</li>
+<li>键盘输入 onkeyup   event.keyCode ===13</li>
 <li><p>按照二维数组中的某一项进行排序：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">aqiData.sort(<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>)</span>&#123;</div><div class="line"> <span class="comment">//  if(a[1]&gt;b[1])&#123;</span></div><div class="line"> <span class="comment">//    return -1;</span></div><div class="line"> <span class="comment">//  &#125;</span></div><div class="line"> <span class="comment">//  if(a[1]&lt;b[1])&#123;</span></div><div class="line"> <span class="comment">//    return 1;</span></div><div class="line"> <span class="comment">//  &#125;</span></div><div class="line"> <span class="comment">//  return 0;</span></div><div class="line"> <span class="keyword">return</span> b[<span class="number">1</span>]-a[<span class="number">1</span>];</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 </li>
@@ -114,13 +112,15 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ife-task16</div><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">"aqi-table"</span>).addEventListener(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span>(event.target.nodeName.toLowerCase() ===<span class="string">"button"</span>)&#123;</div><div class="line">    delBtnHandle.call(<span class="literal">null</span>,event.target.dataset.city);</div><div class="line">  &#125;</div><div class="line">&#125;,<span class="literal">false</span>);</div></pre></td></tr></table></figure>
 <p>对于在事件处理程序中添加的这个参数可以是添加在子元素中的 类似 data-city 的属性。</p>
 </li>
-<li><a href="http://www.cnblogs.com/fullhouse/archive/2012/01/16/2324131.html" target="_blank" rel="external">Js中关于clientWidth、offsetWidth、scrollWidth</a>   <ul>
+<li><a href="http://www.cnblogs.com/fullhouse/archive/2012/01/16/2324131.html" target="_blank" rel="external">Js中关于clientWidth、offsetWidth、scrollWidth</a>   </li>
+</ol>
+<ul>
 <li>offsetWidth :width+padding+border</li>
 <li>offsetHeight :Height+padding+border  </li>
 <li>clientWidth: 获取对象可见内容的宽度，不包括滚动条，不包括边框；</li>
 <li>clientHeight: 获取对象可见内容的高度，不包括滚动条，不包括边框；</li>
 </ul>
-</li>
+<ol>
 <li><p>对象的直接赋值是浅拷贝。<br>深拷贝：  js arr.slice(0) 、arr.concat();</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> deepCopy= <span class="function"><span class="keyword">function</span>(<span class="params">source</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> result=&#123;&#125;;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> source) &#123;</div><div class="line">        result[key] = <span class="keyword">typeof</span> source[key]===’object’? deepCopy(source[key]): source[key];</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> result;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
 </li>
@@ -128,21 +128,23 @@
 <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">body</span>&#123;</div><div class="line">  <span class="attribute">font-size</span>:<span class="number">62.5</span>％　;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p><code>undefined 与null</code><br> <code>null</code> 表示“没有对象”，即此处不应该有值。典型用法：</p>
+</li>
+</ol>
 <ul>
 <li>作为函数的参数，表示该函数的参数不是对象</li>
 <li><p>作为对象原型链的终点</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Object</span>.getPrototypeOf(<span class="built_in">Object</span>.prototype)</div><div class="line"><span class="comment">//null</span></div></pre></td></tr></table></figure>
-<p><code>undefined</code> 表示“缺少值”，就是此处应该有一个值，但是还没有定义。 典型用法：</p>
+<p>  <code>undefined</code> 表示“缺少值”，就是此处应该有一个值，但是还没有定义。 典型用法：</p>
 </li>
 <li>变量被声明了，但没有赋值时，就等于undefined</li>
 <li>调用函数时，应该提供的参数没有提供，该参数等于undefined</li>
 <li>对象没有赋值的属性，改属性的值是undefined。</li>
 <li>函数没有返回值是，默认返回undefined</li>
 </ul>
-</li>
+<ol>
 <li>图像是一种二进制文件。base64   将一幅图片编码成一串字符串，使用该字符串代替图像。当图片很小时，好于 css spirites.<br>src=”data:image/jpg;base64,….”<br>url(“data:image/jpg:….”)<br>data URIS : 允许将一个小文件进行编码后嵌入到，另一个文档中。</li>
-<li>字间距1.75 行间距10, 14号微软雅黑 #333</li>
-<li><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">defined</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">     <span class="keyword">return</span> value !== <span class="literal">undefined</span> &amp;&amp; value !== <span class="literal">null</span>;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> goog.isDef = <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</div><div class="line">  <span class="comment">// void 0 always evaluates to undefined and hence we do not need to depend on</span></div><div class="line">  <span class="comment">// the definition of the global variable named 'undefined'.</span></div><div class="line">  <span class="keyword">return</span> val !== <span class="keyword">void</span> <span class="number">0</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<li><p>字间距1.75 行间距10, 14号微软雅黑 #333<br>12.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">defined</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">     <span class="keyword">return</span> value !== <span class="literal">undefined</span> &amp;&amp; value !== <span class="literal">null</span>;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> goog.isDef = <span class="function"><span class="keyword">function</span>(<span class="params">val</span>) </span>&#123;</div><div class="line">  <span class="comment">// void 0 always evaluates to undefined and hence we do not need to depend on</span></div><div class="line">  <span class="comment">// the definition of the global variable named 'undefined'.</span></div><div class="line">  <span class="keyword">return</span> val !== <span class="keyword">void</span> <span class="number">0</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 </li>
 <li><p>对象的属性类型有数据属性与访问器属性。自己在平时项目中主要使用的是数据属性，主要用到的是数据属性的[[value]]特性。而在看开源库的源码时会遇见访问器属性，即</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj=&#123;</div><div class="line">  _name:<span class="string">"SS"</span>,</div><div class="line">  _age:<span class="number">2</span></div><div class="line">&#125;;</div><div class="line"><span class="built_in">Object</span>.defineProperty(obj,<span class="string">'name'</span>,&#123;</div><div class="line">  get:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._name;</div><div class="line">  &#125;,</div><div class="line">  set:<span class="function"><span class="keyword">function</span>(<span class="params">name</span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>._name = name;</div><div class="line">  &#125;</div><div class="line">  &#125;)</div></pre></td></tr></table></figure>
@@ -188,6 +190,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2016/10/22/ES6(2)/" title="ES6学习笔记(一)">
+  <strong>上一篇：</strong><br/>
+  <span>
+  ES6学习笔记(一)</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2016/10/12/ES6(1)/"  title="ES6学习笔记(一)">
@@ -237,11 +247,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
 			
 		
 			
@@ -249,7 +259,7 @@
 			
 		
 			
-				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
 			
 		
 			
@@ -261,11 +271,11 @@
 			
 		
 			
-				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
@@ -273,7 +283,7 @@
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 			
@@ -281,7 +291,11 @@
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			

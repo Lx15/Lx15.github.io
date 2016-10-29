@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>IFE任务练习笔记(三) | Lx15</title>
+    <title>IFE任务练习笔记(五) | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
@@ -13,13 +13,13 @@
     
     <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IFE任务练习笔记(三)">
-<meta property="og:url" content="http://yoursite.com/2016/09/30/IFE笔记(三)/index.html">
+<meta property="og:title" content="IFE任务练习笔记(五)">
+<meta property="og:url" content="http://yoursite.com/2016/10/27/IFE笔记(五)/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
-<meta property="og:updated_time" content="2016-10-28T09:23:50.000Z">
+<meta property="og:updated_time" content="2016-10-28T09:14:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IFE任务练习笔记(三)">
+<meta name="twitter:title" content="IFE任务练习笔记(五)">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
 
     
@@ -78,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/09/30/IFE笔记(三)/" title="IFE任务练习笔记(三)" itemprop="url">IFE任务练习笔记(三)</a>
+      <a href="/2016/10/27/IFE笔记(五)/" title="IFE任务练习笔记(五)" itemprop="url">IFE任务练习笔记(五)</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-09-29T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-30</time>
+    <time datetime="2016-10-26T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-10-27</time>
     
   </p>
 </header>
@@ -101,36 +101,32 @@
 		<p>&nbsp;&nbsp;&nbsp;&nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。</p>
 <a id="more"></a>
 <ol>
-<li><p>左侧固定右侧自适应</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.left</span>&#123;</div><div class="line">   <span class="attribute">width</span>:<span class="number">200px</span>;</div><div class="line">   <span class="attribute">float</span>:left;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span>&#123;</div><div class="line">   <span class="attribute">margin-left</span>:<span class="number">200px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li>js 数组去重</li>
+</ol>
+<ul>
+<li><p>方法一:双重循环去重 — 耗时 性能差</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> newArray = [<span class="keyword">this</span>[<span class="number">0</span>]];</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;<span class="keyword">this</span>.length;i++)&#123;</div><div class="line">    <span class="keyword">var</span> flag= <span class="literal">false</span>;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> j=<span class="number">0</span>;j&lt;newArray.length;j++)&#123;</div><div class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>[i] == newArray[j])&#123;</div><div class="line">        flag = <span class="literal">true</span>;</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(!flag)&#123;</div><div class="line">      newArray.push(<span class="keyword">this</span>[i]);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> newArray;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
-<li><p>右侧固定左侧自适应</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.left</span>&#123;</div><div class="line">    <span class="attribute">margin-right</span>:<span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span>&#123;</div><div class="line">  <span class="attribute">position</span>:absolute;</div><div class="line">  <span class="attribute">top</span>:<span class="number">0</span>;</div><div class="line">  <span class="attribute">right</span>:<span class="number">0</span>;</div><div class="line">  <span class="attribute">width</span>:<span class="number">200px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<li><p>方法二: 用 forEach()及 indexOf()实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> newArray=[];</div><div class="line">  <span class="keyword">this</span>.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">index</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(newArray.indexOf(index) == <span class="number">-1</span>)&#123;</div><div class="line">      newArray.push(index)</div><div class="line">    &#125;</div><div class="line">  &#125;)</div><div class="line">  <span class="keyword">return</span> newArray;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
-<li><p>清除浮动—1<br><a href="http://zh.learnlayout.com/clearfix.html" target="_blank" rel="external">浮动</a><br>子元素因为浮动使得子元素的高度大于父元素的高度，即造成父元素塌陷。      </p>
-<p>方法一： 在父元素上添加</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">.clear&#123;</div><div class="line">   overflow:auto;</div><div class="line">   zoom:1;//兼容 IE6</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>清除浮动后原来在父容器上面添加的padding margin 对于子元素仍是适用的。<br>这种方法当子元素中的子元素变大时会使得父元素出现滚动条</p>
-<p>清除浮动—2</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">.clearfix&#123;</div><div class="line">  &amp;:after&#123;</div><div class="line">    content: "";</div><div class="line">    display: block;</div><div class="line">    visibility: hidden;</div><div class="line">    height: 0;</div><div class="line">    clear: both;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这种方法不会出现滚动条，但当子元素的子元素变大的时也可能会破坏布局</p>
+</ul>
+<p>比方法一快</p>
+<ul>
+<li>方法三: 排序遍历去重<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.sort();</div><div class="line">  <span class="keyword">var</span> newArray =[];</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="keyword">this</span>.length;i++)&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>[i]!==newArray[newArray.length<span class="number">-1</span>])&#123;<span class="comment">//只和新数组的最后一个元素比较</span></div><div class="line">      newArray.push(<span class="keyword">this</span>[i]);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> newArray;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
-<li><p>首字母大写 :first-letter{ font-size:22px;}<br>font: 多个属性一起使用是有顺序的。<br>字体倾斜：font-style:italic; 对于没有斜体变量的特殊字体应使用 oblique;<br>实现首字母大写并下沉样式：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&amp;<span class="selector-pseudo">:first-letter</span>&#123;</div><div class="line">  <span class="attribute">font-size</span>:<span class="number">70px</span>;</div><div class="line">  <span class="attribute">margin</span>:<span class="number">30px</span> <span class="number">10px</span> <span class="number">20px</span> <span class="number">0</span>;</div><div class="line">  <span class="attribute">float</span>:left;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p> 通过设置字号，float并配合margin来进行定位。</p>
+</ul>
+<p>去重后的数组，与数字相同的数字字符无法区分，比如’1’和1</p>
+<ul>
+<li><p>方法四: 对象键值对法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Array</span>.prototype.unique = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">var</span> obj=&#123;&#125;;</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="keyword">this</span>.length;i++)&#123;</div><div class="line">    obj[<span class="keyword">this</span>[i]] = <span class="keyword">this</span>[i];</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="built_in">Object</span>.keys(obj);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
-<li><p>伪类设置双引号 content:open-quote;配合定位;</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&amp;<span class="selector-pseudo">::before</span>&#123;</div><div class="line">      <span class="attribute">content</span>: open-quote;</div><div class="line">    	<span class="attribute">position</span>:relative;</div><div class="line">      <span class="attribute">left</span>:<span class="number">20px</span>;</div><div class="line">      <span class="attribute">top</span>:<span class="number">20px</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<li><p>方法五:ES6</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span> (<span class="params">arr</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> seen = <span class="keyword">new</span> <span class="built_in">Map</span>()</div><div class="line">    <span class="keyword">return</span> arr.filter((a) =&gt; !seen.has(a) &amp;&amp; seen.set(a, <span class="number">1</span>))</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">unique</span> (<span class="params">arr</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Set</span>(arr))</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
-<li><p>水平导航目录: ul+inline-block+absolute;</p>
-</li>
-<li><p>多个元素使用inline-block 布局时，当内部元素变大时，其他兄弟元素会错位，这个问题使用float:left;解决(问题见原生JS–110.html)</p>
-</li>
-<li><p>只在父元素上使用mouseover 与mouseout事件就想使得子元素出现和消失的结果，这会出现鼠标在子元素上移动时会闪个不停。。。<br>因为这会在连续触发父元素（问题见 原生js-110.html）<br>解决办法： 在父元素上使用 mouseover使得 子元素一进入就出现，在 子元素上使用mouseout 使得子元素消失。若是这时子元素内容变大使得子元素不能再触发，可以将子元素内容设置成背景图片（针对图片的情形），这时应考虑好DOM结构。</p>
-</li>
-<li><p>原生JS关于事件处理的套路：<br>在父元素上添加事件监听，在点击子元素时，会有事件冒泡，所以父元素上的事件监听肯定会监听到，然后在父元素的事件监听处理函数中判断是否是在子元素上，这时当然会用到event.target。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">delegateEvent</span>(<span class="params">delegateElement, targetTag, eventName, handler</span>) </span>&#123;</div><div class="line">  delegateElement.addEventListener(eventName, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> target = event.target;</div><div class="line">    <span class="keyword">if</span> (targetTag.toLowerCase() === target.nodeName.toLowerCase()) &#123;</div><div class="line">      <span class="keyword">return</span> handler(event);</div><div class="line">    &#125;</div><div class="line">  &#125;, <span class="literal">false</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
+</ul>
+<ol>
+<li>元素的所有类名: ele.classList<br>是否含有某个类名： ele.contains(className);</li>
 </ol>
   
 	</div>
@@ -140,7 +136,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/Tags/css/">css</a>
+  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/css/">css</a>
   </div>
 
 </div>
@@ -149,7 +145,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/09/30/IFE笔记(三)/" data-title="IFE任务练习笔记(三) | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/10/27/IFE笔记(五)/" data-title="IFE任务练习笔记(五) | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -162,19 +158,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/10/05/css3基本属性/" title="CSS3基本属性">
-  <strong>上一篇：</strong><br/>
-  <span>
-  CSS3基本属性</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/09/28/图解HTTP(一)/"  title="图解HTTP笔记(一)">
+<a href="/2016/10/25/dom基础(一)/"  title="DOM基础(一)">
  <strong>下一篇：</strong><br/> 
- <span>图解HTTP笔记(一)
+ <span>DOM基础(一)
 </span>
 </a>
 </div>
@@ -183,7 +171,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/09/30/IFE笔记(三)/" data-title="IFE任务练习笔记(三)" data-url="http://yoursite.com/2016/09/30/IFE笔记(三)/"></div>
+	<div class="ds-thread" data-thread-key="2016/10/27/IFE笔记(五)/" data-title="IFE任务练习笔记(五)" data-url="http://yoursite.com/2016/10/27/IFE笔记(五)/"></div>
 </section>
 
 

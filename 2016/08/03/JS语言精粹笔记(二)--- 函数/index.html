@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/08/03/JS语言精粹笔记(二)--- 函数/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="这里是关于自己看JS语言精粹函数与数组方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。所谓编程，就是将一组需求分解成一组函数与数据结构(的技能)。">
-<meta property="og:updated_time" content="2016-08-19T03:19:39.000Z">
+<meta property="og:updated_time" content="2016-10-28T09:29:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS语言精粹笔记(二)------函数&&数组">
 <meta name="twitter:description" content="这里是关于自己看JS语言精粹函数与数组方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。所谓编程，就是将一组需求分解成一组函数与数据结构(的技能)。">
@@ -99,139 +99,27 @@
 		</div>
 		
 		<p>这里是关于自己看JS语言精粹函数与数组方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。<br>所谓编程，就是将一组需求分解成一组函数与数据结构(的技能)。<br><a id="more"></a>  </p>
-<h3 id="函数基础"><a href="#函数基础" class="headerlink" title="函数基础"></a>函数基础</h3><p> 1.对象字面量产生的对象连接到 Object.prototype;函数对象连接到Function.prototype(然后这个原型对象本身连接到Object.prototype)<br> 2.调用一个函数会暂停当前函数的执行，传递控制权和参数给新的函数。除了声明时定义的形式参数，每个函数还接收两个附加的参数：this 和 arguments。 关于this的解释见 <a href="../this.md">JS中的this总结</a><br> 3.<strong>arguments</strong>  函数可以通过此参数访问所有它被调用时传递给它的参数列表，包括那些没有被分配给函数声明时定义的形式参数的多余参数。这样就可以编写一个无须指定参数个数的函数成为可能。    </p>
-<pre><code>var sum = function(){
-    var i,sum =0;
-    for(i=0;i&lt;arguments.length;i+=1){
-        sum+=arguments[i];
-    }
-    return sum;
-}
-console.log(sum(1,2,3,4,5)) 
-</code></pre><p>arguments只是一个类似数组的对象，只有一个length属性，但没有任何数组的方法。<br>4.调用一个函数会暂停当前函数的执行，传递控制权和参数给新的函数。当一个函数被调用时，它从第一个语句开始执行，并在遇到关闭函数的}结束，然后把控制权交还给调用该函数的程序。return 可提前返回。一个函数总会返回一个值，若没有指定返回值，则返回undefined。如果函数是通过new操作符进行调用的，且返回值不是一个对象，则返回this(该新对象)。<br>5.扩充功能      </p>
-<pre><code>Function.prototype.method = function (name,func){
-    if(!this.prototype[name]){
-        this.prototype[name] = func;
-    }
-    return this;
-}
-//添加一个方法提取数字中的整数部分
-Number.method(&apos;integer&apos;,function(){
-    return Math[this &lt; 0 ? &apos;ceil&apos; : &apos;floor&apos;](this);
-})
-//添加一个移除字符串首尾空白的方法。
-Sting.method(&apos;trim&apos;,function(){
-    return this.replace(/^\s+|\s$/g,&apos;&apos;);
-})
-</code></pre><h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><p>1.递归函数可以高效的操作树形结构。       </p>
-<pre><code>var walk_the_DOM = function walk(node,func){
-    func(node);
-    node = node.firstChild;
-    while(node){
-        walk(node,func);
-        node = node.nextSibling;
-    }
-}
-var getElementsByAttribute = function(att,value){
-    var results = {};
-    walk_the_DOM(document.body,function(node){
-        var actual = node.nodeType ===1 &amp;&amp; node.getAttribute(att);
-        if(typeof actual === &apos;string&apos; &amp;&amp; (actual === value || typeof value !== &apos;string&apos;)){
-            results.push(node);
-        }
-    })
-return results;
-}
-</code></pre><p>2.尾递归 是一种在函数的最后执行递归调用语句的特殊形式的递归，这意味着如果一个函数返回自身递归调用的结果，那么调用的过程会被替换成一个循环。加速。     </p>
-<h3 id="柯里化（Curry）"><a href="#柯里化（Curry）" class="headerlink" title="柯里化（Curry）"></a>柯里化（Curry）</h3><p>1.柯里化 也为 “局部套用”，是把多参数函数转换成一系列单参数函数并进行调用的技术。柯里化允许我们把函数与传递给它的参数相结合，产生出一个新的函数。 </p>
-<pre><code>var add1 = add.curry(1);
-console.log(add1(6));//7
-</code></pre><p>js并没有curry方法.    </p>
-<pre><code>Function.method(&apos;curry&apos;,function(){
-    var slice =Array.prototype.slice,
-        args = slice.apply(arguments),
-        that = this;
-    return function (){
-        return that.apply(null,args.concat(slice.apply(arguments)));
-    }
-});
-</code></pre><h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>1.函数可以记住并访问所在的词法作用域，就产生了闭包，即使函数在当前词法作用域之外执行。<br>（* 词法作用域 是由写代码时将变量和块作用域写在哪里决定的，因此放词法分析器处理代码时会保持作用域不变，大部分情况如此）     </p>
-<pre><code>function foo(){
-    var a = 2;
-    function bar(){
-        console.log(a);
-    }
-    return bar;
-}
-var baz = foo();
-baz();//2 
-</code></pre><p>在baz函数执行时，foo函数的内部作用域依然存在，并没有被回收。bar()依然持有对该作用域的引用。这个函数在定义时的词法作用域以外的地方被调用，闭包使得函数可以继续访问定义时的此法作用域。无论通过何种手段将内部函数传递到所在的词法作用域之外，它都会持有对原始定义作用域的引用，无论在何处执行这个函数都会使用闭包。<br>2.</p>
-<pre><code>for(var i=1;i&lt;5;i++){
-    setTimeout(function timer(){
-        console.log(i);
-        },1000);
-}//每隔1s输出6
-</code></pre><p>尽管循环中的五个函数是在各个迭代中分别定义的，但是这些都被封闭在一个共享的全局作用域中，因此只有一个i. 因此需要更多的闭包作用域。       </p>
-<pre><code>for(var i=1;i&lt;=5;i++){
-    (function(j){
-        setTimeout(function timer(){
-            console.log(j);
-            },1000);
-     })(i);
-}// 1,2,3,4,5
-</code></pre><p>在迭代内由于函数执行会为每个迭代都生成一个新的作用域，使得延迟函数的回调可以将新的作用域封闭在每个迭代内部。    </p>
-<pre><code>for(let i=1;i&lt;5;i++){
-    setTimeout(function timer(){
-        console.log(i);
-        },1000);
-}  //1,2,3,4,5
-</code></pre><p>let 使得变量每次迭代都会声明一次.  </p>
-<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>1.用函数与闭包来构造模块,模块是一个提供接口却隐藏状态与实现的函数或者对象.<br>2.给String增加一个方法 deentityify 方法，用来寻找字符串中的html字符实体并把它们替换成对应的字符，这就需要在一个对象中保存字符实体的名字和它们对应的字符。</p>
-<pre><code>String.method(&apos;deentityify&apos;,function(){
-    var entity = {
-        quot:&apos;&quot;&apos;,
-        lt:&apos;&lt;&apos;,
-        gt:&apos;&gt;&apos;
-    };
-return function(){
-       return this.place(/&amp;([^&amp;;]+)/g),function(a,b){
-            var r = entity[b];
-            return typeof r === &apos;string&apos; ? r :a;
-       }
-    }
- }())
-</code></pre><p>这个entity 对象若是放在deentityfy函数中，每次执行时都会有损耗，因为每次执行该函数的时候该字面量都会被求值一次。<br>3.每个模块都有一个外部的封闭函数，该函数必须至少被调用一次，每次调用都会创建一个新的模块实例。 封闭函数必须返回至少一个内部函数，这样内部函数才能在私有作用域中形成闭包，并且可以访问或者修改私有的状态。     </p>
+<h3 id="函数基础"><a href="#函数基础" class="headerlink" title="函数基础"></a>函数基础</h3><p> 1.对象字面量产生的对象连接到 Object.prototype;函数对象连接到Function.prototype(然后这个原型对象本身连接到Object.prototype)<br> 2.调用一个函数会暂停当前函数的执行，传递控制权和参数给新的函数。除了声明时定义的形式参数，每个函数还接收两个附加的参数：this 和 arguments。 关于this的解释见 <a href="../this.md">JS中的this总结</a><br> 3.<strong>arguments</strong>  函数可以通过此参数访问所有它被调用时传递给它的参数列表，包括那些没有被分配给函数声明时定义的形式参数的多余参数。这样就可以编写一个无须指定参数个数的函数成为可能。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> sum = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> i,sum =<span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="built_in">arguments</span>.length;i+=<span class="number">1</span>)&#123;</div><div class="line">        sum+=<span class="built_in">arguments</span>[i];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> sum;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(sum(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>))</div></pre></td></tr></table></figure></p>
+<p>arguments只是一个类似数组的对象，只有一个length属性，但没有任何数组的方法。<br>4.调用一个函数会暂停当前函数的执行，传递控制权和参数给新的函数。当一个函数被调用时，它从第一个语句开始执行，并在遇到关闭函数的}结束，然后把控制权交还给调用该函数的程序。return 可提前返回。一个函数总会返回一个值，若没有指定返回值，则返回undefined。如果函数是通过new操作符进行调用的，且返回值不是一个对象，则返回this(该新对象)。<br>5.扩充功能<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Function</span>.prototype.method = <span class="function"><span class="keyword">function</span> (<span class="params">name,func</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">this</span>.prototype[name])&#123;</div><div class="line">        <span class="keyword">this</span>.prototype[name] = func;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//添加一个方法提取数字中的整数部分</span></div><div class="line"><span class="built_in">Number</span>.method(<span class="string">'integer'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>[<span class="keyword">this</span> &lt; <span class="number">0</span> ? <span class="string">'ceil'</span> : <span class="string">'floor'</span>](<span class="keyword">this</span>);</div><div class="line">&#125;)</div><div class="line"><span class="comment">//添加一个移除字符串首尾空白的方法。</span></div><div class="line">Sting.method(<span class="string">'trim'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/^\s+|\s$/g</span>,<span class="string">''</span>);</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><p>1.递归函数可以高效的操作树形结构。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> walk_the_DOM = <span class="function"><span class="keyword">function</span> <span class="title">walk</span>(<span class="params">node,func</span>)</span>&#123;</div><div class="line">    func(node);</div><div class="line">    node = node.firstChild;</div><div class="line">    <span class="keyword">while</span>(node)&#123;</div><div class="line">        walk(node,func);</div><div class="line">        node = node.nextSibling;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> getElementsByAttribute = <span class="function"><span class="keyword">function</span>(<span class="params">att,value</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> results = &#123;&#125;;</div><div class="line">    walk_the_DOM(<span class="built_in">document</span>.body,<span class="function"><span class="keyword">function</span>(<span class="params">node</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> actual = node.nodeType ===<span class="number">1</span> &amp;&amp; node.getAttribute(att);</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">typeof</span> actual === <span class="string">'string'</span> &amp;&amp; (actual === value || <span class="keyword">typeof</span> value !== <span class="string">'string'</span>))&#123;</div><div class="line">            results.push(node);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line"><span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.尾递归 是一种在函数的最后执行递归调用语句的特殊形式的递归，这意味着如果一个函数返回自身递归调用的结果，那么调用的过程会被替换成一个循环。加速。     </p>
+<h3 id="柯里化（Curry）"><a href="#柯里化（Curry）" class="headerlink" title="柯里化（Curry）"></a>柯里化（Curry）</h3><p>1.柯里化 也为 “局部套用”，是把多参数函数转换成一系列单参数函数并进行调用的技术。柯里化允许我们把函数与传递给它的参数相结合，产生出一个新的函数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> add1 = add.curry(<span class="number">1</span>);</div><div class="line"><span class="built_in">console</span>.log(add1(<span class="number">6</span>));<span class="comment">//7</span></div></pre></td></tr></table></figure></p>
+<p>js并没有curry方法.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Function</span>.method(<span class="string">'curry'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> slice =<span class="built_in">Array</span>.prototype.slice,</div><div class="line">        args = slice.apply(<span class="built_in">arguments</span>),</div><div class="line">        that = <span class="keyword">this</span>;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">return</span> that.apply(<span class="literal">null</span>,args.concat(slice.apply(<span class="built_in">arguments</span>)));</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>1.函数可以记住并访问所在的词法作用域，就产生了闭包，即使函数在当前词法作用域之外执行。<br>（* 词法作用域 是由写代码时将变量和块作用域写在哪里决定的，因此放词法分析器处理代码时会保持作用域不变，大部分情况如此）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(a);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> bar;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> baz = foo();</div><div class="line">baz();<span class="comment">//2</span></div></pre></td></tr></table></figure></p>
+<p>在baz函数执行时，foo函数的内部作用域依然存在，并没有被回收。bar()依然持有对该作用域的引用。这个函数在定义时的词法作用域以外的地方被调用，闭包使得函数可以继续访问定义时的此法作用域。无论通过何种手段将内部函数传递到所在的词法作用域之外，它都会持有对原始定义作用域的引用，无论在何处执行这个函数都会使用闭包。<br>2.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;<span class="number">5</span>;i++)&#123;</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(i);</div><div class="line">        &#125;,<span class="number">1000</span>);</div><div class="line">&#125;<span class="comment">//每隔1s输出6</span></div></pre></td></tr></table></figure></p>
+<p>尽管循环中的五个函数是在各个迭代中分别定义的，但是这些都被封闭在一个共享的全局作用域中，因此只有一个i. 因此需要更多的闭包作用域。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">1</span>;i&lt;=<span class="number">5</span>;i++)&#123;</div><div class="line">    (<span class="function"><span class="keyword">function</span>(<span class="params">j</span>)</span>&#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(j);</div><div class="line">            &#125;,<span class="number">1000</span>);</div><div class="line">     &#125;)(i);</div><div class="line">&#125;<span class="comment">// 1,2,3,4,5</span></div></pre></td></tr></table></figure></p>
+<p>在迭代内由于函数执行会为每个迭代都生成一个新的作用域，使得延迟函数的回调可以将新的作用域封闭在每个迭代内部。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">1</span>;i&lt;<span class="number">5</span>;i++)&#123;</div><div class="line">    setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">timer</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(i);</div><div class="line">        &#125;,<span class="number">1000</span>);</div><div class="line">&#125;  <span class="comment">//1,2,3,4,5</span></div></pre></td></tr></table></figure></p>
+<p>let 使得变量每次迭代都会声明一次.  </p>
+<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>1.用函数与闭包来构造模块,模块是一个提供接口却隐藏状态与实现的函数或者对象.<br>2.给String增加一个方法 deentityify 方法，用来寻找字符串中的html字符实体并把它们替换成对应的字符，这就需要在一个对象中保存字符实体的名字和它们对应的字符。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">String</span>.method(<span class="string">'deentityify'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> entity = &#123;</div><div class="line">        quot:<span class="string">'"'</span>,</div><div class="line">        lt:<span class="string">'&lt;'</span>,</div><div class="line">        gt:<span class="string">'&gt;'</span></div><div class="line">    &#125;;</div><div class="line"><span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">       <span class="keyword">return</span> <span class="keyword">this</span>.place(<span class="regexp">/&amp;([^&amp;;]+)/g</span>),<span class="function"><span class="keyword">function</span>(<span class="params">a,b</span>)</span>&#123;</div><div class="line">            <span class="keyword">var</span> r = entity[b];</div><div class="line">            <span class="keyword">return</span> <span class="keyword">typeof</span> r === <span class="string">'string'</span> ? r :a;</div><div class="line">       &#125;</div><div class="line">    &#125;</div><div class="line"> &#125;())</div></pre></td></tr></table></figure></p>
+<p>这个entity 对象若是放在deentityfy函数中，每次执行时都会有损耗，因为每次执行该函数的时候该字面量都会被求值一次。<br>3.每个模块都有一个外部的封闭函数，该函数必须至少被调用一次，每次调用都会创建一个新的模块实例。 封闭函数必须返回至少一个内部函数，这样内部函数才能在私有作用域中形成闭包，并且可以访问或者修改私有的状态。     </p>
 <ol>
 <li>当只需要一个实例时，可以对这个模块进行简单的改进来实现单例模式</li>
 </ol>
-<pre><code>var foo = (function cool(){
-    var something = &quot;ss&quot;;
-    var another = [1,2,3];
-    function doSomething (){
-        console.log(something);
-    }
-    function doAnother (){
-        console.log(another.join(&quot;!&quot;));
-    }
-    return {
-         doSomething:doSomething,
-         doAnother:doAnother
-    }
-    })(); 
-    foo.doSomething();
-    foo.doAnother();
-</code></pre><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>1.JS数组的length是没有上界的，不会发生越界错误。length属性的值是这个数组的最大整数属性名+1。并不一定等于数组里的属性个数。也可以设置length的值，设置更大的length不会给数组分配更多的空间，而把length设小将导致所有下标大于等于length的属性被删除。<br>2.判断一个对象是否为数组。     </p>
-<pre><code>var is_array = function (value){
-    return Object.prototype.toString.apply(value) === &quot;[object Array]&quot;;
-}
-</code></pre><p>3.数组几个重要的方法      </p>
-<pre><code>array.join(separator);//将数组构造成字符串  
-array.slice(start,end);// 对数组的浅复制，返回一个新数组
-array.splice(start,deleteCount,item...);// 在原数组上进行 手术。。。
-</code></pre><p>4.字符串几个重要方法     </p>
-<pre><code>string.slice(start,end);// 同array
-string.split(separator,limit);//将字符串以这个separator分割成片段组成数组
-</code></pre>  
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> foo = (<span class="function"><span class="keyword">function</span> <span class="title">cool</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> something = <span class="string">"ss"</span>;</div><div class="line">    <span class="keyword">var</span> another = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doSomething</span> (<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(something);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doAnother</span> (<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(another.join(<span class="string">"!"</span>));</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">         doSomething:doSomething,</div><div class="line">         doAnother:doAnother</div><div class="line">    &#125;</div><div class="line">    &#125;)();</div><div class="line">    foo.doSomething();</div><div class="line">    foo.doAnother();</div></pre></td></tr></table></figure>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>1.JS数组的length是没有上界的，不会发生越界错误。length属性的值是这个数组的最大整数属性名+1。并不一定等于数组里的属性个数。也可以设置length的值，设置更大的length不会给数组分配更多的空间，而把length设小将导致所有下标大于等于length的属性被删除。<br>2.判断一个对象是否为数组。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> is_array = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.apply(value) === <span class="string">"[object Array]"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>3.数组几个重要的方法<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">array.join(separator);<span class="comment">//将数组构造成字符串  </span></div><div class="line">array.slice(start,end);<span class="comment">// 对数组的浅复制，返回一个新数组</span></div><div class="line">array.splice(start,deleteCount,item...);<span class="comment">// 在原数组上进行 手术。。。</span></div></pre></td></tr></table></figure></p>
+<p>4.字符串几个重要方法<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">string.slice(start,end);<span class="comment">// 同array</span></div><div class="line">string.split(separator,limit);<span class="comment">//将字符串以这个separator分割成片段组成数组</span></div></pre></td></tr></table></figure></p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -318,11 +206,11 @@ string.split(separator,limit);//将字符串以这个separator分割成片段组
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
 			
 		
 			
@@ -330,7 +218,7 @@ string.split(separator,limit);//将字符串以这个separator分割成片段组
 			
 		
 			
-				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
 			
 		
 			
@@ -342,11 +230,11 @@ string.split(separator,limit);//将字符串以这个separator分割成片段组
 			
 		
 			
-				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
@@ -354,7 +242,7 @@ string.split(separator,limit);//将字符串以这个separator分割成片段组
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 			
@@ -362,7 +250,11 @@ string.split(separator,limit);//将字符串以这个separator分割成片段组
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			

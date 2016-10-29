@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/07/04/this/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;看过js的this很多次，每次都是当时理解，过不了多久就会忘掉，所以不如整理出来，温故而知新。">
-<meta property="og:updated_time" content="2016-08-19T03:02:18.000Z">
+<meta property="og:updated_time" content="2016-10-28T09:32:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS的this总结">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;看过js的this很多次，每次都是当时理解，过不了多久就会忘掉，所以不如整理出来，温故而知新。">
@@ -108,185 +108,38 @@
 <li>4.<strong>默认规则</strong> 在严格模式下绑定到undefined,否则绑定到全局对象。</li>
 </ul>
 <p>正常情况下这四条就够用了，下面倒序依次讲解这四个规则。然后再说明一些特殊情况。</p>
-<h3 id="默认规则"><a href="#默认规则" class="headerlink" title="默认规则"></a>默认规则</h3><p>在无法应用其他规则的时候就使用这条规则。首先是独立函数调用。   </p>
-<pre><code>function foo(){
-    var a = 3;
-    console.log(this.a);
-}
-var a = 2 ;
-foo();//2
-</code></pre><p>在这里就是应用了默认绑定，因为foo函数的调用位置是在全局对象中，根据this的值依据的是调用位置来看，此时this的值必定指向全局对象。<br>但是对于默认规则是和当前模式有关系的。</p>
-<pre><code>function foo(){
-    &apos;use strict&apos;;
-    var a = 3;
-    console.log(this.a);
-}
-var a = 2;
-foo();//TypeError: Cannot read property &apos;a&apos; of undefined  
-</code></pre><h3 id="隐式绑定"><a href="#隐式绑定" class="headerlink" title="隐式绑定"></a>隐式绑定</h3><p>这种情况需要考虑的是 调用位置是否有上下文对象，或者该函数是否属于某个对象。    </p>
-<pre><code>function foo(){
-    var a = 3;
-    console.log(this.a)
-}
-var obj2 ={
-    a:2,
-    foo:foo
-}
-var obj1 = {
-    a:1,
-    obj2:obj2
-}
-obj1.obj2.foo();//2   
-</code></pre><p>在这里隐式绑定规则会把函数调用中的this绑定到这个上下文对象。并且根据this值的判定是根据调用位置的基本规则，也能轻松理解。<br>隐式绑定经常会发生的问题是 隐式丢失，即不会应用隐式绑定规则而是使用默认绑定规则或者undefined。     </p>
-<pre><code>function foo(){
-    console.log(this.a)
-}
-var obj={
-    a:2,
-    foo:foo
-}
-var bar = obj.foo;//函数别名
-var a = &quot;xx&quot;;
-bar();//&quot;xx&quot;   
-</code></pre><p>虽然bar是obj.foo的一个引用，但是实际上，它引用的是 foo函数本身，所以自然而然的使用的就是默认规则。    </p>
-<pre><code>function foo(){
-    console.log(this.a);
-}
-function doFoo(fn){
-    fn();
-}
-var obj={
-    a:2,
-    foo:foo
-}
-var a = &quot;XX&quot;;
-doFoo(obj.foo);//&quot;XX&quot;  
-</code></pre><p>参数传递是一种隐式传递，同样对于类似的setTimeout(fun,delay)这样的函数也会产生这样的情况。    </p>
-<pre><code>var obj = {
-    id:&quot;aa&quot;,
-    foo:function say(){
-        console.log(this.id)
-    }
-}
-var id =&quot;xx&quot;;
-obj.foo();//&quot;aa&quot;
-setTimeout(obj.foo,100);//&quot;xx&quot;
-</code></pre><p>解决办法一 ： that = this;     </p>
-<pre><code>var obj = {
-    count :0,
-    foo: function say(){
-        var that = this;
-
-        if(that.count&lt;1){
-            setTimeout(function(){
-                that.count++;
-                console.log(that.count)
-                },100)
-        }
-    }
-}
-obj.foo();//1  
-</code></pre><p>解决方法二：硬绑定     </p>
-<pre><code>var obj = {
-    count :0,
-    foo: function say(){
-        if(this.count&lt;1){
-            setTimeout(function(){
-                this.count++;
-                console.log(this.count)
-                }.bind(this),100)
-        }
-    }
-}
-obj.foo();//1
-</code></pre><p>解决办法三：=&gt;     </p>
-<h3 id="显示绑定"><a href="#显示绑定" class="headerlink" title="显示绑定"></a>显示绑定</h3><p>在隐式绑定中，函数必须明确的指出属于或者包含于哪个对象，若是不想明确的指出包含于哪个函数就进行函数调用则可以使用显示绑定。即使用call(…)和 apply(…)方法。<br>这两个方法的第一个参数是一个<strong>对象</strong>，在调用函数时将其绑定到this。因为这种方式是直接指定this的值，所以称之为显示绑定。    </p>
-<pre><code>function foo(){
-    console.log(this.a)
-}
-var obj ={
-    a:2
-}
-foo.call(obj);
-</code></pre><p>通过foo.call(…)可以在调用foo时强制把它的this绑定到obj上。<br>前面说call(…)函数的第一个参数是一个对象。倘若传入的是一个原始值（如数字，字符串），这个值会被转换成它的对象形式（即new Number(),new String(),new Boolean()），这就是“装箱”。<br>显示绑定也会有绑定丢失的情况。    </p>
+<h3 id="默认规则"><a href="#默认规则" class="headerlink" title="默认规则"></a>默认规则</h3><p>在无法应用其他规则的时候就使用这条规则。首先是独立函数调用。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> a = <span class="number">3</span>;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> a = <span class="number">2</span> ;</div><div class="line">foo();<span class="comment">//2</span></div></pre></td></tr></table></figure></p>
+<p>在这里就是应用了默认绑定，因为foo函数的调用位置是在全局对象中，根据this的值依据的是调用位置来看，此时this的值必定指向全局对象。<br>但是对于默认规则是和当前模式有关系的。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line"><span class="meta">    'use strict'</span>;</div><div class="line">    <span class="keyword">var</span> a = <span class="number">3</span>;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</div><div class="line">foo();<span class="comment">//TypeError: Cannot read property 'a' of undefined</span></div></pre></td></tr></table></figure></p>
+<h3 id="隐式绑定"><a href="#隐式绑定" class="headerlink" title="隐式绑定"></a>隐式绑定</h3><p>这种情况需要考虑的是 调用位置是否有上下文对象，或者该函数是否属于某个对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> a = <span class="number">3</span>;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj2 =&#123;</div><div class="line">    a:<span class="number">2</span>,</div><div class="line">    foo:foo</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj1 = &#123;</div><div class="line">    a:<span class="number">1</span>,</div><div class="line">    obj2:obj2</div><div class="line">&#125;</div><div class="line">obj1.obj2.foo();<span class="comment">//2</span></div></pre></td></tr></table></figure></p>
+<p>在这里隐式绑定规则会把函数调用中的this绑定到这个上下文对象。并且根据this值的判定是根据调用位置的基本规则，也能轻松理解。<br>隐式绑定经常会发生的问题是 隐式丢失，即不会应用隐式绑定规则而是使用默认绑定规则或者undefined。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj=&#123;</div><div class="line">    a:<span class="number">2</span>,</div><div class="line">    foo:foo</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> bar = obj.foo;<span class="comment">//函数别名</span></div><div class="line"><span class="keyword">var</span> a = <span class="string">"xx"</span>;</div><div class="line">bar();<span class="comment">//"xx"</span></div></pre></td></tr></table></figure></p>
+<p>虽然bar是obj.foo的一个引用，但是实际上，它引用的是 foo函数本身，所以自然而然的使用的就是默认规则。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">doFoo</span>(<span class="params">fn</span>)</span>&#123;</div><div class="line">    fn();</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj=&#123;</div><div class="line">    a:<span class="number">2</span>,</div><div class="line">    foo:foo</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> a = <span class="string">"XX"</span>;</div><div class="line">doFoo(obj.foo);<span class="comment">//"XX"</span></div></pre></td></tr></table></figure></p>
+<p>参数传递是一种隐式传递，同样对于类似的setTimeout(fun,delay)这样的函数也会产生这样的情况。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    id:<span class="string">"aa"</span>,</div><div class="line">    foo:<span class="function"><span class="keyword">function</span> <span class="title">say</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.id)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> id =<span class="string">"xx"</span>;</div><div class="line">obj.foo();<span class="comment">//"aa"</span></div><div class="line">setTimeout(obj.foo,<span class="number">100</span>);<span class="comment">//"xx"</span></div></pre></td></tr></table></figure></p>
+<p>解决办法一 ： that = this;<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    count :<span class="number">0</span>,</div><div class="line">    foo: <span class="function"><span class="keyword">function</span> <span class="title">say</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> that = <span class="keyword">this</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(that.count&lt;<span class="number">1</span>)&#123;</div><div class="line">            setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">                that.count++;</div><div class="line">                <span class="built_in">console</span>.log(that.count)</div><div class="line">                &#125;,<span class="number">100</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">obj.foo();<span class="comment">//1</span></div></pre></td></tr></table></figure></p>
+<p>解决方法二：硬绑定<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    count :<span class="number">0</span>,</div><div class="line">    foo: <span class="function"><span class="keyword">function</span> <span class="title">say</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.count&lt;<span class="number">1</span>)&#123;</div><div class="line">            setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">                <span class="keyword">this</span>.count++;</div><div class="line">                <span class="built_in">console</span>.log(<span class="keyword">this</span>.count)</div><div class="line">                &#125;.bind(<span class="keyword">this</span>),<span class="number">100</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">obj.foo();<span class="comment">//1</span></div></pre></td></tr></table></figure></p>
+<p>解决办法三：=&gt;     </p>
+<h3 id="显示绑定"><a href="#显示绑定" class="headerlink" title="显示绑定"></a>显示绑定</h3><p>在隐式绑定中，函数必须明确的指出属于或者包含于哪个对象，若是不想明确的指出包含于哪个函数就进行函数调用则可以使用显示绑定。即使用call(…)和 apply(…)方法。<br>这两个方法的第一个参数是一个<strong>对象</strong>，在调用函数时将其绑定到this。因为这种方式是直接指定this的值，所以称之为显示绑定。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a)</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj =&#123;</div><div class="line">    a:<span class="number">2</span></div><div class="line">&#125;</div><div class="line">foo.call(obj);</div></pre></td></tr></table></figure></p>
+<p>通过foo.call(…)可以在调用foo时强制把它的this绑定到obj上。<br>前面说call(…)函数的第一个参数是一个对象。倘若传入的是一个原始值（如数字，字符串），这个值会被转换成它的对象形式（即new Number(),new String(),new Boolean()），这就是“装箱”。<br>显示绑定也会有绑定丢失的情况。    </p>
 <ul>
 <li><strong>硬绑定</strong> 用来解决绑定丢失。    </li>
 </ul>
-<pre><code>function foo(){
-    console.log(this.a);
-}
-var obj = {
-    a:2
-}
-var bar = function(){
-    foo.call(obj);
-}
-bar();//2
-setTimeout(bar,100);//2
-bar.call(window);//2 硬绑定也不可能再修改她的this
-</code></pre><p>硬绑定的典型应用场景是创建一个包裹函数，负责接收参数并返回值。     </p>
-<pre><code>function foo(sth){
-    console.log(this.a,sth);
-    return this.a + sth;
-}
-var obj ={
-    a:2
-}
-var bar = function (){
-    return foo.apply(obj,arguments);
-}
-var b = bar(3);//2,3
-console.log(b);//5
-</code></pre><p>另一种使用方法是创建一个可以重复使用的辅助函数   </p>
-<pre><code>function foo(sth){
-    console.log(this.a,sth);
-    return this.a + sth;
-}
-var obj ={
-    a:2
-}
-function bind (fn,obj){
-    return function(){
-        return fn.apply(obj,arguments);
-    }
-}
-var bar =bind(foo,obj);
-var b = bar(3);//2,3
-console.log(b);//5
-</code></pre><p>硬绑定很有用，所以ES5中包含bind方法。  </p>
-<pre><code>function foo(sth){
-    console.log(this.a,sth);
-    return this.a + sth;
-}
-var obj ={
-    a:2
-}
-var bar = foo.bind(obj);//给foo绑定this
-var b = bar(3);//2 3  执行 foo
-console.log(b);//3
-</code></pre><ul>
-<li><p><strong>API中的 this</strong>        </p>
-<p>  function foo(e){</p>
-<pre><code>console.log(e,this.id);
-</code></pre><p>  }<br>  var obj = {</p>
-<pre><code>id:&quot;aa&quot;
-</code></pre><p>  }<br>  [1,2,3].forEach(foo,obj);//1 aa 2 aa 3 aa </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    a:<span class="number">2</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    foo.call(obj);</div><div class="line">&#125;</div><div class="line">bar();<span class="comment">//2</span></div><div class="line">setTimeout(bar,<span class="number">100</span>);<span class="comment">//2</span></div><div class="line">bar.call(<span class="built_in">window</span>);<span class="comment">//2 硬绑定也不可能再修改她的this</span></div></pre></td></tr></table></figure>
+<p>硬绑定的典型应用场景是创建一个包裹函数，负责接收参数并返回值。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">sth</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a,sth);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.a + sth;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj =&#123;</div><div class="line">    a:<span class="number">2</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> bar = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> foo.apply(obj,<span class="built_in">arguments</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> b = bar(<span class="number">3</span>);<span class="comment">//2,3</span></div><div class="line"><span class="built_in">console</span>.log(b);<span class="comment">//5</span></div></pre></td></tr></table></figure></p>
+<p>另一种使用方法是创建一个可以重复使用的辅助函数<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">sth</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a,sth);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.a + sth;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj =&#123;</div><div class="line">    a:<span class="number">2</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bind</span> (<span class="params">fn,obj</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">return</span> fn.apply(obj,<span class="built_in">arguments</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> bar =bind(foo,obj);</div><div class="line"><span class="keyword">var</span> b = bar(<span class="number">3</span>);<span class="comment">//2,3</span></div><div class="line"><span class="built_in">console</span>.log(b);<span class="comment">//5</span></div></pre></td></tr></table></figure></p>
+<p>硬绑定很有用，所以ES5中包含bind方法。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">sth</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a,sth);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.a + sth;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj =&#123;</div><div class="line">    a:<span class="number">2</span></div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> bar = foo.bind(obj);<span class="comment">//给foo绑定this</span></div><div class="line"><span class="keyword">var</span> b = bar(<span class="number">3</span>);<span class="comment">//2 3  执行 foo</span></div><div class="line"><span class="built_in">console</span>.log(b);<span class="comment">//3</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>API中的 this</strong>        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(e,<span class="keyword">this</span>.id);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> obj = &#123;</div><div class="line">    id:<span class="string">"aa"</span></div><div class="line">&#125;</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>].forEach(foo,obj);<span class="comment">//1 aa 2 aa 3 aa</span></div></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>对于forEach(func,thisArg)中的 thisArc 为“value to use as this when executing func”</p>
-<h3 id="new-绑定"><a href="#new-绑定" class="headerlink" title="new 绑定"></a>new 绑定</h3><p>在js中构造函数只是普通的函数，只是使用new操作符进行调用的函数。当用new进行调用函数时，会自动执行 </p>
+<h3 id="new-绑定"><a href="#new-绑定" class="headerlink" title="new 绑定"></a>new 绑定</h3><p>在js中构造函数只是普通的函数，只是使用new操作符进行调用的函数。当用new进行调用函数时，会自动执行</p>
 <ul>
 <li>1.创建一个全新的对象</li>
 <li>2.这个新对象会被执行[[Prototye]]连接。</li>
 <li>3.这个新对象会绑定到函数调用的this。</li>
 <li>4.如果函数没有返回其他对象，那么new表达式中的函数调用会自动返回这个新对象。</li>
 </ul>
-<pre><code>function foo(a){
-    this.a =a;
-}
-var bar = new foo(2);
-console.log(bar.a);//2
-</code></pre><p><hr><br>以上就是正常情况this赋值的四条规则。    </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a</span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.a =a;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> bar = <span class="keyword">new</span> foo(<span class="number">2</span>);</div><div class="line"><span class="built_in">console</span>.log(bar.a);<span class="comment">//2</span></div></pre></td></tr></table></figure>
+<p><hr><br>以上就是正常情况this赋值的四条规则。    </p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -374,11 +227,11 @@ console.log(bar.a);//2
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
 			
 		
 			
@@ -386,7 +239,7 @@ console.log(bar.a);//2
 			
 		
 			
-				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
 			
 		
 			
@@ -398,11 +251,11 @@ console.log(bar.a);//2
 			
 		
 			
-				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
@@ -410,7 +263,7 @@ console.log(bar.a);//2
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 			
@@ -418,7 +271,11 @@ console.log(bar.a);//2
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			

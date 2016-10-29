@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>IFE任务练习笔记(三) | Lx15</title>
+    <title>DOM基础(一) | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
+    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;DOM基础的学习笔记。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IFE任务练习笔记(三)">
-<meta property="og:url" content="http://yoursite.com/2016/09/30/IFE笔记(三)/index.html">
+<meta property="og:title" content="DOM基础(一)">
+<meta property="og:url" content="http://yoursite.com/2016/10/25/dom基础(一)/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
-<meta property="og:updated_time" content="2016-10-28T09:23:50.000Z">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;DOM基础的学习笔记。">
+<meta property="og:updated_time" content="2016-10-28T09:15:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IFE任务练习笔记(三)">
-<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
+<meta name="twitter:title" content="DOM基础(一)">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;DOM基础的学习笔记。">
 
     
     
@@ -78,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/09/30/IFE笔记(三)/" title="IFE任务练习笔记(三)" itemprop="url">IFE任务练习笔记(三)</a>
+      <a href="/2016/10/25/dom基础(一)/" title="DOM基础(一)" itemprop="url">DOM基础(一)</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-09-29T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-30</time>
+    <time datetime="2016-10-24T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-10-25</time>
     
   </p>
 </header>
@@ -94,43 +94,63 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM"><span class="toc-number">1.</span> <span class="toc-text">DOM</span></a></li></ol>
 		
 		</div>
 		
-		<p>&nbsp;&nbsp;&nbsp;&nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。</p>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;DOM基础的学习笔记。</p>
 <a id="more"></a>
+<h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><ol>
+<li><code>Node类型</code>DOM1级定义了一个Node接口，JS中的所有节点类型都继承自Node类型，所以所有的节点类型都共享着相同的属性与方法。<br>都有的属性（只读）：</li>
+</ol>
+<ul>
+<li><code>nodeType</code></li>
+<li><code>nodeName</code>&amp; <code>nodeValue</code>: 这两个值取决于节点的类型。对于元素 nodeName:元素的标签名，nodeValue:null.</li>
+<li><code>childNodes</code> :保存着NodeList对象。</li>
+<li><code>parentNode</code></li>
+<li><code>previousSibling</code>:childNodes 列表中的第一个节点的previousSibling为null</li>
+<li><code>nextSibling</code>:childNodes 列表中的最后一个节点的nextSibling为null</li>
+<li><code>firstChild</code>:childNodes 列表中的第一个节点</li>
+<li><code>lastChild</code>:childNodes 列表中的最后一个节点</li>
+<li><code>ownerDocument</code>:整个文档的整个节点</li>
+<li><code>hasChildNodes()</code><br>操作节点：</li>
+<li><code>appendChild()</code>: 向childNodes列表的末尾添加一个节点，返回新增的节点</li>
+<li><code>insertBefore()</code>:</li>
+<li><code>replaceChild()</code></li>
+<li><code>removeChild()</code></li>
+<li><code>cloneNode</code>:用于创建调用这个方法的节点的一个完全相同的副本 深复制&amp;浅复制</li>
+<li><code>normalize()</code>:</li>
+</ul>
 <ol>
-<li><p>左侧固定右侧自适应</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.left</span>&#123;</div><div class="line">   <span class="attribute">width</span>:<span class="number">200px</span>;</div><div class="line">   <span class="attribute">float</span>:left;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span>&#123;</div><div class="line">   <span class="attribute">margin-left</span>:<span class="number">200px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>右侧固定左侧自适应</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.left</span>&#123;</div><div class="line">    <span class="attribute">margin-right</span>:<span class="number">200px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.right</span>&#123;</div><div class="line">  <span class="attribute">position</span>:absolute;</div><div class="line">  <span class="attribute">top</span>:<span class="number">0</span>;</div><div class="line">  <span class="attribute">right</span>:<span class="number">0</span>;</div><div class="line">  <span class="attribute">width</span>:<span class="number">200px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>清除浮动—1<br><a href="http://zh.learnlayout.com/clearfix.html" target="_blank" rel="external">浮动</a><br>子元素因为浮动使得子元素的高度大于父元素的高度，即造成父元素塌陷。      </p>
-<p>方法一： 在父元素上添加</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">.clear&#123;</div><div class="line">   overflow:auto;</div><div class="line">   zoom:1;//兼容 IE6</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>清除浮动后原来在父容器上面添加的padding margin 对于子元素仍是适用的。<br>这种方法当子元素中的子元素变大时会使得父元素出现滚动条</p>
-<p>清除浮动—2</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">.clearfix&#123;</div><div class="line">  &amp;:after&#123;</div><div class="line">    content: "";</div><div class="line">    display: block;</div><div class="line">    visibility: hidden;</div><div class="line">    height: 0;</div><div class="line">    clear: both;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这种方法不会出现滚动条，但当子元素的子元素变大的时也可能会破坏布局</p>
-</li>
-<li><p>首字母大写 :first-letter{ font-size:22px;}<br>font: 多个属性一起使用是有顺序的。<br>字体倾斜：font-style:italic; 对于没有斜体变量的特殊字体应使用 oblique;<br>实现首字母大写并下沉样式：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&amp;<span class="selector-pseudo">:first-letter</span>&#123;</div><div class="line">  <span class="attribute">font-size</span>:<span class="number">70px</span>;</div><div class="line">  <span class="attribute">margin</span>:<span class="number">30px</span> <span class="number">10px</span> <span class="number">20px</span> <span class="number">0</span>;</div><div class="line">  <span class="attribute">float</span>:left;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p> 通过设置字号，float并配合margin来进行定位。</p>
-</li>
-<li><p>伪类设置双引号 content:open-quote;配合定位;</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&amp;<span class="selector-pseudo">::before</span>&#123;</div><div class="line">      <span class="attribute">content</span>: open-quote;</div><div class="line">    	<span class="attribute">position</span>:relative;</div><div class="line">      <span class="attribute">left</span>:<span class="number">20px</span>;</div><div class="line">      <span class="attribute">top</span>:<span class="number">20px</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>水平导航目录: ul+inline-block+absolute;</p>
-</li>
-<li><p>多个元素使用inline-block 布局时，当内部元素变大时，其他兄弟元素会错位，这个问题使用float:left;解决(问题见原生JS–110.html)</p>
-</li>
-<li><p>只在父元素上使用mouseover 与mouseout事件就想使得子元素出现和消失的结果，这会出现鼠标在子元素上移动时会闪个不停。。。<br>因为这会在连续触发父元素（问题见 原生js-110.html）<br>解决办法： 在父元素上使用 mouseover使得 子元素一进入就出现，在 子元素上使用mouseout 使得子元素消失。若是这时子元素内容变大使得子元素不能再触发，可以将子元素内容设置成背景图片（针对图片的情形），这时应考虑好DOM结构。</p>
-</li>
-<li><p>原生JS关于事件处理的套路：<br>在父元素上添加事件监听，在点击子元素时，会有事件冒泡，所以父元素上的事件监听肯定会监听到，然后在父元素的事件监听处理函数中判断是否是在子元素上，这时当然会用到event.target。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">delegateEvent</span>(<span class="params">delegateElement, targetTag, eventName, handler</span>) </span>&#123;</div><div class="line">  delegateElement.addEventListener(eventName, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> target = event.target;</div><div class="line">    <span class="keyword">if</span> (targetTag.toLowerCase() === target.nodeName.toLowerCase()) &#123;</div><div class="line">      <span class="keyword">return</span> handler(event);</div><div class="line">    &#125;</div><div class="line">  &#125;, <span class="literal">false</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
+<li><code>Document类型</code>nodeType:9</li>
+<li><code>Element类型</code><br>nodeType：1<br>nodeName 和 tagName都是元素标签名，获得标签名在用于相关操作时最好转换成大写或者小写。<br>nodeValue 值为null<br>操作特性(属性)的方法：</li>
+</ol>
+<ul>
+<li><code>getAttribute()</code></li>
+<li><code>setAttribute()</code></li>
+<li><code>removeAttribute()</code><br>Element类型中含有<code>attributes</code>属性。<code>attributes</code>属性中包含一个NamedNodeMap，是动态的集合。此对象拥有的方法：</li>
+<li><code>getNamedItem(name)</code></li>
+<li><code>removeNamedItem(name)</code></li>
+<li><code>setNamedItem(node)</code></li>
+<li><code>item(pos)</code><br>attributes 属性中包含一系列节点，每个节点的nodeName就是特性(属性)的名称，nodeValue是特性的值</li>
+</ul>
+<ol>
+<li><code>text类型</code><br>nodeType：3<br>nodeName:”#text”<br>nodeValue : 节点所包含的文本。访问节点中的文本可以通过 nodeValue 或者data属性。<br>操作节点中的文本的方法：  </li>
+</ol>
+<ul>
+<li><code>appendData(text)</code></li>
+<li><code>deleteData(offset,count)</code></li>
+<li><code>insertData(offset,text)</code></li>
+<li><code>replaceData(offset,count,text)</code></li>
+<li><code>splitText(offset)</code></li>
+<li><code>substringData(offset,count)</code></li>
+<li><code>document.createTextNode(text)</code>创建新文本节点</li>
+</ul>
+<ol>
+<li><code>Attr类型</code><br>nodeType：2<br>nodeName:特性的名称<br>nodeValue:特性的值<br>Attr 对象3个属性： name,value 和 specified</li>
+<li><code>动态脚本</code>: 在页面加载时不存在，但将来中的某一时刻通过修改DOM动态添加的脚本。方法：插入外部文件和直接插入js代码<br><code>动态样式</code>: 在页面加载时不存在的样式，在页面加载完成后动态加载到页面中。</li>
+<li><code>操作表格</code> 有一堆方法可以直接操作表格</li>
+<li><code>NodeList</code> 每当文档结构发生变化时，都会得到更新。</li>
 </ol>
   
 	</div>
@@ -140,7 +160,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/Tags/css/">css</a>
+  <span></span> <a href="/Tags/DOM/">DOM</a>
   </div>
 
 </div>
@@ -149,7 +169,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/09/30/IFE笔记(三)/" data-title="IFE任务练习笔记(三) | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/10/25/dom基础(一)/" data-title="DOM基础(一) | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -163,18 +183,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/10/05/css3基本属性/" title="CSS3基本属性">
+ <a href="/2016/10/27/IFE笔记(五)/" title="IFE任务练习笔记(五)">
   <strong>上一篇：</strong><br/>
   <span>
-  CSS3基本属性</span>
+  IFE任务练习笔记(五)</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/09/28/图解HTTP(一)/"  title="图解HTTP笔记(一)">
+<a href="/2016/10/22/ES6(2)/"  title="ES6学习笔记(一)">
  <strong>下一篇：</strong><br/> 
- <span>图解HTTP笔记(一)
+ <span>ES6学习笔记(一)
 </span>
 </a>
 </div>
@@ -183,7 +203,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/09/30/IFE笔记(三)/" data-title="IFE任务练习笔记(三)" data-url="http://yoursite.com/2016/09/30/IFE笔记(三)/"></div>
+	<div class="ds-thread" data-thread-key="2016/10/25/dom基础(一)/" data-title="DOM基础(一)" data-url="http://yoursite.com/2016/10/25/dom基础(一)/"></div>
 </section>
 
 
@@ -193,7 +213,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DOM"><span class="toc-number">1.</span> <span class="toc-text">DOM</span></a></li></ol>
  
   </div>
 

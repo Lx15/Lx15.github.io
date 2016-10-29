@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/09/15/IFE笔记(二)/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记之二。这里主要是css中的水平和垂直的的居中问题。">
-<meta property="og:updated_time" content="2016-09-16T14:45:27.000Z">
+<meta property="og:updated_time" content="2016-10-28T09:22:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IFE任务练习笔记(二)">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记之二。这里主要是css中的水平和垂直的的居中问题。">
@@ -110,7 +110,7 @@
    white-space:nowrap;  
 }
 </code></pre><p>  即使子元素的行高等于父元素的高度，这样自然就居中了。</p>
-<h3 id="子元素是像text或links-的inline-或-inline-多行元素"><a href="#子元素是像text或links-的inline-或-inline-多行元素" class="headerlink" title="子元素是像text或links 的inline 或 inline-* 多行元素"></a>子元素是像text或links 的inline 或 inline-* 多行元素</h3><p>  可以使用padding-top 或者padding-bootom但当元素在table cell 中时，是不管用的，这时可以用vertical-align.<br>  这里使用flex 也是很好的。关于flex，之后详细看看。<br>  当以上方法都不可用时，可以使用伪元素 </p>
+<h3 id="子元素是像text或links-的inline-或-inline-多行元素"><a href="#子元素是像text或links-的inline-或-inline-多行元素" class="headerlink" title="子元素是像text或links 的inline 或 inline-* 多行元素"></a>子元素是像text或links 的inline 或 inline-* 多行元素</h3><p>  可以使用padding-top 或者padding-bootom但当元素在table cell 中时，是不管用的，这时可以用vertical-align.<br>  这里使用flex 也是很好的。关于flex，之后详细看看。<br>  当以上方法都不可用时，可以使用伪元素</p>
 <pre><code>.parent{
     relative
 }
@@ -125,59 +125,19 @@
     display:inline-block;
     vertical-align : middle;
 }
-</code></pre><h3 id="子元素是一个块级元素"><a href="#子元素是一个块级元素" class="headerlink" title="子元素是一个块级元素"></a>子元素是一个块级元素</h3><p> *知道子元素的高度</p>
-<pre><code>.parent {
-    position:relative;
-}
-.child {
-    position:absolute;
-    top:50%;
-    height:100px;
-    padding:20px;
-    margin-top：-70px;// 50+20  
-}
-</code></pre><p> *不知道子元素的高度</p>
-<pre><code>.parent {
-    position:relative;
-}
-.child  {
-    position: absolute;
-    top:50%;
-    transform : translateY(-50%);
-}
-</code></pre><h3 id="使用flex"><a href="#使用flex" class="headerlink" title="使用flex"></a>使用flex</h3><pre><code>.parent {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-</code></pre><h2 id="既有水平居中又有垂直居中"><a href="#既有水平居中又有垂直居中" class="headerlink" title="既有水平居中又有垂直居中"></a>既有水平居中又有垂直居中</h2><h3 id="子元素有固定的宽和高"><a href="#子元素有固定的宽和高" class="headerlink" title="子元素有固定的宽和高"></a>子元素有固定的宽和高</h3><pre><code>  .parent{
-    position:relative;
-  }
-.child {
-    width: 300px;
-    height: 100px;
-    padding: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -70px 0 0 -170px;
-}
-</code></pre><h3 id="子元素有未知的宽和高"><a href="#子元素有未知的宽和高" class="headerlink" title="子元素有未知的宽和高"></a>子元素有未知的宽和高</h3><pre><code>.parent {
-  position: relative;
-}
-.child {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-</code></pre><h3 id="使用flex-1"><a href="#使用flex-1" class="headerlink" title="使用flex"></a>使用flex</h3><p>  是时候好好学学使用flex了</p>
-<pre><code>.parent {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><pre><code>GAME　OVER  !!!
+</code></pre><h3 id="子元素是一个块级元素"><a href="#子元素是一个块级元素" class="headerlink" title="子元素是一个块级元素"></a>子元素是一个块级元素</h3><ul>
+<li><p>知道子元素的高度</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">.parent &#123;</div><div class="line">    position:relative;</div><div class="line">&#125;</div><div class="line">.child &#123;</div><div class="line">    position:absolute;</div><div class="line">    top:50%;</div><div class="line">    height:100px;</div><div class="line">    padding:20px;</div><div class="line">    margin-top：-70px;// 50+20  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>不知道子元素的高度</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">position</span>:relative;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.child</span>  &#123;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">top</span>:<span class="number">50%</span>;</div><div class="line">    <span class="attribute">transform </span>: <span class="built_in">translateY</span>(-50%);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="使用flex"><a href="#使用flex" class="headerlink" title="使用flex"></a>使用flex</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">    <span class="attribute">flex-direction</span>: column;</div><div class="line">    <span class="attribute">justify-content</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="既有水平居中又有垂直居中"><a href="#既有水平居中又有垂直居中" class="headerlink" title="既有水平居中又有垂直居中"></a>既有水平居中又有垂直居中</h2><h3 id="子元素有固定的宽和高"><a href="#子元素有固定的宽和高" class="headerlink" title="子元素有固定的宽和高"></a>子元素有固定的宽和高</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">  <span class="selector-class">.parent</span>&#123;</div><div class="line">    <span class="attribute">position</span>:relative;</div><div class="line">  &#125;</div><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">padding</span>: <span class="number">20px</span>;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">margin</span>: -<span class="number">70px</span> <span class="number">0</span> <span class="number">0</span> -<span class="number">170px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="子元素有未知的宽和高"><a href="#子元素有未知的宽和高" class="headerlink" title="子元素有未知的宽和高"></a>子元素有未知的宽和高</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%, -50%);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用flex-1"><a href="#使用flex-1" class="headerlink" title="使用flex"></a>使用flex</h3><p>  是时候好好学学使用flex了<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">  <span class="attribute">display</span>: flex;</div><div class="line">  <span class="attribute">justify-content</span>: center;</div><div class="line">  <span class="attribute">align-items</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><pre><code>GAME　OVER  !!!
 </code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
@@ -265,11 +225,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
 			
 		
 			
@@ -277,7 +237,7 @@
 			
 		
 			
-				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
 			
 		
 			
@@ -289,11 +249,11 @@
 			
 		
 			
-				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
@@ -301,7 +261,7 @@
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 			
@@ -309,7 +269,11 @@
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			

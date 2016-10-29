@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/09/06/event/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。我主要使用的DOM2级方法，并且为了浏览器的兼容性基本上都设置在冒泡阶段捕获。这里主要是原生事件的基本知识，具体属性问题在实际使用时一查就知道了，所以也不全哈~~~">
-<meta property="og:updated_time" content="2016-10-15T01:51:11.000Z">
+<meta property="og:updated_time" content="2016-10-29T02:09:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS中的事件（一）">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;JS中原生的事件需要关注的主要是事件的处理程序、事件对象以及跨浏览器的解决方案。我主要使用的DOM2级方法，并且为了浏览器的兼容性基本上都设置在冒泡阶段捕获。这里主要是原生事件的基本知识，具体属性问题在实际使用时一查就知道了，所以也不全哈~~~">
@@ -94,7 +94,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件流"><span class="toc-number">1.</span> <span class="toc-text">事件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件处理程序"><span class="toc-number">2.</span> <span class="toc-text">事件处理程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件对象"><span class="toc-number">3.</span> <span class="toc-text">事件对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件流"><span class="toc-number">1.</span> <span class="toc-text">事件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件处理程序"><span class="toc-number">2.</span> <span class="toc-text">事件处理程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件对象"><span class="toc-number">3.</span> <span class="toc-text">事件对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存与性能"><span class="toc-number">4.</span> <span class="toc-text">内存与性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
 		
 		</div>
 		
@@ -103,19 +103,15 @@
 <h2 id="事件流"><a href="#事件流" class="headerlink" title="事件流"></a>事件流</h2><p>事件流是页面中接收事件的顺序：冒泡（IE）与捕捉（网景）。 现在高版本的浏览器这两种都会支持，在”DOM2级事件”中将事件流包括三个阶段：事件捕获阶段、处于目标阶段和事件冒泡阶段。</p>
 <h2 id="事件处理程序"><a href="#事件处理程序" class="headerlink" title="事件处理程序"></a>事件处理程序</h2><ol>
 <li><strong>DOM0 级事件处理程序</strong>每个元素都有自己的事件处理程序属性（onclick等属性），这些属性通常小写，将这种属性值设置成一个函数，就可以指定事件处理程序。这时候的事件处理程序是在元素的作用域中运行， 即程序中的this 指向当前元素。(onclick)(这是肯定的啊，这个事件处理程序是这个元素对象的一个属性方法，this自然指向自己…)，注意：这种方法添加的事件处理程序会在事件流的冒泡阶段被处理。<br>删除事件处理程序： btn.onclick = null;</li>
-</ol>
-<ol>
-<li><strong>DOM2 级事件处理程序</strong>DOM2级事件定义了两个方法，用于指定和删除事件处理程序的操作，addEventListener()和removeEventListener()。所有DOM节点都包含着两个方法，并且有3个参数：要处理的事件名、作为事件处理程序的函数和一个布尔值。true:表示在捕获阶段调用事件处理程序。false:在冒泡阶段调用事件处理程序（建议用false）.</li>
-</ol>
-<p>DOM2 好处是可以添加多个事件处理程序。 用addEventListener()添加的事件处理函数必须用removeEventListener()才能移除。对于匿名函数无法处理。这时候的事件处理程序是在元素的作用域中运行， 即程序中的this 指向当前元素。  （click）</p>
-<ol>
+<li><p><strong>DOM2 级事件处理程序</strong>DOM2级事件定义了两个方法，用于指定和删除事件处理程序的操作，addEventListener()和removeEventListener()。所有DOM节点都包含着两个方法，并且有3个参数：要处理的事件名、作为事件处理程序的函数和一个布尔值。true:表示在捕获阶段调用事件处理程序。false:在冒泡阶段调用事件处理程序（建议用false）.</p>
+<p>DOM2 好处是可以添加多个事件处理程序。 用addEventListener()添加的事件处理函数必须用removeEventListener()才能移除。对于匿名函数无法处理。这时候的事件处理程序是在元素的作用域中运行， 即程序中的this 指向当前元素。  （click）     </p>
+</li>
 <li><p><strong>IE事件处理程序</strong>IE 实现了两个方法，attachEvent()与detachEvent()。参数为事件处理程序名称与事件处理程序参数。 attachEvent添加的事件处理程序都会被添加到冒泡阶段。但此事件处理程序的作用域是全局。可以用来为一个元素添加多个事件处理程序。detachEvent用来移除事件。（onclick）.<br>与DOM0级方法与DOM2级方法不一样的是 :这个attachEvent()中的事件处理程序是在全局作用域中运行。  </p>
-<p>btn.attachEvent(‘onclick’,function(){<br>  alert(this == window);// true    !!! 很重要<br>  })</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">btn.attachEvent(<span class="string">'onclick'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  alert(<span class="keyword">this</span> == <span class="built_in">window</span>);<span class="comment">// true    !!! 很重要</span></div><div class="line">  &#125;)</div></pre></td></tr></table></figure>
 <p>另外： 添加多个事件处理程序时 这些事件处理程序不是以添加他们的顺序执行，而是以相反的顺序触发!!!!!!!!</p>
 </li>
-<li><p><strong>跨浏览器的事件处理程序</strong>创建一个属于EventUtil对象的方法addHandler 与 removeHandler()。职责是根据情况分别使用DOM0级方法、DOM2级方法或ＩＥ方法来添加事件。３个参数：要操作的元素、事件名称和事件处理函数。
-　</p>
-<h2 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h2></li>
+<li><strong>跨浏览器的事件处理程序</strong>创建一个属于EventUtil对象的方法addHandler 与 removeHandler()。职责是根据情况分别使用DOM0级方法、DOM2级方法或ＩＥ方法来添加事件。３个参数：要操作的元素、事件名称和事件处理函数。
+　<h2 id="事件对象"><a href="#事件对象" class="headerlink" title="事件对象"></a>事件对象</h2></li>
 </ol>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;所有浏览器都支持event对象。在触发DOM上的某个事件时，都会产生一个事件对象event.这个对象上面包含着所有与事件有关的信息。     </p>
 <ol>
@@ -126,6 +122,14 @@
 <li><p><strong>跨浏览器的事件对象</strong></p>
 </li>
 </ol>
+<h2 id="内存与性能"><a href="#内存与性能" class="headerlink" title="内存与性能"></a>内存与性能</h2><p>  在JS中,添加到页面上的事件处理程序数量将直接关系到页面的整体运行性能，导致这一问题的原因：首先，每个函数都是对象，都会占用内存；内存中的对象越多，性能就越差。 其次，必须事先指定所有事件处理程序而导致的DOM访问次数增加，会延迟整个页面的交互就绪事件。</p>
+<ol>
+<li><code>事件委托</code>：可以解决 “事件处理程序过多”。事件委托利用冒泡，只在DOM树中尽量最高的层次上添加一个事件处理程序，就可以管理某一类型的所有事件。</li>
+<li><code>空事件处理程序</code>： 当从文档中移除待有时间处理程序的元素时，若通过纯粹的DOM操作，如removeChild() 、 replaceChild()、innerHTML替换页面某一部分时，那么原来添加到元素中的事件处理程序极有可能无法被当做垃圾回收。另一种情况是当卸载页面时会使得<code>空事件处理程序</code>增加。</li>
+<li><code>移除事件处理程序</code>： 每当将事件处理程序指定元素时，运行中的浏览器代码与支持页面交互的js代码之间就会建立一个连接，这种连接越多，页面执行起来就会越慢。 为减少这种情况，一可以使用<code>事件委托</code>，二是可以使用<code>移除事件处理程序</code>。<br><code>移除事件处理程序</code>就是在使用removeChild() 、 replaceChild()、innerHTML替换页面某一部分之前，手动的移除事件处理程序<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">btn.onclick = <span class="literal">null</span>;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>更好的解决办法是 在页面卸载之前，先通过onunload事件处理程序移除所有事件处理程序。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//事件处理程序</span></div><div class="line"><span class="keyword">var</span> EventUtil = &#123;</div><div class="line">        addHandler: <span class="function"><span class="keyword">function</span>(<span class="params">element, type, handler</span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (element.addEventListener) &#123;</div><div class="line">                element.addEventListener(type, handler, <span class="literal">false</span>);</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (element.attachEvent) &#123;</div><div class="line">                element.attachEvent(<span class="string">"on"</span> + type, handler);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                elemenr[<span class="string">"on"</span> + type] = handler;</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        <span class="comment">//跨浏览器的事件对象</span></div><div class="line">        getEvent: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> event ? event : <span class="built_in">window</span>.event;</div><div class="line">        &#125;,</div><div class="line">        getTarget: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> event.target || event.srcElement;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>其实说了那么多，不过是在解释这几行代码，用时直接粘贴啊。。。这就是城市人的套路啊……<br>我还不知道在重用的库中事件的实现机制是什么，，，还有在AngularJS 中的实现机制是什么，等—-JS中的事件(二) 吧…..</p>
   
@@ -189,7 +193,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件流"><span class="toc-number">1.</span> <span class="toc-text">事件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件处理程序"><span class="toc-number">2.</span> <span class="toc-text">事件处理程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件对象"><span class="toc-number">3.</span> <span class="toc-text">事件对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事件流"><span class="toc-number">1.</span> <span class="toc-text">事件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件处理程序"><span class="toc-number">2.</span> <span class="toc-text">事件处理程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件对象"><span class="toc-number">3.</span> <span class="toc-text">事件对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存与性能"><span class="toc-number">4.</span> <span class="toc-text">内存与性能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
  
   </div>
 
@@ -215,11 +219,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
 			
 		
 			
@@ -227,7 +231,7 @@
 			
 		
 			
-				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
 			
 		
 			
@@ -239,11 +243,11 @@
 			
 		
 			
-				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
@@ -251,7 +255,7 @@
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 			
@@ -259,7 +263,11 @@
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			

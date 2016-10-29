@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/03/06/JS 中的insertSort&&mergeSort 算法实现/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
-<meta property="og:updated_time" content="2016-08-19T02:54:15.000Z">
+<meta property="og:updated_time" content="2016-10-28T10:26:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS中的insertSort&&mergeSort算法实现">
 <meta name="twitter:description" content="最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。">
@@ -94,69 +94,23 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mergeSort"><span class="toc-number">2.</span> <span class="toc-text">mergeSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">3.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">2.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
 		
 		</div>
 		
 		<p>最近在学习算法，所以将刚学的插入排序和归并排序用js实现一下。<br><a id="more"></a></p>
-<h2 id="insertSort"><a href="#insertSort" class="headerlink" title="insertSort"></a>insertSort</h2><pre><code>function insertSort(arr){
-    var l=arr.length;
-    for(var j=1;j &lt; l ;j++){
-        var key = arr[j];
-         var i = j-1;
-        while(  i&gt;=0 &amp;&amp; arr[i] &gt; key){
-             arr[i+1]=arr[i];
-             i--;
-        }
-        arr[i+1] =key;
-    }
-}
-</code></pre><ul>
-<li><p>注释：注意哨兵key的使用          </p>
-<h2 id="mergeSort"><a href="#mergeSort" class="headerlink" title="mergeSort"></a>mergeSort</h2><p>  function merge(arr,p,q,r){</p>
-<pre><code> var n1 = q-p+1;
- var n2 = r-q;
- var L=[],R=[];
- for(var i = 0;i &lt; n1;i++){
-   L[i] = arr[p+i];
-  }
-for(var j = 0;j &lt; n2;j++){
-   R[j] = arr[q+j+1];
-}
- L[n1] = Infinity;
- R[n2] = Infinity;
- var i=0,j=0;
- for(var k=p;k&lt;= r;k++){     
-    if(L[i] &lt;= R[j]){     
-      arr[k] = L[i];
-      i++;
-    }else{
-      arr[k] = R[j];
-      j++;
-   }       
-</code></pre><p>  }<br>  function  mergeSort(arr,p,r){</p>
-<pre><code>if(p &lt; r){
-  // q=Number.parseInt((p+r)/2);
-  //.........
-  var q=Math.floor((p+r)/2); 
-  mergeSort(arr,p,q);         }
-
-  mergeSort(arr,q+1,r);
-  merge(arr,p,q,r);
-</code></pre><p>  }                      </p>
-</li>
-<li><p>在mergeSort中最需要注意的是函数中的局部作用域，在最初的代码中mergeSort 中的q,因为没有写var而变成全局变量，所以出错。</p>
-</li>
+<h2 id="insertSort"><a href="#insertSort" class="headerlink" title="insertSort"></a>insertSort</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">insertSort</span>(<span class="params">arr</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> l=arr.length;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j=<span class="number">1</span>;j &lt; l ;j++)&#123;</div><div class="line">            <span class="keyword">var</span> key = arr[j];</div><div class="line">             <span class="keyword">var</span> i = j<span class="number">-1</span>;</div><div class="line">            <span class="keyword">while</span>(  i&gt;=<span class="number">0</span> &amp;&amp; arr[i] &gt; key)&#123;</div><div class="line">                 arr[i+<span class="number">1</span>]=arr[i];</div><div class="line">                 i--;</div><div class="line">            &#125;</div><div class="line">            arr[i+<span class="number">1</span>] =key;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"><span class="string">``</span><span class="string">`    </span></div><div class="line"></div><div class="line">* 注释：注意哨兵key的使用          </div><div class="line">## mergeSort</div><div class="line">`<span class="string">``</span>javascript</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">arr,p,q,r</span>)</span>&#123;</div><div class="line">         <span class="keyword">var</span> n1 = q-p+<span class="number">1</span>;</div><div class="line">         <span class="keyword">var</span> n2 = r-q;</div><div class="line">         <span class="keyword">var</span> L=[],R=[];</div><div class="line">         <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>;i &lt; n1;i++)&#123;</div><div class="line">           L[i] = arr[p+i];</div><div class="line">          &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>;j &lt; n2;j++)&#123;</div><div class="line">           R[j] = arr[q+j+<span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">         L[n1] = <span class="literal">Infinity</span>;</div><div class="line">         R[n2] = <span class="literal">Infinity</span>;</div><div class="line">         <span class="keyword">var</span> i=<span class="number">0</span>,j=<span class="number">0</span>;</div><div class="line">         <span class="keyword">for</span>(<span class="keyword">var</span> k=p;k&lt;= r;k++)&#123;     </div><div class="line">            <span class="keyword">if</span>(L[i] &lt;= R[j])&#123;     </div><div class="line">              arr[k] = L[i];</div><div class="line">              i++;</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">              arr[k] = R[j];</div><div class="line">              j++;</div><div class="line">           &#125;       </div><div class="line">    &#125;       </div><div class="line">    <span class="function"><span class="keyword">function</span>  <span class="title">mergeSort</span>(<span class="params">arr,p,r</span>)</span>&#123;</div><div class="line">        <span class="keyword">if</span>(p &lt; r)&#123;</div><div class="line">          <span class="comment">// q=Number.parseInt((p+r)/2);</span></div><div class="line">          <span class="comment">//.........</span></div><div class="line">          <span class="keyword">var</span> q=<span class="built_in">Math</span>.floor((p+r)/<span class="number">2</span>);</div><div class="line">          mergeSort(arr,p,q);         &#125;</div><div class="line"></div><div class="line">          mergeSort(arr,q+<span class="number">1</span>,r);</div><div class="line">          merge(arr,p,q,r);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>在mergeSort中最需要注意的是函数中的局部作用域，在最初的代码中mergeSort 中的q,因为没有写var而变成全局变量，所以出错。</li>
 </ul>
-<h2 id="用到的其他知识点"><a href="#用到的其他知识点" class="headerlink" title="用到的其他知识点"></a>用到的其他知识点</h2><p>代码实现用的是html界面，所以设计一下几个知识点：<br>(1)对于数字型的字符串转化成相应的数组，数组转化成字符串</p>
-<pre><code>var string=$(&quot;input[type=&apos;text&apos;]&quot;).val();
-var arr=JSON.parse(&quot;[&quot;+string+&quot;]&quot;);
-arr.toString();
-</code></pre><p>(2)修改dom 文本节点的值： </p>
-<pre><code>+ $().text();
-+ $().innerHTML=&quot;xx&quot;;
-+ $().firstChild.nodeValue=&quot;XX&quot; ;但这种之前不能为空 
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>   纸上得来终觉浅，绝知此事要躬行 。   </p>
+<h2 id="用到的其他知识点"><a href="#用到的其他知识点" class="headerlink" title="用到的其他知识点"></a>用到的其他知识点</h2><p>代码实现用的是html界面，所以设计一下几个知识点：<br>(1)对于数字型的字符串转化成相应的数组，数组转化成字符串<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> string=$(<span class="string">"input[type='text']"</span>).val();</div><div class="line"><span class="keyword">var</span> arr=<span class="built_in">JSON</span>.parse(<span class="string">"["</span>+string+<span class="string">"]"</span>);</div><div class="line">arr.toString();</div></pre></td></tr></table></figure></p>
+<p>(2)修改dom 文本节点的值：</p>
+<ul>
+<li>$().text();</li>
+<li>$().innerHTML=”xx”;</li>
+<li>$().firstChild.nodeValue=”XX” ;但这种之前不能为空</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>   纸上得来终觉浅，绝知此事要躬行 。   </p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -218,7 +172,7 @@ arr.toString();
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mergeSort"><span class="toc-number">2.</span> <span class="toc-text">mergeSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">3.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#insertSort"><span class="toc-number">1.</span> <span class="toc-text">insertSort</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用到的其他知识点"><span class="toc-number">2.</span> <span class="toc-text">用到的其他知识点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
  
   </div>
 
@@ -244,11 +198,11 @@ arr.toString();
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
 			
 		
 			
@@ -256,7 +210,7 @@ arr.toString();
 			
 		
 			
-				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
 			
 		
 			
@@ -268,11 +222,11 @@ arr.toString();
 			
 		
 			
-				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
@@ -280,7 +234,7 @@ arr.toString();
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 			
@@ -288,7 +242,11 @@ arr.toString();
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			

@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/08/01/JS语言精粹笔记(一)--对象/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="这里是关于自己看JS语言精粹对象方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。">
-<meta property="og:updated_time" content="2016-08-19T03:02:00.000Z">
+<meta property="og:updated_time" content="2016-10-28T09:30:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS语言精粹笔记(一)------对象">
 <meta name="twitter:description" content="这里是关于自己看JS语言精粹对象方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。">
@@ -100,14 +100,16 @@
 		
 		<p>这里是关于自己看JS语言精粹对象方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。<br><a id="more"></a></p>
 <h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>1.++ 当检索对象的一个并不存在的成员属性的值时，将返回undefined, || 运算符可用来填充默认值；</p>
-<pre><code>var a = {};       
-    a.b; //undefined     
-var c = a.b || &quot;c&quot;;  //&quot;c&quot;          
-</code></pre><p>++ 从undefined的成员属性中取值将会导致TypeError异常，可以使用&amp;&amp;来避免错误。</p>
-<pre><code>var a = {}；     
-    a.b; //throw &quot;TypeError&quot;         
-    a &amp;&amp; a.b; // undefined         
-</code></pre><p>2.对象通过引用来传递，正常情况下永远不会被复制。<br>3.原型关系是一种动态的关系，如果添加一个新的属性到原型中，该属性会立即对于所有基于该原型创建的对象可见。<br>4.<strong>反射</strong>：在不知道一个对象内部结构的情况下，若想通过一种机制和这个对象进行通信，这个机制就是反射。换种说法：反射就是获得对象内部的结构的方法就是反射。在js中常使用的是 for( … in …),在js中反射很简单是因为 函数也是对象可以作为属性值进行枚举出来。<br>for in 可以将在原型对象中的属性也列举出来，并且每次顺序不固定。for in 可以和hasOwnProperty 和typeOf一起使用去除原型对象中的属性或者去除函数类型的属性<br>5.<strong>应尽量减少全局污染</strong> 方法之一是 为应用创建一个唯一的全局变量（应该是一个对象）。把全部的全局性的资源全部放在一个名称空间下。基本所有的的库都会有自己的命名空间，这样来避免进行命名冲突。所有代码不会因为写在不同的文件中就会进行相互分隔，只是增加了易读性。方法二：闭包</p>
+<pre><code class="javascript"><span class="keyword">var</span> a = {};       
+    a.b; <span class="comment">//undefined     </span>
+<span class="keyword">var</span> c = a.b || <span class="string">"c"</span>;  <span class="comment">//"c"</span>
+</code></pre>
+<p>++ 从undefined的成员属性中取值将会导致TypeError异常，可以使用&amp;&amp;来避免错误。</p>
+<pre><code class="javascript"><span class="keyword">var</span> a = {}；     
+    a.b; <span class="comment">//throw "TypeError"         </span>
+    a &amp;&amp; a.b; <span class="comment">// undefined</span>
+</code></pre>
+<p>2.对象通过引用来传递，正常情况下永远不会被复制。<br>3.原型关系是一种动态的关系，如果添加一个新的属性到原型中，该属性会立即对于所有基于该原型创建的对象可见。<br>4.<strong>反射</strong>：在不知道一个对象内部结构的情况下，若想通过一种机制和这个对象进行通信，这个机制就是反射。换种说法：反射就是获得对象内部的结构的方法就是反射。在js中常使用的是 for( … in …),在js中反射很简单是因为 函数也是对象可以作为属性值进行枚举出来。<br>for in 可以将在原型对象中的属性也列举出来，并且每次顺序不固定。for in 可以和hasOwnProperty 和typeOf一起使用去除原型对象中的属性或者去除函数类型的属性<br>5.<strong>应尽量减少全局污染</strong> 方法之一是 为应用创建一个唯一的全局变量（应该是一个对象）。把全部的全局性的资源全部放在一个名称空间下。基本所有的的库都会有自己的命名空间，这样来避免进行命名冲突。所有代码不会因为写在不同的文件中就会进行相互分隔，只是增加了易读性。方法二：闭包</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -195,11 +197,11 @@ var c = a.b || &quot;c&quot;;  //&quot;c&quot;
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
 			
 		
 			
@@ -207,7 +209,7 @@ var c = a.b || &quot;c&quot;;  //&quot;c&quot;
 			
 		
 			
-				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
 			
 		
 			
@@ -219,11 +221,11 @@ var c = a.b || &quot;c&quot;;  //&quot;c&quot;
 			
 		
 			
-				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
@@ -231,7 +233,7 @@ var c = a.b || &quot;c&quot;;  //&quot;c&quot;
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 			
@@ -239,7 +241,11 @@ var c = a.b || &quot;c&quot;;  //&quot;c&quot;
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			

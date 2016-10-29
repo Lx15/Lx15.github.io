@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/08/21/JS语言精粹笔记(四)---易错点/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="这里是关于自己看JS语言精粹附录知识点方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。">
-<meta property="og:updated_time" content="2016-09-16T14:37:50.000Z">
+<meta property="og:updated_time" content="2016-10-28T09:29:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS语言精粹笔记(四)----易错点">
 <meta name="twitter:description" content="这里是关于自己看JS语言精粹附录知识点方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。">
@@ -99,30 +99,22 @@
 		</div>
 		
 		<p>这里是关于自己看JS语言精粹附录知识点方面的笔记，记得并不全面，是一些关于自己不太清楚的点。以后随着学习也可以继续补充。<br><a id="more"></a></p>
-<h5 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h5><p>typeof 运算符返回一个用于识别其运算数类型的 字符串(就是字符串)。     </p>
-<pre><code>typeof null ;// &apos;object&apos;
-my_value === nulll;// 用于检测 null
-if(my_value &amp;&amp; typeof my_value ==== &apos;object&apos;){
-    // 不是null的对象
-}
-</code></pre><h5 id="parseInt"><a href="#parseInt" class="headerlink" title="parseInt"></a>parseInt</h5><ol>
+<h5 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h5><p>typeof 运算符返回一个用于识别其运算数类型的 字符串(就是字符串)。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typeof</span> <span class="literal">null</span> ;<span class="comment">// 'object'</span></div><div class="line">my_value === nulll;<span class="comment">// 用于检测 null</span></div><div class="line"><span class="keyword">if</span>(my_value &amp;&amp; <span class="keyword">typeof</span> my_value ==== <span class="string">'object'</span>)&#123;</div><div class="line">    <span class="comment">// 不是null的对象</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h5 id="parseInt"><a href="#parseInt" class="headerlink" title="parseInt"></a>parseInt</h5><ol>
 <li><p>parseInt 将字符串转换成整数，遇到非数字时会停止解析。  </p>
-<p> parseInt(“16”);// 16<br> parseInt(“16 kkk”);//16</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">"16"</span>);<span class="comment">// 16</span></div><div class="line"><span class="built_in">parseInt</span>(<span class="string">"16 kkk"</span>);<span class="comment">//16</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>若第一个字符是0,则会按照八进制来求值,parseInt 可以指定解析基数parseInt(“08”,10)</p>
 <h5 id="NaN"><a href="#NaN" class="headerlink" title="NaN"></a>NaN</h5></li>
 <li><p>NaN 表示 不是一个数字。NaN 会在试图把非数字形式的字符串转换成数字时产生的。</p>
-<p> +’0’;// 0<br> +’oops’;// NaN<br> typeof NaN === ‘number’//true </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">+<span class="string">'0'</span>;<span class="comment">// 0</span></div><div class="line">+<span class="string">'oops'</span>;<span class="comment">// NaN</span></div><div class="line"><span class="keyword">typeof</span> <span class="literal">NaN</span> === <span class="string">'number'</span><span class="comment">//true</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>辨别数字与NaN     </p>
-<p> isNaN(NaN);// true<br> isNaN(0);//false<br> isNaN(“oo”);//true</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">isNaN</span>(<span class="literal">NaN</span>);<span class="comment">// true</span></div><div class="line"><span class="built_in">isNaN</span>(<span class="number">0</span>);<span class="comment">//false</span></div><div class="line"><span class="built_in">isNaN</span>(<span class="string">"oo"</span>);<span class="comment">//true</span></div></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>isFinite 函数会筛除掉 NaN 和 Infinity .isFinite 会试图把运算数转换成一个数字。</p>
-<pre><code>var  isNumber = function(value){
-    return typeof value === &apos;number&apos; &amp;&amp; isFinite (value);
-}//用于验证是不是一个数字
-</code></pre><h5 id="假值-falsy-value"><a href="#假值-falsy-value" class="headerlink" title="假值(falsy value)"></a>假值(falsy value)</h5><p> 0 、 NaN 、’’、false、null、undefined 这些值全部等同于假，但它们是不可互换的。    </p>
+<p>isFinite 函数会筛除掉 NaN 和 Infinity .isFinite 会试图把运算数转换成一个数字。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span>  isNumber = <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">typeof</span> value === <span class="string">'number'</span> &amp;&amp; <span class="built_in">isFinite</span> (value);</div><div class="line">&#125;<span class="comment">//用于验证是不是一个数字</span></div></pre></td></tr></table></figure></p>
+<h5 id="假值-falsy-value"><a href="#假值-falsy-value" class="headerlink" title="假值(falsy value)"></a>假值(falsy value)</h5><p> 0 、 NaN 、’’、false、null、undefined 这些值全部等同于假，但它们是不可互换的。    </p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -210,11 +202,11 @@ if(my_value &amp;&amp; typeof my_value ==== &apos;object&apos;){
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>14</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>6</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
 			
 		
 			
@@ -222,7 +214,7 @@ if(my_value &amp;&amp; typeof my_value ==== &apos;object&apos;){
 			
 		
 			
-				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>1</sup></a></li>
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
 			
 		
 			
@@ -234,11 +226,11 @@ if(my_value &amp;&amp; typeof my_value ==== &apos;object&apos;){
 			
 		
 			
-				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
@@ -246,7 +238,7 @@ if(my_value &amp;&amp; typeof my_value ==== &apos;object&apos;){
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 			
@@ -254,7 +246,11 @@ if(my_value &amp;&amp; typeof my_value ==== &apos;object&apos;){
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			
