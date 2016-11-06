@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/09/07/git操作/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。">
-<meta property="og:updated_time" content="2016-09-16T13:56:45.000Z">
+<meta property="og:updated_time" content="2016-11-06T05:50:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="日常常用git操作">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。">
@@ -101,25 +101,57 @@
 		<p>&nbsp;&nbsp;&nbsp;&nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。</p>
 <a id="more"></a>
 <ol>
-<li><p>从远程pull一个分支dev到本地分支dev-test<br>git pull origin dev:dev-test<br>这样会直接创建一个新的分支dev-test。</p>
+<li><p>从远程pull一个分支dev到本地分支dev-test</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git pull origin dev:dev-test</div></pre></td></tr></table></figure>
+<p>这样会直接创建一个新的分支dev-test。</p>
 </li>
-<li><p>在本地Dev分支创建分支dev-test<br>git branch dev-test<br>这个dev-test分支会直接从dev中复制过来内容，而（1）中的dev-test则在创建时为空。</p>
+<li><p>在本地Dev分支创建分支dev-test</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch dev-test</div></pre></td></tr></table></figure>
+<p>这个dev-test分支会直接从dev中复制过来内容，而（1）中的dev-test则在创建时为空。</p>
 </li>
-<li><p>切换到dev分支<br>git checkout dev</p>
+<li><p>切换到dev分支</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout dev</div></pre></td></tr></table></figure>
 </li>
-<li><p>合并dev-test到dev<br>git merge dev-test</p>
+<li><p>合并dev-test到dev</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git merge dev-test</div></pre></td></tr></table></figure>
 </li>
-<li><p>删除dev-test分支<br>git branch -d dev-test<br>强制删除dev-test分支<br>git branch -D dev-test</p>
+<li><p>删除dev-test分支</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch <span class="_">-d</span> dev-test</div></pre></td></tr></table></figure>
+<p>强制删除dev-test分支</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch -D dev-test</div></pre></td></tr></table></figure>
 </li>
-<li><p>推送本地分支dev-test到远程dev<br>git push origin dev-test:dev</p>
+<li><p>推送本地分支dev-test到远程dev</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin dev-test:dev</div></pre></td></tr></table></figure>
 </li>
 <li><p>coding.net 的邮箱 938266124@qq.com</p>
 </li>
-<li><p>从一个现有的本地仓库 clone到本地的另一个仓库<br>git clone /e/aaanow/remote/testGit.git</p>
+<li><p>从一个现有的本地仓库 clone到本地的另一个仓库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> /e/aaanow/remote/<span class="built_in">test</span>Git.git</div></pre></td></tr></table></figure>
 </li>
-<li><p>从现有仓库连接这个刚刚clone的仓库<br>git remote add <name> /e/aaanow/remote/testGit/.git</name></p>
+<li><p>从现有仓库连接这个刚刚clone的仓库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git remote add &lt;name&gt; /e/aaanow/remote/<span class="built_in">test</span>Git/.git</div></pre></td></tr></table></figure>
 </li>
-<li><p>git fetch origin master<br>git log -p master..origin/master<br>git merge origin/master<br>以上命令的含义：<br>  首先从远程的origin的master主分支下载最新的版本到origin/master分支上<br>  然后比较本地的master分支和origin/master分支的差别<br>  最后进行合并<br>  上述过程其实可以用以下更清晰的方式来进行：<br>  git fetch origin master:tmp<br>  git diff tmp<br>  git merge tmp</p>
+<li><p><code>git stash</code>与<code>git stash pop</code><br> <code>git stash</code> 用来暂存当前正在进行的工作。用于当想pull 最新代码， 又不想加新commit， 或者另外一种情况，为了修复一个紧急的bug,先stash, 使返回到自己上一个commit, 改完bug之后再stash pop, 继续原来的工作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> stash</div><div class="line"><span class="variable">$do</span> some work</div><div class="line"><span class="variable">$git</span> stash pop</div></pre></td></tr></table></figure>
+<p><code>git stash save</code>与<code>git stash list</code>      </p>
+<pre><code>Git stash save &quot;work in progress for foo feature&quot;
+当你多次使用’git stash’命令后，你的栈里将充满了未提交的代码，这时候你会对将哪个版本应用回来有些困惑，
+</code></pre><p><code>git stash list</code> 命令可以将当前的Git栈信息打印出来，你只需要找到对应的版本号，例如使用’git stash apply stash@{1}’就可以将你指定版本号为stash@{1}的工作取出来，当你将所有的栈都应用回来的时候，可以使用’git stash clear’来将栈清空。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">git stash          <span class="comment"># save uncommitted changes</span></div><div class="line"><span class="comment"># pull, edit, etc.</span></div><div class="line">git stash list     <span class="comment"># list stashed changes in this git</span></div><div class="line">git show stash@&#123;0&#125; <span class="comment"># see the last stash</span></div><div class="line">git stash pop      <span class="comment"># apply last stash and remove it from the list</span></div><div class="line"></div><div class="line">git stash --help   <span class="comment"># for more info</span></div></pre></td></tr></table></figure>
+</li>
+<li><p><code>git commit --amend</code>用于修复上次已提交的文字</p>
+</li>
+<li><p><code>git reset --soft 版本号</code>与<code>git reset --hard 版本号</code><br>  <code>git reset --soft 版本号</code>是回到版本号所在的版本，即不再有这个版本号之后的版本，但是工作区仍存在这个版本号更改之后的代码。此命令可用于 合并几次提交 去除冗余的提交提示 的情况。<br>  <code>git reset --hard 版本号</code> 是回到版本号所在的版本，即不再有这个版本号之后的版本，并且工作区也不存在这个版本号更改之后的代码。此命令可用于去除不用的功能。<br>  若是想找到去除的代码，可用下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git reflog</div><div class="line">git reset --hard 版本号</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>git fetch</code>与<code>git merge</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git fetch origin master</div><div class="line">git <span class="built_in">log</span> -p master..origin/master</div><div class="line">git merge origin/master</div></pre></td></tr></table></figure>
+<p>以上命令的含义：</p>
+<pre><code>首先从远程的origin的master主分支下载最新的版本到origin/master分支上
+然后比较本地的master分支和origin/master分支的差别
+最后进行合并
+</code></pre><p>上述过程其实可以用以下更清晰的方式来进行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git fetch origin master:tmp</div><div class="line">git diff tmp</div><div class="line">git merge tmp</div></pre></td></tr></table></figure>
 </li>
 </ol>
   
@@ -209,11 +241,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>16</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>8</sup></a></li>
 			
 		
 			

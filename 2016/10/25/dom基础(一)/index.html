@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>DOM基础(一) | Lx15</title>
+    <title>DOM基础 | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
@@ -13,13 +13,13 @@
     
     <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;DOM基础的学习笔记。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DOM基础(一)">
+<meta property="og:title" content="DOM基础">
 <meta property="og:url" content="http://yoursite.com/2016/10/25/dom基础(一)/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;DOM基础的学习笔记。">
-<meta property="og:updated_time" content="2016-10-28T09:15:57.000Z">
+<meta property="og:updated_time" content="2016-11-06T05:39:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DOM基础(一)">
+<meta name="twitter:title" content="DOM基础">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;DOM基础的学习笔记。">
 
     
@@ -78,7 +78,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/10/25/dom基础(一)/" title="DOM基础(一)" itemprop="url">DOM基础(一)</a>
+      <a href="/2016/10/25/dom基础(一)/" title="DOM基础" itemprop="url">DOM基础</a>
   </h1>
   <p class="article-author">By
        
@@ -101,54 +101,57 @@
 		<p>&nbsp;&nbsp;&nbsp;&nbsp;DOM基础的学习笔记。</p>
 <a id="more"></a>
 <h2 id="DOM"><a href="#DOM" class="headerlink" title="DOM"></a>DOM</h2><ol>
-<li><code>Node类型</code>DOM1级定义了一个Node接口，JS中的所有节点类型都继承自Node类型，所以所有的节点类型都共享着相同的属性与方法。<br>都有的属性（只读）：</li>
-</ol>
-<ul>
-<li><code>nodeType</code></li>
-<li><code>nodeName</code>&amp; <code>nodeValue</code>: 这两个值取决于节点的类型。对于元素 nodeName:元素的标签名，nodeValue:null.</li>
-<li><code>childNodes</code> :保存着NodeList对象。</li>
-<li><code>parentNode</code></li>
-<li><code>previousSibling</code>:childNodes 列表中的第一个节点的previousSibling为null</li>
-<li><code>nextSibling</code>:childNodes 列表中的最后一个节点的nextSibling为null</li>
-<li><code>firstChild</code>:childNodes 列表中的第一个节点</li>
-<li><code>lastChild</code>:childNodes 列表中的最后一个节点</li>
-<li><code>ownerDocument</code>:整个文档的整个节点</li>
-<li><code>hasChildNodes()</code><br>操作节点：</li>
-<li><code>appendChild()</code>: 向childNodes列表的末尾添加一个节点，返回新增的节点</li>
-<li><code>insertBefore()</code>:</li>
-<li><code>replaceChild()</code></li>
-<li><code>removeChild()</code></li>
-<li><code>cloneNode</code>:用于创建调用这个方法的节点的一个完全相同的副本 深复制&amp;浅复制</li>
-<li><code>normalize()</code>:</li>
-</ul>
-<ol>
-<li><code>Document类型</code>nodeType:9</li>
-<li><code>Element类型</code><br>nodeType：1<br>nodeName 和 tagName都是元素标签名，获得标签名在用于相关操作时最好转换成大写或者小写。<br>nodeValue 值为null<br>操作特性(属性)的方法：</li>
-</ol>
-<ul>
-<li><code>getAttribute()</code></li>
-<li><code>setAttribute()</code></li>
-<li><code>removeAttribute()</code><br>Element类型中含有<code>attributes</code>属性。<code>attributes</code>属性中包含一个NamedNodeMap，是动态的集合。此对象拥有的方法：</li>
-<li><code>getNamedItem(name)</code></li>
-<li><code>removeNamedItem(name)</code></li>
-<li><code>setNamedItem(node)</code></li>
-<li><code>item(pos)</code><br>attributes 属性中包含一系列节点，每个节点的nodeName就是特性(属性)的名称，nodeValue是特性的值</li>
-</ul>
-<ol>
-<li><code>text类型</code><br>nodeType：3<br>nodeName:”#text”<br>nodeValue : 节点所包含的文本。访问节点中的文本可以通过 nodeValue 或者data属性。<br>操作节点中的文本的方法：  </li>
-</ol>
-<ul>
-<li><code>appendData(text)</code></li>
-<li><code>deleteData(offset,count)</code></li>
-<li><code>insertData(offset,text)</code></li>
-<li><code>replaceData(offset,count,text)</code></li>
-<li><code>splitText(offset)</code></li>
-<li><code>substringData(offset,count)</code></li>
-<li><code>document.createTextNode(text)</code>创建新文本节点</li>
-</ul>
-<ol>
-<li><code>Attr类型</code><br>nodeType：2<br>nodeName:特性的名称<br>nodeValue:特性的值<br>Attr 对象3个属性： name,value 和 specified</li>
-<li><code>动态脚本</code>: 在页面加载时不存在，但将来中的某一时刻通过修改DOM动态添加的脚本。方法：插入外部文件和直接插入js代码<br><code>动态样式</code>: 在页面加载时不存在的样式，在页面加载完成后动态加载到页面中。</li>
+<li><p><code>Node类型</code>DOM1级定义了一个Node接口，JS中的所有节点类型都继承自Node类型，所以所有的节点类型都共享着相同的属性与方法。<br>都有的属性（只读）：</p>
+<blockquote>
+<p>nodeType<br>nodeName&amp; nodeValue: 这两个值取决于节点的类型。对于元素 nodeName:元素的标签名，nodeValue:null.<br>childNodes :保存着NodeList对象。<br>parentNode<br>previousSibling:childNodes 列表中的第一个节点的previousSibling为null<br>nextSibling:childNodes 列表中的最后一个节点的nextSibling为null<br>firstChild:childNodes 列表中的第一个节点<br>lastChild:childNodes 列表中的最后一个节点<br>ownerDocument:整个文档的整个节点<br>hasChildNodes()</p>
+</blockquote>
+<p>操作节点：</p>
+<blockquote>
+<p>appendChild(): 向childNodes列表的末尾添加一个节点，返回新增的节点<br>insertBefore():<br>replaceChild()<br>removeChild()<br>cloneNode:用于创建调用这个方法的节点的一个完全相同的副本 深复制&amp;浅复制<br>normalize():</p>
+</blockquote>
+</li>
+<li><p><code>Document类型</code>nodeType:9</p>
+</li>
+<li><p><code>Element类型</code><br>nodeType：1<br>nodeName 和 tagName都是元素标签名，获得标签名在用于相关操作时最好转换成大写或者小写。<br>nodeValue 值为null<br>操作特性(属性)的方法：</p>
+<blockquote>
+<p><code>getAttribute()</code><br><code>setAttribute()</code><br><code>removeAttribute()</code></p>
+</blockquote>
+<p>Element类型中含有<code>attributes</code>属性。<code>attributes</code>属性中包含一个NamedNodeMap，是动态的集合。此对象拥有的方法：</p>
+<blockquote>
+<p><code>getNamedItem(name)</code><br><code>removeNamedItem(name)</code><br><code>setNamedItem(node)</code><br><code>item(pos)</code></p>
+</blockquote>
+<p>attributes 属性中包含一系列节点，每个节点的nodeName就是特性(属性)的名称，nodeValue是特性的值</p>
+</li>
+<li><p><code>text类型</code><br>nodeType：3<br>nodeName:”#text”<br>nodeValue : 节点所包含的文本。访问节点中的文本可以通过 nodeValue 或者data属性。<br>操作节点中的文本的方法：  </p>
+<blockquote>
+<p><code>appendData(text)</code><br><code>deleteData(offset,count)</code><br><code>insertData(offset,text)</code><br><code>replaceData(offset,count,text)</code><br><code>splitText(offset)</code><br><code>substringData(offset,count)</code><br><code>document.createTextNode(text)</code>创建新文本节点</p>
+</blockquote>
+</li>
+<li><p><code>Attr类型</code><br>nodeType：2<br>nodeName:特性的名称<br>nodeValue:特性的值<br>Attr 对象3个属性： name,value 和 specified</p>
+</li>
+<li><p><code>DOM 操作内容</code></p>
+<blockquote>
+<p>innerHTML属性用来获取和设置HTML内容。语法：元素节点.innerHTML 或者 元素节点.innerHTML = ‘HTML字符串’;<br>innerText|textContent属性用来获取和设置文本内容。fireFox使用textContent来获取和设置（注意兼容性）。语法：元素节点.innerText 或者 元素节点.innerText = ‘HTML字符串’;</p>
+</blockquote>
+</li>
+<li><p><code>操作位置与大小</code></p>
+<blockquote>
+<p>clientWidth属性用来获取元素的实际宽度，该值受滚动条和内边距影响，外边距和border不会影响。语法：element.clientWidth;<br>clientHeight属性用来获取元素的实际高度，该值受滚动条和内边距影响，外边距和border不会影响。语法：element.clientHeight;<br>offsetWidth属性用来获取元素的实际宽度，该值受边框和内边距影响，外边距和滚动条不会影响。语法：element.offsetWidth;<br>offsetHeight属性用来获取元素的实际高度，该值受边框和内边距影响，外边距和滚动条不会影响。语法：element.offsetHeight;<br>offsetTop和offsetLeft属性用来获取元素相对于父级的位置。该值受外边距影响。语法：element.offsetTop || element.offsetLeft;<br>scrollTop和scrollLeft属性用来获取滚动条被隐藏的区域大小，也可设置定位到该区域（比如返回顶部）。语法：element.scrollTop || element.scrollLeft || element.scrollTop = 0;  </p>
+</blockquote>
+</li>
+<li><p><code>DOM操作样式</code></p>
+<blockquote>
+<p>style属性用来获取和设置元素的行内样式。语法：element.style;style属性只能获取和设置行内样式，对于如font-size这种样式属性，应该去掉 - 并且将 - 后面的第一个字母大写，驼峰法来获取和设置 如：element.style.fontSize , element.style.backgroundColor<br>getComputedStyle全局方法用来获取计算后的样式，第一个参数是元素节点，第二个参数是类型，如:hover,:active等伪类，默认情况下传 null ,某些IE版本使用currentStyle属性来获取 box.currentStyle。语法：window.getComputedStyle(元素，类型)<br>className属性用来获取和设置元素的样式名称。语法：element.className<br>自定义的 addClass() | hasClass() | removeClass() 方法</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//元素是否含有某样式</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">hasClass</span>(<span class="params">element,className</span>)</span>&#123;</div><div class="line">    	<span class="keyword">return</span> !!element.className.match(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'(\\s|^)'</span>+className+<span class="string">'(\\s|$)'</span>));</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//向元素添加新样式</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addClass</span>(<span class="params">element,className</span>)</span>&#123;</div><div class="line">    	 <span class="keyword">if</span>(hasClass(element,className) == <span class="literal">false</span>)&#123;</div><div class="line">    	  	element.className += <span class="string">' '</span>+className;</div><div class="line">    	  &#125;</div><div class="line">     &#125;</div><div class="line">    <span class="comment">//移除元素的指定样式</span></div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">removeClass</span>(<span class="params">element,className</span>)</span>&#123;</div><div class="line">    	<span class="keyword">var</span> currentClass = element.className;</div><div class="line">    	 <span class="keyword">if</span>(hasClass(element,className))&#123;</div><div class="line">    	     currentClass = currentClass.replace(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'(\\s|^)'</span>+className+<span class="string">'(\\s|$)'</span>),<span class="string">' '</span>);</div><div class="line">                <span class="comment">//去除空格</span></div><div class="line">    	    currentClass = currentClass.replace(<span class="regexp">/(^\s*)|(\s*$)/g</span>,<span class="string">''</span>);</div><div class="line">    	    element.className = currentClass;</div><div class="line">    	&#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>常用到的简洁快速的document属性和方法</code></p>
+<blockquote>
+<p>document.title 用来获取文档标题<br>document.domain 用来获取当前域名<br>document.URL 用来获取当前url路径<br>document.forms 获取表单集合<br>document.images 获取图片集合<br>document.body 获取body元素节点<br>document.compatMode 识别文档模式</p>
+</blockquote>
+</li>
+<li><p><code>动态脚本</code>: 在页面加载时不存在，但将来中的某一时刻通过修改DOM动态添加的脚本。方法：插入外部文件和直接插入js代码<br><code>动态样式</code>: 在页面加载时不存在的样式，在页面加载完成后动态加载到页面中。</p>
+</li>
 <li><code>操作表格</code> 有一堆方法可以直接操作表格</li>
 <li><code>NodeList</code> 每当文档结构发生变化时，都会得到更新。</li>
 </ol>
@@ -169,7 +172,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/10/25/dom基础(一)/" data-title="DOM基础(一) | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/10/25/dom基础(一)/" data-title="DOM基础 | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -203,7 +206,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/10/25/dom基础(一)/" data-title="DOM基础(一)" data-url="http://yoursite.com/2016/10/25/dom基础(一)/"></div>
+	<div class="ds-thread" data-thread-key="2016/10/25/dom基础(一)/" data-title="DOM基础" data-url="http://yoursite.com/2016/10/25/dom基础(一)/"></div>
 </section>
 
 
@@ -239,11 +242,11 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>15</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>16</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>7</sup></a></li>
+				<li><a href="/Tags/css/" title="css">css<sup>8</sup></a></li>
 			
 		
 			
