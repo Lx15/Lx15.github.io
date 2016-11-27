@@ -1,0 +1,591 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>AngularJs学习----指令 | Lx15</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="这篇文章主要包括ng中的内置指令、指令定义以及指令中的关键字段解释等问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJs学习----指令">
+<meta property="og:url" content="http://yoursite.com/2016/11/15/AngularJs---directives/index.html">
+<meta property="og:site_name" content="Lx15">
+<meta property="og:description" content="这篇文章主要包括ng中的内置指令、指令定义以及指令中的关键字段解释等问题。">
+<meta property="og:updated_time" content="2016-11-27T12:01:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJs学习----指令">
+<meta name="twitter:description" content="这篇文章主要包括ng中的内置指令、指令定义以及指令中的关键字段解释等问题。">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15" title="Lx15"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15">Lx15</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/15/AngularJs---directives/" title="AngularJs学习----指令" itemprop="url">AngularJs学习----指令</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2016-11-14T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-11-15</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#内置指令"><span class="toc-number">1.</span> <span class="toc-text">内置指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指令定义"><span class="toc-number">2.</span> <span class="toc-text">指令定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指令定义解释"><span class="toc-number">3.</span> <span class="toc-text">指令定义解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用文献"><span class="toc-number">4.</span> <span class="toc-text">引用文献</span></a></li></ol>
+		
+		</div>
+		
+		<p>  这篇文章主要包括ng中的内置指令、指令定义以及指令中的关键字段解释等问题。<br><a id="more"></a></p>
+<h2 id="内置指令"><a href="#内置指令" class="headerlink" title="内置指令"></a>内置指令</h2><ol>
+<li><p>对于指令，可以把它简单的理解成在特定的DOM元素上运行的函数，指令可以扩展这个函数的功能。    </p>
+<p>内置指令是打包在AngularJS中的内部指令，所有的内置指令的命名空间都使用了ng作为前缀，如ng-app。当AngularJs编译HTML时就会调用指令。调用指令意味着执行指令背后与之相关联的Javascript代码。指令可以和其他指令或属性组合在一起使用，这种组合使用的方法叫做合成。</p>
+</li>
+<li><p>常用基础属性内置指令：          </p>
+<blockquote>
+<p>. 布尔属性 (当这个属性出现时，这个属性的值就是true,如果未出现，这个属性的值就是false):    </p>
+</blockquote>
+<p>(1)  ng-disabled<br>(2)  ng-readonly<br>(3)  ng-checked: 下面这个例子会默认把复选框勾选</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">label</span>&gt;</span> someProperty = &#123;&#123;someProperty&#125;&#125;<span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">ng-chexked</span> =<span class="string">"someProperty"</span> <span class="attr">ng-init</span>=<span class="string">"someProperty =true"</span> <span class="attr">ng-model</span>=<span class="string">"someProperty"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>(4) ng-selected</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">label</span>&gt;</span> select two fish:<span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">ng-model</span>=<span class="string">"isTwoFish"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">class</span>=<span class="string">""</span> <span class="attr">name</span>=<span class="string">""</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">option</span>&gt;</span>one　Fish<span class="tag">&lt;/<span class="name">option</span>&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">option</span> <span class="attr">ng-selected</span> =<span class="string">"isTwoFish"</span>&gt;</span>Two Fish<span class="tag">&lt;/<span class="name">option</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>类布尔属性  </p>
+</blockquote>
+<p>(1) ng-href ：AngularJs 会等到差值生效后再执行连接行为 ng-href 与ng-src 能有效帮助重构和避免错误。<br>(2)ng-src ： AngularJs会告诉浏览器在ng-src 对应的表达式生效之前不要加载图像。</p>
+</li>
+<li><p>在指令中使用子作用域的内置指令：<br>下面的指令会以父级作用域为原型生成子作用域，这种继承的机制可以创建一盒隔离层，用来将需要协同工作的方法和数据模型对象放在一起。</p>
+<p>(1)  <code>ng-app</code> 位AngularJS应用穿件$rootScope,$rootScope是作用域链的起点，任何嵌套在ng-app中的指令都会继承它。<br>可以在整个文档汇总只使用一次ng-app。 如果需要在一个页面中放置多个AngularJs应用，需要手动引导应用。<br>(2)  <code>ng-controller</code> 接收一个参数，这个参数必须，并且是一个AngularJs表达式。子$scope只是一个Javascript对象，其中包含从父级$scope中通过原型继 承得到的方法和属性。 $scope 对象的职责是承载DOM中指令共享的操作和类型。操作指的是$scope上的标准的JavaScript方法。模型指的是$scope上保存的包含瞬时状态数据的JavaScript对象。持久化状态的数据应该保存在服务中，服务的作用是处理模型的持久化。控制器应尽量简单，应尽量将业务逻辑移到服务和指令中。注意 $.<em>.</em> 是引用传递 ，$._ 是值传递。<br>(3)  <code>ng-include</code> 在使用这个指令时，AngularJs会自动创建一个子作用域，如果想使用某个特定的作用域，如ControllerA的作用域，必须在同一个DOM元素上添加ng-controller =”ControllerA”指令，这样当模板加载完成后，不会像往常一样从外部作用域继承并创建一个新的子作用域。<br>(4)  <code>ng-switch</code> 这个指令及 ng-switch-when 、on=”propertyName”一起使用时 可以在propertyName 发生变化是渲染不同指令到视图中。<br>(5)  <code>ng-view</code><br>(6)  <code>ng-if</code> ng-if与ng-show、ng-hide指令最本质的区别是，它不是通过CSS显示或隐藏DOM节点，而是真正生成或移除节点。当一个元素被ng-if 从DOM中移除时，同它关联的作用域也会被销毁，而且当它重新加入DOM中时，会通过原型继承从它的父作用域生成一个新的作用域。而且ngIf 重新创建元素时用的是它们编译后的状态。<br>(7)  <code>ng-repeat</code> 集合中每个元素都会被赋予自己的模板和作用域。<br>(8)  <code>ng-init</code><br>(9)  <span>{ { } }</span>是ng-bind 简略形式， <span>{ { } }</span>会导致页面加载时未渲染的元素发生闪烁，用ng-bind可以避免这个问题。 或者在含有 <span>{ { } }</span>的元素上使用ng-cloak指令，ng-cloak指令会将内部元素隐藏，知道路由调用对应的页面才显示出来。<br>(10)  <code>ng-form</code> :表单可以嵌套<br>(11)  <code>ng-attr-(suffix)</code>当AngularJs编译DOM时会查找花括号<span>{ { } }</span>内的表达式，这些表达式会被自动注册到$watch服务中并更新到$digest循环中，成为它的一部分。但有时浏览器会对属性有限制 如svg,此时应使用<span>ng-attr-{ {suffix} }</span>。   </p>
+</li>
+</ol>
+<h2 id="指令定义"><a href="#指令定义" class="headerlink" title="指令定义"></a>指令定义</h2><p> 当AngularJs 启动应用时，会把第一个参数当做一个字符串，并以此字符串为名注册第二个参数返回的对象，AngularJs编译器会解析主HTML的DOM中的元素、属性、注释和CSS类名中使用了这个名字的地方，并在这些地方引用对应的指令。指令的工厂函数之后在编译器第一次匹配到这个指令时调用一次，和controller函数类似，通过$injector.invoke来调用指令的工作函数。当AngularJs在DOM中遇到具名的指令时，会去匹配已经注册过得指令，并通过名称在注册过得对象中查找，此时就开始了一个指令的生命周期，指令的生命周期开始于$compile方法并结束与link方法。<br>   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'myApp'</span>,[])</div><div class="line">  .directive(<span class="string">'myDirective'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span>&#123;</div><div class="line">      restrict:<span class="built_in">String</span>,</div><div class="line">      priority:<span class="built_in">Number</span>,</div><div class="line">      terminal:<span class="built_in">Boolean</span>,</div><div class="line">      template:<span class="built_in">String</span> or  Template <span class="function"><span class="keyword">function</span> :</span></div><div class="line">        <span class="title">function</span> (<span class="params">tElement,tAttrs</span>)(<span class="params"></span>),</div><div class="line">      <span class="title">replace</span>:<span class="title">Boolean</span> <span class="title">of</span> <span class="title">String</span>,</div><div class="line">      <span class="title">scope</span>:<span class="title">Boolean</span> <span class="title">or</span> <span class="title">Object</span>,</div><div class="line">      <span class="title">transclude</span>:<span class="title">Boolean</span>,</div><div class="line">      <span class="title">controller</span>:<span class="title">String</span> <span class="title">or</span> <span class="title">function</span>(<span class="params">scope,element,attrs,transclude,otherInjectables</span>)&#123;&#125;，</div><div class="line">      controllerAs:<span class="built_in">String</span>,</div><div class="line">      <span class="built_in">require</span>: <span class="built_in">String</span>,</div><div class="line">      link: <span class="function"><span class="keyword">function</span>(<span class="params">scope,iElement,iAttrs</span>)</span>&#123;&#125;,</div><div class="line">      compile:</div><div class="line">        <span class="function"><span class="keyword">function</span>(<span class="params">tElement,tAttrs,transclude</span>)</span>&#123;</div><div class="line">          <span class="keyword">return</span> &#123;</div><div class="line">            pre:<span class="function"><span class="keyword">function</span>(<span class="params">scope,iElement,iAttrs,controller</span>)</span>&#123;&#125;,</div><div class="line">            post: <span class="function"><span class="keyword">function</span>(<span class="params">scope,iElement,iAttrs,controller</span>)</span>&#123;&#125;</div><div class="line">          &#125;</div><div class="line">          <span class="comment">// 或者</span></div><div class="line">          <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;)</div></pre></td></tr></table></figure></p>
+<h2 id="指令定义解释"><a href="#指令定义解释" class="headerlink" title="指令定义解释"></a>指令定义解释</h2><ol>
+<li>directive() 方法接受两个参数: name(字符串)  与 function (返回一个对象)。<br>当AngularJs 在DOM中遇到具名的指令时，会去匹配已经注册过的指令，并通过名字在注册过的对象中查找。此时，就开始了一个指令的生命周期，指令的生命周期开始于$compile方法并结束于link方法。</li>
+<li><code>restrict</code> : 可选值为 “EACM”</li>
+<li><code>priority</code> :优先级，默认值是0。ngRepeat优先级是1000，在同一个元素上，高优先级的指令优先运行。</li>
+<li><code>terminal</code> : true or false。 用来告诉AngularJs是否停止运行当前元素上比本指令优先级低的指令。但是同当前指令优先级相同的指令还是会与运行。</li>
+<li><code>template</code> :html 或者 函数（参数是 tElement 和 tAttrs,并返回一个代表模板的字符串）</li>
+<li><code>templateUrl</code>: 一个代表外部HTML文件路径的字符串或者 一个可以接受两个参数的函数（tElement 和tAttrs）并返回一个外部HTML文件路径的字符串。 这两种情况模板的URL都将通过AngularJS内置的安全层，特别是$getTrustedResourceUrl,这样可以保护模板不会被不信任的源加载。并且这两情类型在默认情况下都是在后台通过Ajax来请求HTML模板文件， 模板加载时异步的，意味着编译和链接要暂停，等待模板加载完成。</li>
+<li><code>replace</code> : 默认是true  是否模板是被当做子元素插入到调用此指令的元素内部。</li>
+<li><p>scope 参数</p>
+<p>想了解这个参数的使用，必须先了解指令的作用域。在DOM中每个指令调用时都可能会：</p>
+<blockquote>
+<p>直接调用相同的作用域对象<br>从当前作用域对象继承一个新的作用域对象<br>创建一个同当前作用域相隔离的作用域对象</p>
+</blockquote>
+<p>指令中的作用域一定是上面的三种之一。从scope参数的取值就可以理解以上的三种作用域。指令嵌套并不一定意味着需要改变它的作用域。默认情况下，子指令会被赋予访问父DOM元素对应的作用域的能力。</p>
+<p>(1). scope : true or fasle<br>scope 默认值是false，意味着和包含着指令的DOM是相同的作用域。 scope的值是true时，意味着会从父作用域继承并创建一个新的作用域对象。内置指令ng-controller的作用就是从父级作用域继承并创建一个新的子作用域，它会创建一个新的从父级作用域继承而来的子作用域。看个demo就轻松懂了…</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-app="myApp"</div><div class="line">     ng-init="someProperty = 'some data'"&gt;&lt;/div&gt;</div><div class="line">    &lt;div ng-controller="popCtrl" ng-init="myProperty = 'wow, this is cool'"&gt;</div><div class="line">      Outside : &#123;&#123; myProperty &#125;&#125;</div><div class="line">      &lt;br/&gt;</div><div class="line">      myAnoProperty:&#123;&#123;myAnoProperty&#125;&#125;</div><div class="line">      &lt;div my-Inherit-scope-directive ng-init="myAnoProperty = 'wow '"&gt;</div><div class="line">      &lt;/div&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">angular.module('myApp', [])</div><div class="line">.controller('popCtrl', function($scope) &#123;</div><div class="line">&#125;)</div><div class="line">.directive('myInheritScopeDirective',function()&#123;</div><div class="line">  return&#123;</div><div class="line">    restrict:'A',</div><div class="line">    template:"&lt;div&gt;inhi~  &#123;&#123;myProperty&#125;&#125; &#123;&#123;myAnoProperty&#125;&#125;&lt;/div&gt;",</div><div class="line">    scope:true</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>运行结果是</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Outside : wow,this is cool</div><div class="line">myAnoProperty :</div><div class="line">inhi~ wow,this is cool wow</div></pre></td></tr></table></figure>
+<p>myInheritScopeDirective 指令中scope值为true,所以会创建从父级popCtrl中继承而来的子级作用域。所以在myInheritScopeDirective指令中的变量 myProperty 和myAnoProperty 都是有值的。但是在myAnoProperty 是在myInheritScopeDirective指令的作用域中进行初始化的，所以在父级作用域是没有办法取到值的。 若是将myInheritScopeDirective指令中的scope取值为false，那么 在popCtrl中的myAnoProperty也是有值的，因为myInheritScopeDirective指令不会创建新的子作用域。</p>
+<p>(2). scope :{} 隔离作用域<br>当scope的值不是布尔值，而是变成对象，那么这个指令会创建一个和外层包含的DOM元素对应的作用域相平行的一个隔离作用域。具有隔离作用域的指令最主要的使用场景是创建可复用的组件，组件可以在未知上下文中使用，并且可以避免污染所处的外部作用域或不经意地污染内部作用域。将scope的值取{}空对象，这样指令就无法访问外部作用域了，看了栗子咯…</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-app="myApp"</div><div class="line">     ng-init="someProperty = 'some data'"&gt;&lt;/div&gt;</div><div class="line">    &lt;div ng-controller="SecondCtrl" ng-init="myProperty = 'wow, this is cool'"&gt;</div><div class="line">      Outside : &#123;&#123; myProperty &#125;&#125;</div><div class="line">      &lt;div my-directive &gt;</div><div class="line">      &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">angular.module('myApp', [])</div><div class="line">.controller('SecondCtrl', function($scope) &#123;</div><div class="line">&#125;)</div><div class="line">// scope :&#123;&#125; 是独立作用域  只有在自己作用域上的赋值才能使用， 在外层上的作用域并不是父作用域 ，并不能够使用</div><div class="line">.directive('myDirective', function() &#123;</div><div class="line">  return &#123;</div><div class="line">    restrict: 'A',</div><div class="line">    scope: &#123;&#125;,</div><div class="line">    priority:100,</div><div class="line">    template:"&lt;div&gt;hello &#123;&#123;myProperty&#125;&#125;&lt;/div&gt;"</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>运行结果是</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Outside : wow,this is cool</div><div class="line">hello</div></pre></td></tr></table></figure>
+<p>在这里myDirective指令创建了隔离作用域，所以自然myProperty变量是获取不到外面的值的。</p>
+</li>
+</ol>
+<p>从上面可以看出创建一个空的隔离作用域是没有太大意义的，因为没有办法获取外界信息，就没有办法进行交互，所以应该个隔离作用域传递数据，关于数据的传递有三种，即数据的绑定策略有三种： @、=、&amp;。</p>
+<blockquote>
+<p>本地作用域属性：@（or @attr）<br>  @ 可以将本地作用域同DOM 属性的值进行绑定，指令作用域可以使用外部作用域的变量。<br>双向绑定 ： =( or =attr)<br>  = 可以将本地作用域上的属性同父级作用域上的属性进行双向的数据绑定，就像普通的数据绑定一样，本地属性会反映出父数据模型中所发生的改变。<br>父级作用域绑定 ： &amp;（or &amp;=attr）<br>  &amp; 可以对父级作用域进行绑定，以便在器中运行函数，意味着对这个值进行设置时会生成一个指向父级作用域的包装函数。</p>
+</blockquote>
+<p>  废话少说，上栗子！</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line">&lt;body ng-controller=<span class="string">"bodyCtrl"</span>&gt;</div><div class="line">  <span class="xml"><span class="comment">&lt;!--my-Url 大小写无所谓 但必须是短线分隔形式--&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">""</span> <span class="attr">ng-model</span>=<span class="string">"a"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">my-directive</span> <span class="attr">baidu-Url</span>=<span class="string">"&#123;&#123;a&#125;&#125;"</span> <span class="attr">my-Link-Text</span>=<span class="string">"&#123;&#123;myLinkText&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="comment">&lt;!--注意在这里使用的是 a,即绑定的直接是变量值 而不是&#123;&#123;a&#125;&#125;--&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">my-two-directive</span> <span class="attr">baidu-Url</span>=<span class="string">"a"</span> &gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">my-three-directive</span> <span class="attr">fun</span> =<span class="string">"show(a)"</span> &gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"></span></div><div class="line">        angular.module(<span class="string">'myApp'</span>, [])</div><div class="line">        .controller(<span class="string">'bodyCtrl'</span>,[<span class="string">'$scope'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>)</span>&#123;</div><div class="line">          $scope.a =<span class="string">"http://baidu.com"</span>;</div><div class="line">          $scope.myLinkText = <span class="string">"baidu"</span>;</div><div class="line">          $scope.show = <span class="function"><span class="keyword">function</span> (<span class="params">a</span>)</span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(a);</div><div class="line">          &#125;</div><div class="line">        &#125;])</div><div class="line">        <span class="comment">// 指令是形成自己的独立作用域  在使用指令时 ，指令中的scope上的变量 将DOM中同属性的值赋值到自己的 scope变量上。</span></div><div class="line">        <span class="comment">// 指令也可以有自己的控制器</span></div><div class="line">        .directive(<span class="string">'myDirective'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> &#123;</div><div class="line">                restrict: <span class="string">'AE'</span>,</div><div class="line">                replace: <span class="literal">true</span>,<span class="comment">// 是否显示自己自定义的指令</span></div><div class="line">                scope: &#123;</div><div class="line">                    myUrl: <span class="string">'@baiduUrl'</span>,</div><div class="line">                    myLinkText: <span class="string">'@'</span><span class="comment">// @ 绑定是找到属性名相同的直接绑定</span></div><div class="line">                &#125;,</div><div class="line">                <span class="comment">// 用 \ 来换行</span></div><div class="line">                template: <span class="string">'&lt;div&gt;\</span></div><div class="line">                  &lt;a href="&#123;&#123;myUrl&#125;&#125;"&gt;&#123;&#123;myLinkText&#125;&#125;&#123;&#123;myUrl&#125;&#125;&lt;/a&gt;\</div><div class="line">                  &lt;/div&gt;',</div><div class="line">                controller:<span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>)</span>&#123;</div><div class="line">                  <span class="built_in">console</span>.log($scope.myUrl);<span class="comment">// baidu.com</span></div><div class="line">                  <span class="built_in">console</span>.log($scope.baiduUrl);<span class="comment">// undefined</span></div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">        &#125;)</div><div class="line">        .directive(<span class="string">'myTwoDirective'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> &#123;</div><div class="line">                restrict: <span class="string">'AE'</span>,</div><div class="line">                replace: <span class="literal">false</span>,<span class="comment">// 是否显示自己自定义的指令</span></div><div class="line">                scope: &#123;</div><div class="line">                    myUrl: <span class="string">'=baiduUrl'</span></div><div class="line">                &#125;,</div><div class="line">                <span class="comment">// 用 \ 来换行</span></div><div class="line">                template: <span class="string">'&lt;div&gt;\</span></div><div class="line">                &#123;&#123;myUrl&#125;&#125;\</div><div class="line">                  &lt;/div&gt;',</div><div class="line">                controller:<span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>)</span>&#123;</div><div class="line">                  <span class="built_in">console</span>.log($scope.myUrl);<span class="comment">// baidu.com</span></div><div class="line">                  <span class="built_in">console</span>.log($scope.baiduUrl);<span class="comment">// undefined</span></div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">        &#125;)</div><div class="line">        .directive(<span class="string">'myThreeDirective'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> &#123;</div><div class="line">                restrict: <span class="string">'AE'</span>,</div><div class="line">                replace: <span class="literal">false</span>,<span class="comment">// 是否显示自己自定义的指令</span></div><div class="line">                scope: &#123;</div><div class="line">                    show: <span class="string">'&amp;fun'</span><span class="comment">// 与 外层作用域进行绑定，以运行其函数</span></div><div class="line">                &#125;,</div><div class="line">                <span class="comment">// 用 \ 来换行</span></div><div class="line">                template: <span class="string">'&lt;div&gt;\</span></div><div class="line">                &#123;&#123;myUrl&#125;&#125;\</div><div class="line">                  &lt;/div&gt;',</div><div class="line">                controller:<span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>)</span>&#123;</div><div class="line">                  $scope.show();</div><div class="line"></div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">        &#125;)</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>这个这么明显还有注释就不解释啦，嘿嘿。。。犯懒了。。。</p>
+<h2 id="引用文献"><a href="#引用文献" class="headerlink" title="引用文献"></a>引用文献</h2><ol>
+<li>《AngularJS权威教程》</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/ng/">ng</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/11/15/AngularJs---directives/" data-title="AngularJs学习----指令 | Lx15" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/11/20/canvas/" title="CANVAS">
+  <strong>上一篇：</strong><br/>
+  <span>
+  CANVAS</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/11/06/BOM/"  title="BOM基础">
+ <strong>下一篇：</strong><br/> 
+ <span>BOM基础
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/11/15/AngularJs---directives/" data-title="AngularJs学习----指令" data-url="http://yoursite.com/2016/11/15/AngularJs---directives/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#内置指令"><span class="toc-number">1.</span> <span class="toc-text">内置指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指令定义"><span class="toc-number">2.</span> <span class="toc-text">指令定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指令定义解释"><span class="toc-number">3.</span> <span class="toc-text">指令定义解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用文献"><span class="toc-number">4.</span> <span class="toc-text">引用文献</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="Lx15.github.io" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Tags/js/" title="js">js<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/css/" title="css">css<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/ng/" title="ng">ng<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/util/" title="util">util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/html5/" title="html5">html5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="undefined" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=undefined&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/Lx15.github.io" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

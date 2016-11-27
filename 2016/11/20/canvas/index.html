@@ -1,0 +1,582 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>CANVAS | Lx15</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="Canvas API 可以用来动态生成和展示图形、图表、图像以及动画。最近用到了canvas，整理一下canvas的知识点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CANVAS">
+<meta property="og:url" content="http://yoursite.com/2016/11/20/canvas/index.html">
+<meta property="og:site_name" content="Lx15">
+<meta property="og:description" content="Canvas API 可以用来动态生成和展示图形、图表、图像以及动画。最近用到了canvas，整理一下canvas的知识点。">
+<meta property="og:updated_time" content="2016-11-27T12:06:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CANVAS">
+<meta name="twitter:description" content="Canvas API 可以用来动态生成和展示图形、图表、图像以及动画。最近用到了canvas，整理一下canvas的知识点。">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15" title="Lx15"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15">Lx15</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/20/canvas/" title="CANVAS" itemprop="url">CANVAS</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2016-11-19T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-11-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Canvas特点"><span class="toc-number">1.</span> <span class="toc-text">Canvas特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Canvas基本用法及注意点"><span class="toc-number">2.</span> <span class="toc-text">Canvas基本用法及注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有趣的demo"><span class="toc-number">3.</span> <span class="toc-text">有趣的demo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用文献"><span class="toc-number">4.</span> <span class="toc-text">引用文献</span></a></li></ol>
+		
+		</div>
+		
+		<p>   Canvas API 可以用来动态生成和展示图形、图表、图像以及动画。最近用到了canvas，整理一下canvas的知识点。<br>   <a id="more"></a></p>
+<h2 id="Canvas特点"><a href="#Canvas特点" class="headerlink" title="Canvas特点"></a>Canvas特点</h2><p>  Canvas 本质上是一个位图画布，其上绘制的图形是不可缩放的，不能像SVG图像那样可以被放大缩小。此外，用canvas绘制出来的对象不属于页面DOM结构或者任何命名空间。SVG图像却可以在不同的分辨率下流畅地缩放，并且支持单击检测（能检测到鼠标点击了图像上的哪个点）。但是Cavas有两个优势： 首先，不需要将所有绘制图像中的每个图元当做对象存储，所以执行性能非常好；其次，在其他编程语言现有的优秀二维绘图API的基础上实现的Canvas API 比较简单。但是如果你的图像显示需要显著的交互行为，那么可以考虑使用SVG代替Canvas API。SVG也能用于绘制，而且它整合了浏览器的DOM。</p>
+<h2 id="Canvas基本用法及注意点"><a href="#Canvas基本用法及注意点" class="headerlink" title="Canvas基本用法及注意点"></a>Canvas基本用法及注意点</h2><ol>
+<li><p>在使用canvas 时要先设置 width 和height属相，默认是宽为300，高为150。然后取得绘图上下文，即取得绘图上下文对象的引用。并且要进行检测getContext()是否存在。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">"canvas"</span>);</div><div class="line"><span class="keyword">if</span>(canvas.getContext)&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最好在canvas 标签上直接设置width和height，若是使用css设置宽高属性，在某些情况下会导致图像扭曲。</p>
+</li>
+<li><p>在获取context之后，即可以进行绘制矩形、绘制路径、绘制文本、变换、绘制图像、阴影、渐变等功能。在绘制这些图形时用到最多的是context的fillStyle 和 strokeStyle属性。 这两个属性的值可以是字符串、渐变对象或模式对象。</p>
+</li>
+<li><p>渐变对象 context.createLinearGradient()、模式对象 context.createPattern() 可以赋值给 stroke、fill 这两个属性。</p>
+</li>
+<li><p>只有当对路径应用context 的stroke() 或者fill() 方法时，结果才能显现出来，否则在只有在显示图像、显示文本或者绘制、填充和清除矩形框的时候，canvas才会马上更新。</p>
+</li>
+<li><p>若是先stroke后fill ， 填充会覆盖一部分描边路径。若设置路径宽度是4px,这个宽度是沿路径线居中对齐的，而填充是把路径轮廓内部所有像素全部填充，所以会覆盖描边路径的一半。若是想看到完整的路径，则可以先填充再描边。</p>
+</li>
+<li><p>不论开始绘制何种图形，第一个需要调用的就是context的beginPath(),用来通知canvas将要绘制一个新的图形了。对于canvas来说，beginPath()函数最大的用处是canvas需要据此来计算图形的内部和外部的范围，以便完成后续的stroke和fill。</p>
+</li>
+<li><p>在canvas 时插入图片时，必须等到图片完全加载后才能对其操作，浏览器通常会在页面脚本执行的同时异步加载图片。如果视图在图片未完全加载之前就将其呈现在canvas上，那么canvas将不会显示任何图片。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> img = <span class="keyword">new</span> Image();</div><div class="line">  img.src =<span class="string">"x.png"</span>;</div><div class="line">  img.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>使用canvas上的toDataURL()方法，可以导出在canvas元素上绘制的图像，参数表示图像的MIME类型格式。如果绘制到画布上的图像源自不同的域，toDataURL()会抛出错误。</p>
+</li>
+<li><p>关于可重用代码： 一般绘制都应从原点（坐标系的0,0点）开始，应用变换（缩放、平移、旋转），然后不断修改代码直到达到希望的效果。所以经常会用到 translate()、save()、 restore() 函数。</p>
+</li>
+<li><p><code>使用图像数据</code>   可以通过context的getImageData()取得原始图像数据，返回的是ImageData 的实例。每个ImageData对象都有三个属性：width、height 和data。其中data属性是一个数组，保存着图像中每一个像素的数据。在data数组中，每一个像素用4个元素来保存，分别表示红、绿、蓝和透明度值。因此，第一个像素的数据就保存在数组的第0到第3个元素中，我们可以在直接访问到这些袁术图像数据，并且能以各种方式来修改这些数据。修改之后使用context.putImageData()将图像数据绘制到画布上。<br>由于安全问题，在getImageData() 调用时，如果canvas中的图像来自其他域，就会抛出安全异常。因为在没有canvas API之前，无法使用编程的方式获取下载图片的像素信息，来自其他网站的私有图片可以显示在本地，但无法被读取或者复制。</p>
+</li>
+<li><p>两个会应用到context中所有绘制操作的属性：globalAlpha 和 globalCompositionOperation 。</p>
+</li>
+</ol>
+<h2 id="有趣的demo"><a href="#有趣的demo" class="headerlink" title="有趣的demo"></a>有趣的demo</h2><ol>
+<li><p>模拟热图的实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">canvas.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    x = e.clientX - e.target.offsetLeft;</div><div class="line">    y = e.clientY - e.target.offsetTop;</div><div class="line">    addToPoint(x, y)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getColor</span>(<span class="params">intensity</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> colors = [<span class="string">"#072933"</span>, <span class="string">"#2E4045"</span>, <span class="string">"#8C593B"</span>, <span class="string">"#B2814E"</span>, <span class="string">"#FAC268"</span>, <span class="string">"#FAD237"</span>];</div><div class="line">    <span class="keyword">return</span> colors[<span class="built_in">Math</span>.floor(intensity / <span class="number">2</span>)];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">drawPoint</span>(<span class="params">x, y, radius</span>) </span>&#123;</div><div class="line">    context.fillStyle = getColor(radius);</div><div class="line">    radius = <span class="built_in">Math</span>.sqrt(radius) * <span class="number">6</span>;</div><div class="line"></div><div class="line">    context.beginPath();</div><div class="line">    context.arc(x, y, radius, <span class="number">0</span>, <span class="built_in">Math</span>.PI * <span class="number">2</span>, <span class="literal">true</span>)</div><div class="line"></div><div class="line">    context.closePath();</div><div class="line">    context.fill();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">addToPoint</span>(<span class="params">x, y</span>) </span>&#123;</div><div class="line">    x = <span class="built_in">Math</span>.floor(x / SCALE);</div><div class="line">    y = <span class="built_in">Math</span>.floor(y / SCALE);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!points[[x, y]]) &#123;</div><div class="line">        points[[x, y]] = <span class="number">1</span>;</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (points[[x, y]] == <span class="number">10</span>) &#123;</div><div class="line">        <span class="keyword">return</span></div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        points[[x, y]]++;</div><div class="line">    &#125;</div><div class="line">    drawPoint(x * SCALE, y * SCALE, points[[x, y]]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>用points对应的值去获取对应的颜色和绘制相应大小的图形。</p>
+</li>
+<li><p>模拟阴天闪电</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (<span class="built_in">Math</span>.random() &gt; <span class="number">.01</span>) &#123;</div><div class="line">  context.globalAlpha = <span class="number">0.65</span>; <span class="comment">// 不透明度 越大越不透明</span></div><div class="line">  context.fillStyle = <span class="string">'#000000'</span>;</div><div class="line">  context.fillRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">400</span>, <span class="number">600</span>);</div><div class="line">  context.globalAlpha = <span class="number">1.0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>大部分情况下天气较暗，用来模拟阴天，配合requestAnimationFrame 实现闪电</p>
+</li>
+<li><p>模拟下雨</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">context.fillStyle = context.createPattern(rain, <span class="string">'repeat'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> now = <span class="built_in">Date</span>.now();</div><div class="line">context.save();</div><div class="line">context.translate(<span class="number">-256</span> + (<span class="number">0.1</span> * now) % <span class="number">256</span>, <span class="number">-256</span> + (<span class="number">0.5</span> * now) % <span class="number">256</span>);</div><div class="line">context.fillRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">400</span> + <span class="number">256</span>, <span class="number">600</span> + <span class="number">256</span>);</div><div class="line">context.restore();</div></pre></td></tr></table></figure>
+<p>用一张下雨的图片铺满，然后根据时间 来设置原点位置，并且使得画的矩形比下雨所需的矩形要大，以保证覆盖。配合requestAnimationFrame 实现下雨</p>
+</li>
+<li><p>模拟下雨与下雪</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">context.fillStyle = context.createPattern(rain, <span class="string">'repeat'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> now = <span class="built_in">Date</span>.now();</div><div class="line"></div><div class="line">context.save();</div><div class="line">context.translate(<span class="number">-256</span> + (<span class="number">0.1</span> * now) % <span class="number">256</span>, <span class="number">-256</span> + (<span class="number">0.5</span> * now) % <span class="number">256</span>);</div><div class="line">context.fillRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">400</span> + <span class="number">256</span>, <span class="number">600</span> + <span class="number">256</span>);</div><div class="line">context.restore();</div><div class="line"></div><div class="line">context.save();</div><div class="line">context.translate(<span class="number">-256</span> + (<span class="number">0.08</span> * now) % <span class="number">256</span>, <span class="number">-256</span> + (<span class="number">0.2</span> * now) % <span class="number">256</span>);</div><div class="line">context.fillRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">400</span> + <span class="number">256</span>, <span class="number">600</span> + <span class="number">256</span>);</div><div class="line">context.restore();</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>  下雨的同时下雪与只下雨的区别是下雪的速率比较小，下雨的速率比较大,所以设置两个不同的原点，同时绘制两个不同的图片，相互叠加，这样就能有雨雪的效果。<br>  上面这几个例子都要配合requestAnimationFrame来实现动画。</p>
+<h2 id="引用文献"><a href="#引用文献" class="headerlink" title="引用文献"></a>引用文献</h2><ol>
+<li>《HTML5高级程序设计》 第二章</li>
+<li>《javascript 高级程序设计》</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/html5/">html5</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/11/20/canvas/" data-title="CANVAS | Lx15" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/11/25/requestAnimationFrame/" title="requestAnimationFrame">
+  <strong>上一篇：</strong><br/>
+  <span>
+  requestAnimationFrame</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/11/15/AngularJs---directives/"  title="AngularJs学习----指令">
+ <strong>下一篇：</strong><br/> 
+ <span>AngularJs学习----指令
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/11/20/canvas/" data-title="CANVAS" data-url="http://yoursite.com/2016/11/20/canvas/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Canvas特点"><span class="toc-number">1.</span> <span class="toc-text">Canvas特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Canvas基本用法及注意点"><span class="toc-number">2.</span> <span class="toc-text">Canvas基本用法及注意点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有趣的demo"><span class="toc-number">3.</span> <span class="toc-text">有趣的demo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用文献"><span class="toc-number">4.</span> <span class="toc-text">引用文献</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="Lx15.github.io" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Tags/js/" title="js">js<sup>20</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/css/" title="css">css<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/ng/" title="ng">ng<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/util/" title="util">util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/html5/" title="html5">html5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="undefined" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=undefined&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/Lx15.github.io" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

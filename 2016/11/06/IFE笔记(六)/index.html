@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/11/06/IFE笔记(六)/index.html">
 <meta property="og:site_name" content="Lx15">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
-<meta property="og:updated_time" content="2016-11-06T05:36:41.000Z">
+<meta property="og:updated_time" content="2016-11-27T12:09:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IFE任务练习笔记(六)">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记，因为是边学边记所以也比较零散，仅供自己平日记录。">
@@ -119,6 +119,12 @@
 <p>auto:默认值 用户可以选中元素中的内容<br>none——用户不能选择元素中的任何内容<br>text——用户可以选择元素中的文本<br>element——文本可选，但仅限元素的边界内(只有IE和FF支持)<br>all——在编辑器内，如果双击/上下文点击发生在子元素上，改值的最高级祖先元素将被选中。<br>-moz-none——firefox私有，元素和子元素的文本将不可选，但是，子元素可以通过text重设回可选</p>
 </blockquote>
 </li>
+<li><p>用css写箭头</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.right-arrow</span>&#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">border-left</span>: <span class="number">10px</span> solid <span class="number">#6898c2</span>;</div><div class="line">    <span class="attribute">border-top</span>: <span class="number">5px</span> solid transparent;</div><div class="line">    <span class="attribute">border-bottom</span>: <span class="number">5px</span> solid transparent;</div><div class="line">    <span class="attribute">cursor</span>: pointer;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.down-arrow</span>&#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</div><div class="line">    <span class="attribute">border-top</span>: <span class="number">10px</span> solid <span class="number">#6898c2</span>;</div><div class="line">    <span class="attribute">border-left</span>: <span class="number">5px</span> solid transparent;</div><div class="line">    <span class="attribute">border-right</span>: <span class="number">5px</span> solid transparent;</div><div class="line">    <span class="attribute">cursor</span>: pointer;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在父元素上hover时控制子元素的显隐</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">父元素 <span class="selector-class">.father</span></div><div class="line">子元素 <span class="selector-class">.child</span></div><div class="line">  <span class="selector-class">.father</span><span class="selector-pseudo">:hover</span>&gt;<span class="selector-class">.child</span>&#123;</div><div class="line">    <span class="attribute">display</span>: block;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+</li>
 </ol>
   
 	</div>
@@ -207,7 +213,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>17</sup></a></li>
+				<li><a href="/Tags/js/" title="js">js<sup>20</sup></a></li>
 			
 		
 			
@@ -235,15 +241,15 @@
 			
 		
 			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+				<li><a href="/Tags/ng/" title="ng">ng<sup>1</sup></a></li>
 			
 		
 			
@@ -255,7 +261,15 @@
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/Tags/html5/" title="html5">html5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
