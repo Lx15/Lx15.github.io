@@ -1,0 +1,581 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>AngularJs学习--- service | Lx15</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="服务是一个单例对象，在每个应用中只会被实例化一次，并且是延迟加载的（在需要时才会被创建）。 优点：
+
+为应用提供通用的服务，形式可以是常量或对象
+便于模块化
+便于单元测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJs学习--- service">
+<meta property="og:url" content="http://yoursite.com/2016/11/25/ngService/index.html">
+<meta property="og:site_name" content="Lx15">
+<meta property="og:description" content="服务是一个单例对象，在每个应用中只会被实例化一次，并且是延迟加载的（在需要时才会被创建）。 优点：
+
+为应用提供通用的服务，形式可以是常量或对象
+便于模块化
+便于单元测试">
+<meta property="og:updated_time" content="2016-12-04T11:34:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJs学习--- service">
+<meta name="twitter:description" content="服务是一个单例对象，在每个应用中只会被实例化一次，并且是延迟加载的（在需要时才会被创建）。 优点：
+
+为应用提供通用的服务，形式可以是常量或对象
+便于模块化
+便于单元测试">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15" title="Lx15"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15">Lx15</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/25/ngService/" title="AngularJs学习--- service" itemprop="url">AngularJs学习--- service</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2016-11-24T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-11-25</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于服务"><span class="toc-number">1.</span> <span class="toc-text">关于服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建服务"><span class="toc-number">2.</span> <span class="toc-text">创建服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#factory"><span class="toc-number">2.1.</span> <span class="toc-text">factory()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#service"><span class="toc-number">2.2.</span> <span class="toc-text">service()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#provider"><span class="toc-number">2.3.</span> <span class="toc-text">provider()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#constant-与value"><span class="toc-number">2.4.</span> <span class="toc-text">constant()与value()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#decorator"><span class="toc-number">2.5.</span> <span class="toc-text">decorator()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用服务"><span class="toc-number">3.</span> <span class="toc-text">使用服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务源码实现"><span class="toc-number">4.</span> <span class="toc-text">服务源码实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用文章"><span class="toc-number">5.</span> <span class="toc-text">引用文章</span></a></li></ol>
+		
+		</div>
+		
+		<p>  服务是一个单例对象，在每个应用中只会被实例化一次，并且是延迟加载的（在需要时才会被创建）。 优点：</p>
+<ol>
+<li>为应用提供通用的服务，形式可以是常量或对象</li>
+<li>便于模块化</li>
+<li>便于单元测试<a id="more"></a>
+</li>
+</ol>
+<h2 id="关于服务"><a href="#关于服务" class="headerlink" title="关于服务"></a>关于服务</h2><p>  出于内存占用和性能的考虑，控制器只会在需要时被实例化，并且不再需要就会被销毁，这意味着每次切换路由或重新加载视图时，当前的控制器会被AngularJs 清除掉。<br>  <code>服务</code>提供了一种能在应用的整个生命周期内保持数据的方法，它能够在控制器之间进行通信，并且能保证数据的一致性。<code>服务</code>也是在控制器之间共享数据的典型方法。<br>  AngularJs 提供了一些内置服务，如$http,任何地方使用这些内置服务都是统一的,并且根据我们自己的应用需要我们也可以创建自己的服务。</p>
+<h2 id="创建服务"><a href="#创建服务" class="headerlink" title="创建服务"></a>创建服务</h2><p>  自己创建服务也是很容易的：只需要注册这个服务即可。服务被注册后，AngularJS 编译器就可以引用它，并且在运行时把它当做依赖加载进来。<br>  在AngularJS中 ，有五种方法可以用来注册服务：</p>
+<blockquote>
+<p>factory()<br>service()<br>constant()<br>value()<br>provider()</p>
+</blockquote>
+<h3 id="factory"><a href="#factory" class="headerlink" title="factory()"></a>factory()</h3><p>factory() 方法是用来注册服务的最常规的方式。<br>factoty() 接收两个参数：name (字符串) 和 getFn(函数)。形式如下:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'myApp'</span>)</div><div class="line">.factoty(<span class="string">'myService'</span>，<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line"></div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p> 因为服务是单例对象，getFn在应用的声明周期只会被调用一次。同其他的AngularJS的服务一样，在定义服务时，getFn可以接受一个包含可被注入对象的数组或函数。</p>
+<h3 id="service"><a href="#service" class="headerlink" title="service()"></a>service()</h3><p>service() 可以注册一个支持构造函数的服务，它允许我们为服务对象注册一个构造函数。<br>service() 接受两个参数： name(字符串)和 constructor(函数)。constructor 是构造函数，用来调用它实例化服务的对象。service()函数会在创建实例时通过new关键字来实例化服务对象。 形式如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Person = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">angular.module(<span class="string">'myApp'</span>)</div><div class="line">.service(<span class="string">'myService'</span>,Person);</div></pre></td></tr></table></figure></p>
+<h3 id="provider"><a href="#provider" class="headerlink" title="provider()"></a>provider()</h3><p>所有服务都是由$provide服务创建的，$provide 服务负责在运行时初始化这些提供者。 提供者是一个具有$get()方法的对象，$injector通过调用$get方法创建服务实例。<br>所有创建服务的方法都构建在provider方法之上。provider()方法负责在$providerCache中注册服务。<br>provider() 方法可以接受两个参数：name(字符串)和 aProvider(对象/函数/数组)。</p>
+<blockquote>
+<p>name : name参数在providerCache中是注册的名字。name+Provider 会成为服务的提供者。name也是服务实例的名字。<br>aProvider 可以是多种形式。</p>
+<pre><code>1. aProvider是个函数，那么它会通过依赖注入被调用，并且负责通过$get方法返回一个对象。
+2. aProvider是个数组，会被当成一个带有行内依赖注入声明的函数来处理。数组的最后一个元素应该是函数，可以返回一个带有$get方法的对象。
+3. aProvider 是个对象，则应该带有$
+</code></pre></blockquote>
+<p>provider()函数会返回一个已经注册的提供者实例。直接使用provider()是最原始的创建服务的方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'myApp'</span>,[])</div><div class="line"> .provider(<span class="string">'myService'</span>,&#123;</div><div class="line">    a:<span class="string">"ss"</span>,</div><div class="line">    $get:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">      <span class="keyword">return</span>&#123;</div><div class="line">        geta:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">this</span>.a;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"> &#125;)</div></pre></td></tr></table></figure>
+<p>当我们给provider()函数传入的就是$get()方法时，factory()函数就是用provider()方法注册服务的简化形式.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 下面这两种方法作用相同</span></div><div class="line">angular.module(<span class="string">'myApp'</span>)</div><div class="line">  .factory(<span class="string">'myService'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">return</span>&#123;</div><div class="line">      username:<span class="string">"ss"</span></div><div class="line">    &#125;</div><div class="line">  &#125;)</div><div class="line">  .provider(<span class="string">'myService'</span>,&#123;</div><div class="line">    $get:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">      <span class="keyword">return</span> &#123;</div><div class="line">        username:<span class="string">'ss'</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;)</div></pre></td></tr></table></figure></p>
+<p>是否可以一直使用.factoty()方法代替.provider()呢？ 答案在于 是否需要用AngularJS的.config() 函数来对.provider()方法返回的服务进行额外的配置。<br>先注册一个服务<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 下面这两种方法作用相同</span></div><div class="line">angular.module(<span class="string">'myApp'</span>)</div><div class="line">  .provider(<span class="string">'myService'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> myUrl = <span class="string">"ss"</span>;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setUrl</span> (<span class="params">url</span>)</span>&#123;</div><div class="line">      <span class="keyword">if</span>(url)&#123;</div><div class="line">        myUrl =url;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    $get:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">      <span class="keyword">return</span> &#123;</div><div class="line"></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;)</div></pre></td></tr></table></figure></p>
+<p>若是想在应用启动前配置 myService 的URL ,则：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">'myApp'</span>,[])</div><div class="line">.config(<span class="function"><span class="keyword">function</span>(<span class="params">myServiceProdiver</span>)</span>&#123;</div><div class="line">  myServiceProdiver.setUrl(<span class="string">"xx.com"</span>);</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>在上面的栗子中，provider() 在myService 后面添加Provider生成一个新的提供者，myServiceProdiver可以被注入到config()<br>如果希望在config中可以对服务进行配置，必须使用provider()来定义服务。</p>
+<h3 id="constant-与value"><a href="#constant-与value" class="headerlink" title="constant()与value()"></a>constant()与value()</h3><p>constant()可以将一个已经存在的常量注册为服务，并可以注入到其他的任何地方。<br>constant() 接收两个参数name 和 value.<br>constant() 注册的常量服务，不能被装饰器拦截。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'app'</span>, []);</div><div class="line"></div><div class="line">app.constant(<span class="string">'PI'</span>, <span class="number">3.14159265359</span>);</div><div class="line"></div><div class="line">app.config(<span class="function"><span class="keyword">function</span>(<span class="params">PI</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> radius = <span class="number">4</span>;</div><div class="line">    <span class="comment">//PI can be injected here in the config block</span></div><div class="line">    <span class="keyword">var</span> perimeter = <span class="number">2</span> * PI * radius;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">app.controller(<span class="string">'appCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">PI</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> radius = <span class="number">4</span>;</div><div class="line">    <span class="comment">// calculate area of the circle</span></div><div class="line">    <span class="keyword">var</span> area = PI * radius * radius;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>value()可以将一个已经存在的变量注册为服务，不能注入在 config 的方法中。<br>value() 接收两个参数name 和 value.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'app'</span>, []);</div><div class="line"></div><div class="line">app.value(<span class="string">'greeting'</span>, <span class="string">'Hello'</span>);</div><div class="line"></div><div class="line">app.config(<span class="function"><span class="keyword">function</span> (<span class="params">$provide</span>) </span>&#123;</div><div class="line">  $provide.decorator(<span class="string">'greeting'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$delegate</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> $delegate + <span class="string">' World!'</span>;</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="decorator"><a href="#decorator" class="headerlink" title="decorator()"></a>decorator()</h3><p> $provide 服务提供了在服务实例创建时对其进行拦截的功能，并可以对服务进行扩展，或者用另外的内容替换它。<br> 对服务进行装饰的场景有很多，比如对服务进行扩展，将外部数据缓存进localStorage的功能，或者对服务进行封装以便在开发中进行调试和跟踪。<br> 对decorator() 使用较好的用途是对第三方模块的扩展。如下面这个例子（<a href="http://plnkr.co/edit/lj9srM2KXZmwmTxLb1p7?p=preview" target="_blank" rel="external">来源</a>）。</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">var</span> upstream = angular.module(<span class="string">'thirdParty'</span>, []);</div><div class="line">upstream.service(<span class="string">'emailService'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"> <span class="keyword">this</span>.email = <span class="string">""</span>;</div><div class="line"></div><div class="line"> <span class="keyword">this</span>.setContent = <span class="function"><span class="keyword">function</span>(<span class="params">content</span>) </span>&#123;</div><div class="line">   <span class="keyword">this</span>.email = content;</div><div class="line"> &#125;;</div><div class="line"></div><div class="line"> <span class="keyword">this</span>.send = <span class="function"><span class="keyword">function</span>(<span class="params">recipient</span>) </span>&#123;</div><div class="line">   <span class="keyword">return</span> <span class="string">'sending "'</span> + <span class="keyword">this</span>.email + <span class="string">'" to '</span> + recipient;</div><div class="line"> &#125;;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> app = angular.module(<span class="string">'myApp'</span>, [<span class="string">'thirdParty'</span>]);</div><div class="line"></div><div class="line">app.config(<span class="function"><span class="keyword">function</span>(<span class="params">$provide</span>) </span>&#123;</div><div class="line"> $provide.decorator(<span class="string">'emailService'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$delegate</span>) </span>&#123;</div><div class="line">   <span class="comment">// myApp depends on the emailService from a third-party module, but the service is lacking a way to send email with signature.</span></div><div class="line">   <span class="comment">// To avoid reinventing the wheel and, as well as, maintaining a good habit of leaving third-party module intact,</span></div><div class="line">   <span class="comment">// I use $provide.decorator here to enhance emailService.</span></div><div class="line">   $delegate.sendWithSignature = <span class="function"><span class="keyword">function</span>(<span class="params">recipient, signature</span>) </span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="string">'sending "'</span> + <span class="keyword">this</span>.email + <span class="string">'" to '</span> + recipient + <span class="string">" by "</span> + signature;</div><div class="line">   &#125;;</div><div class="line">   <span class="keyword">return</span> $delegate;</div><div class="line"> &#125;);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">app.controller(<span class="string">'MainCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope, emailService</span>) </span>&#123;</div><div class="line"> emailService.setContent(<span class="string">"Greeting!!"</span>);</div><div class="line"> $scope.emailComplete = emailService.sendWithSignature(<span class="string">'a@a.com'</span>, <span class="string">'tamakisquare'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="使用服务"><a href="#使用服务" class="headerlink" title="使用服务"></a>使用服务</h2><p>  可以在控制器、指令、过滤器或另外一个服务中通过依赖声明的方式来使用服务。AngularJS 会像平时一样在运行期自动处理实例化和依赖加载的相关项。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">angular.module(<span class="string">"myApp"</span>)</div><div class="line">.controller(<span class="string">"myCtrl"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">myService</span>)</span>&#123;</div><div class="line">   myService.getName();</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h2 id="服务源码实现"><a href="#服务源码实现" class="headerlink" title="服务源码实现"></a>服务源码实现</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">supportObject</span>(<span class="params">delegate</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">key, value</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (isObject(key)) &#123;</div><div class="line">            forEach(key, reverseParams(delegate));</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> delegate(key, value);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">provider</span>(<span class="params">name, provider_</span>) </span>&#123;</div><div class="line">    assertNotHasOwnProperty(name, <span class="string">'service'</span>);</div><div class="line">    <span class="keyword">if</span> (isFunction(provider_) || isArray(provider_)) &#123;</div><div class="line">        provider_ = providerInjector.instantiate(provider_);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (!provider_.$get) &#123;</div><div class="line">        <span class="keyword">throw</span> $injectorMinErr(<span class="string">'pget'</span>, <span class="string">"Provider '&#123;0&#125;' must define $get factory method."</span>, name);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> providerCache[name + providerSuffix] = provider_;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">enforceReturnValue</span>(<span class="params">name, factory</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">enforcedReturnValue</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> result = instanceInjector.invoke(factory, <span class="keyword">this</span>);</div><div class="line">        <span class="keyword">if</span> (isUndefined(result)) &#123;</div><div class="line">            <span class="keyword">throw</span> $injectorMinErr(<span class="string">'undef'</span>, <span class="string">"Provider '&#123;0&#125;' must return a value from $get factory method."</span>, name);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">factory</span>(<span class="params">name, factoryFn, enforce</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> provider(name, &#123;</div><div class="line">        $get: enforce !== <span class="literal">false</span> ? enforceReturnValue(name, factoryFn) : factoryFn</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">service</span>(<span class="params">name, constructor</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> factory(name, [<span class="string">'$injector'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$injector</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> $injector.instantiate(<span class="keyword">constructor</span>);</div><div class="line">    &#125;]);</div><div class="line">&#125;</div><div class="line"></div><div class="line">function value(name, val) &#123;</div><div class="line">    <span class="keyword">return</span> factory(name, valueFn(val), <span class="literal">false</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">constant</span>(<span class="params">name, value</span>) </span>&#123;</div><div class="line">    assertNotHasOwnProperty(name, <span class="string">'constant'</span>);</div><div class="line">    providerCache[name] = value;</div><div class="line">    instanceCache[name] = value;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">decorator</span>(<span class="params">serviceName, decorFn</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> origProvider = providerInjector.get(serviceName + providerSuffix),</div><div class="line">        orig$get = origProvider.$get;</div><div class="line"></div><div class="line">    origProvider.$get = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> origInstance = instanceInjector.invoke(orig$get, origProvider);</div><div class="line">        <span class="keyword">return</span> instanceInjector.invoke(decorFn, <span class="literal">null</span>, &#123;</div><div class="line">            $delegate: origInstance</div><div class="line">        &#125;);</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>  服务的工厂函数用来生成一个单例的对象或函数，这个对象或函数就是服务，它会存在于应用的整个生命周期中，当我们的AngularJS应用加载服务时，这个函数会被执行并返回一个单例的服务对象。</p>
+<h2 id="引用文章"><a href="#引用文章" class="headerlink" title="引用文章"></a>引用文章</h2><ol>
+<li>《AngularJS 权威教程》 Ari Lerner</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/ng/">ng</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/11/25/ngService/" data-title="AngularJs学习--- service | Lx15" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/11/30/ngdatabind/" title="AngularJs学习--- 双向数据绑定&amp;脏值检查">
+  <strong>上一篇：</strong><br/>
+  <span>
+  AngularJs学习--- 双向数据绑定&amp;脏值检查</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/11/25/requestAnimationFrame/"  title="requestAnimationFrame">
+ <strong>下一篇：</strong><br/> 
+ <span>requestAnimationFrame
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/11/25/ngService/" data-title="AngularJs学习--- service" data-url="http://yoursite.com/2016/11/25/ngService/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于服务"><span class="toc-number">1.</span> <span class="toc-text">关于服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建服务"><span class="toc-number">2.</span> <span class="toc-text">创建服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#factory"><span class="toc-number">2.1.</span> <span class="toc-text">factory()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#service"><span class="toc-number">2.2.</span> <span class="toc-text">service()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#provider"><span class="toc-number">2.3.</span> <span class="toc-text">provider()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#constant-与value"><span class="toc-number">2.4.</span> <span class="toc-text">constant()与value()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#decorator"><span class="toc-number">2.5.</span> <span class="toc-text">decorator()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用服务"><span class="toc-number">3.</span> <span class="toc-text">使用服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务源码实现"><span class="toc-number">4.</span> <span class="toc-text">服务源码实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用文章"><span class="toc-number">5.</span> <span class="toc-text">引用文章</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="Lx15.github.io" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Tags/js/" title="js">js<sup>23</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/css/" title="css">css<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/ng/" title="ng">ng<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/html5/" title="html5">html5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/util/" title="util">util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="undefined" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=undefined&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/Lx15.github.io" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

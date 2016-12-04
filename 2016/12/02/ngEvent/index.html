@@ -1,0 +1,536 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>AngularJs学习--- 事件通信机制 | Lx15</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="Angular的作用域在本质上是分层次的：他们可以通过父子关系来回沟通，但作用域通常不是共享变量的，他们执行的功能往往各不相同，跟在父树上的位置无关。共享数据使用服务，作用域间通信使用事件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJs学习--- 事件通信机制">
+<meta property="og:url" content="http://yoursite.com/2016/12/02/ngEvent/index.html">
+<meta property="og:site_name" content="Lx15">
+<meta property="og:description" content="Angular的作用域在本质上是分层次的：他们可以通过父子关系来回沟通，但作用域通常不是共享变量的，他们执行的功能往往各不相同，跟在父树上的位置无关。共享数据使用服务，作用域间通信使用事件。">
+<meta property="og:updated_time" content="2016-12-04T11:42:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJs学习--- 事件通信机制">
+<meta name="twitter:description" content="Angular的作用域在本质上是分层次的：他们可以通过父子关系来回沟通，但作用域通常不是共享变量的，他们执行的功能往往各不相同，跟在父树上的位置无关。共享数据使用服务，作用域间通信使用事件。">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15" title="Lx15"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15">Lx15</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/12/02/ngEvent/" title="AngularJs学习--- 事件通信机制" itemprop="url">AngularJs学习--- 事件通信机制</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2016-12-01T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-12-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#来个栗子"><span class="toc-number">1.</span> <span class="toc-text">来个栗子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用文章"><span class="toc-number">2.</span> <span class="toc-text">引用文章</span></a></li></ol>
+		
+		</div>
+		
+		<p>  Angular的作用域在本质上是分层次的：他们可以通过父子关系来回沟通，但作用域通常不是共享变量的，他们执行的功能往往各不相同，跟在父树上的位置无关。共享数据使用服务，作用域间通信使用事件。<br><a id="more"></a><br>  Angular事件系统并不与浏览器的事件系统相通。这意味着，我们只能在作用域上监听Angular事件而不是DOM事件。<br>  事件通信是按照作用域链来进行传播。使用scope()原型上的$emit进行向上传播，$broadcast 进行向下传播，$on 进行事件接收。</p>
+<h2 id="来个栗子"><a href="#来个栗子" class="headerlink" title="来个栗子"></a>来个栗子</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">&lt;body&gt;</div><div class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"ParentCtrl"</span>&gt;</span></span></div><div class="line">     <span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"SelfCtrl"</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">button</span> <span class="attr">ng-click</span>=<span class="string">"click()"</span>&gt;</span>click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">       <span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"ChildCtrl"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">     <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">     <span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"BroCtrl"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    &lt;script type=<span class="string">"text/javascript"</span>&gt;</div><div class="line">        angular.module(<span class="string">'myApp'</span>, [])</div><div class="line">        .controller(<span class="string">'ParentCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;</div><div class="line">         $scope.$on(<span class="string">'to-child'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e, d</span>) </span>&#123;</div><div class="line">           <span class="built_in">console</span>.log(<span class="string">'broadcast---parent'</span>);</div><div class="line">         &#125;);</div><div class="line">         $scope.$on(<span class="string">'to-parent'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">           <span class="built_in">console</span>.log(<span class="string">"emit---parent"</span>);</div><div class="line">         &#125;)</div><div class="line">        &#125;)</div><div class="line">        .controller(<span class="string">'SelfCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;</div><div class="line">          $scope.click = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            $scope.$broadcast(<span class="string">'to-child'</span>, <span class="string">'haha'</span>);</div><div class="line">            $scope.$emit(<span class="string">'to-parent'</span>, <span class="string">'hehe'</span>);</div><div class="line">            $scope.$on(<span class="string">'to-parent'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">              <span class="built_in">console</span>.log(<span class="string">"emit--self"</span>);</div><div class="line">            &#125;);</div><div class="line">            $scope.$on(<span class="string">'to-child'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">              <span class="built_in">console</span>.log(<span class="string">"broadcast--self"</span>);</div><div class="line">            &#125;)</div><div class="line">          &#125;</div><div class="line">        &#125;)</div><div class="line">        .controller(<span class="string">'ChildCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>)</span>&#123;</div><div class="line">          $scope.$on(<span class="string">'to-child'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e, d</span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'broadcast---child'</span>, d);</div><div class="line">          &#125;);</div><div class="line">        &#125;)</div><div class="line">        .controller(<span class="string">'BroCtrl'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>)</span>&#123;</div><div class="line">          $scope.$on(<span class="string">'to-child'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e, d</span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'broadcast--bro'</span>);</div><div class="line">          &#125;);</div><div class="line">          $scope.$on(<span class="string">'to-parent'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e, d</span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'emit--bro'</span>);</div><div class="line">          &#125;);</div><div class="line">        &#125;);</div><div class="line">    <span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure>
+<p> 在这个例子中作用域的嵌套关系是这样的:</p>
+<pre><code>&gt; ParentCtrl
+    &gt; SelfCtrl
+      &gt; ChildCtrl
+    &gt; BroCtrl
+</code></pre><p>根据使用$emit来向上传播事件、使用$broadcast来向下传播事件、使用$on 来接收事件这样的规则，若是想从SelfCtrl向ParentCtrl传递消息则应使用$emit方法，而且ChildCtrl是收不到的。同样给ChildCtrl传递消息应使用$broadcast方法，当然ParentCtrl是收不到消息的。</p>
+<p>查看console的结果会发现无论是$emit还是$broadcast都不会在自己的作用域上接收消失，实际上也没有这个必要。</p>
+<p>事件的消息传播是按照作用域链进行，若是SelfCtrl 想和兄弟作用域BroCtrl进行通信呢？我觉得可以这样，SelfCtrl可以先发消息通知ParentCtrl,ParentCtrl收到消息后再通知BroCtrl,这样就能通信了。</p>
+<p>还有种不太好的方式，就是将 $emit,$broadcast,$on全部放在$rootScope上，这样发消息是都能收到的，但是这样会污染$rootScope。</p>
+<h2 id="引用文章"><a href="#引用文章" class="headerlink" title="引用文章"></a>引用文章</h2><ol>
+<li><a href="http://www.angularjs.cn/A08c" target="_blank" rel="external">angularjs的事件 $broadcast and $emit and $on </a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/ng/">ng</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/12/02/ngEvent/" data-title="AngularJs学习--- 事件通信机制 | Lx15" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/11/30/ngdatabind/"  title="AngularJs学习--- 双向数据绑定&amp;脏值检查">
+ <strong>下一篇：</strong><br/> 
+ <span>AngularJs学习--- 双向数据绑定&amp;脏值检查
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/12/02/ngEvent/" data-title="AngularJs学习--- 事件通信机制" data-url="http://yoursite.com/2016/12/02/ngEvent/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#来个栗子"><span class="toc-number">1.</span> <span class="toc-text">来个栗子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用文章"><span class="toc-number">2.</span> <span class="toc-text">引用文章</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="Lx15.github.io" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Tags/js/" title="js">js<sup>23</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/css/" title="css">css<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/ng/" title="ng">ng<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/html5/" title="html5">html5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/util/" title="util">util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="undefined" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=undefined&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/Lx15.github.io" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
