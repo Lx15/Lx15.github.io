@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>好文章收集 | Lx15</title>
+    <title>AngularJs 遇见的坑 | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。">
+    <meta name="description" content="今天调代码的时候遇见了一个我看起来很诡异的情况 ，就是在ng-controller 中 用ng-show 来现因两个模块。但是无论怎样做，这个ng-show 也不能正常切换，真是奇怪，这个ng-show 和ng-controller 我可是用过很多次了啊。。。 多次事实证明，表现出来的错误并不一定是错误的根源，尤其是这些写过多次理应就是这样的错误，这些往往都是表象。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="好文章收集">
-<meta property="og:url" content="http://yoursite.com/2016/09/20/resources/index.html">
+<meta property="og:title" content="AngularJs 遇见的坑">
+<meta property="og:url" content="http://yoursite.com/2016/12/08/ngPit(一)/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。">
-<meta property="og:updated_time" content="2016-10-06T13:15:38.000Z">
+<meta property="og:description" content="今天调代码的时候遇见了一个我看起来很诡异的情况 ，就是在ng-controller 中 用ng-show 来现因两个模块。但是无论怎样做，这个ng-show 也不能正常切换，真是奇怪，这个ng-show 和ng-controller 我可是用过很多次了啊。。。 多次事实证明，表现出来的错误并不一定是错误的根源，尤其是这些写过多次理应就是这样的错误，这些往往都是表象。">
+<meta property="og:updated_time" content="2016-12-24T08:46:02.230Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="好文章收集">
-<meta name="twitter:description" content="有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。">
+<meta name="twitter:title" content="AngularJs 遇见的坑">
+<meta name="twitter:description" content="今天调代码的时候遇见了一个我看起来很诡异的情况 ，就是在ng-controller 中 用ng-show 来现因两个模块。但是无论怎样做，这个ng-show 也不能正常切换，真是奇怪，这个ng-show 和ng-controller 我可是用过很多次了啊。。。 多次事实证明，表现出来的错误并不一定是错误的根源，尤其是这些写过多次理应就是这样的错误，这些往往都是表象。">
 
     
     
@@ -78,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/09/20/resources/" title="好文章收集" itemprop="url">好文章收集</a>
+      <a href="/2016/12/08/ngPit(一)/" title="AngularJs 遇见的坑" itemprop="url">AngularJs 遇见的坑</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-09-19T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-20</time>
+    <time datetime="2016-12-07T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-12-08</time>
     
   </p>
 </header>
@@ -94,20 +94,16 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具类"><span class="toc-number">1.</span> <span class="toc-text">工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Js学习"><span class="toc-number">2.</span> <span class="toc-text">Js学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css学习"><span class="toc-number">3.</span> <span class="toc-text">css学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#心灵鸡汤"><span class="toc-number">4.</span> <span class="toc-text">心灵鸡汤</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。</p>
-<a id="more"></a>
-<h3 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h3><ol>
-<li><a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" target="_blank" rel="external">SASS用法指南</a></li>
-<li><a href="http://www.cnblogs.com/vajoy/p/5341664.html" target="_blank" rel="external">浅谈浏览器http的缓存机制</a></li>
-</ol>
-<h3 id="Js学习"><a href="#Js学习" class="headerlink" title="Js学习"></a>Js学习</h3><ol>
-<li><a href="https://github.com/ericdum/mujiang.info/issues/6/" target="_blank" rel="external">npm的package.json中文文档</a></li>
-</ol>
-<h3 id="css学习"><a href="#css学习" class="headerlink" title="css学习"></a>css学习</h3><h3 id="心灵鸡汤"><a href="#心灵鸡汤" class="headerlink" title="心灵鸡汤"></a>心灵鸡汤</h3>  
+		<p> 今天调代码的时候遇见了一个我看起来很诡异的情况 ，就是在ng-controller 中 用ng-show 来现因两个模块。但是无论怎样做，这个ng-show 也不能正常切换，真是奇怪，这个ng-show 和ng-controller 我可是用过很多次了啊。。。 多次事实证明，表现出来的错误并不一定是错误的根源，尤其是这些写过多次理应就是这样的错误，这些往往都是表象。<br><a id="more"></a></p>
+<p> 遇见的bug 代码简化如下<br> <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-controller="demoCtrl"&gt;</div><div class="line">  &lt;button type="button" name="button" ng-click="change()"&gt;change&lt;/button&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;div ng-controller="demoCtrl"&gt;</div><div class="line">      &lt;div class="one" ng-show="pattern"&gt;</div><div class="line">          one</div><div class="line">      &lt;/div&gt;</div><div class="line">      &lt;div class="two" ng-show="!pattern"&gt;</div><div class="line">          two</div><div class="line">      &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">  &lt;script type="text/javascript"&gt;</div><div class="line">      angular.module('myApp', [])</div><div class="line">          .controller('demoCtrl', function($scope) &#123;</div><div class="line">              $scope.pattern = true;</div><div class="line">              $scope.change = function() &#123;</div><div class="line">                  $scope.pattern = !$scope.pattern;</div><div class="line">              &#125;</div><div class="line">          &#125;)</div><div class="line">  &lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<p>这段代码我在写时就认为效果就应该是点击change 时两个div相互切换，然而并没有，纳尼？<br>我想这样功能的代码如果把button放在第二个 ng-controller 中 效果就可以了，这也是我们常用的方式。<br>代码如下:<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-controller="demoCtrl"&gt;</div><div class="line">  &lt;button type="button" name="button" ng-click="change()"&gt;change1&lt;/button&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;div ng-controller="demoCtrl"&gt;</div><div class="line">      &lt;div class="one" ng-show="pattern"&gt;</div><div class="line">          one</div><div class="line">      &lt;/div&gt;</div><div class="line">      &lt;div class="two" ng-show="!pattern"&gt;</div><div class="line">          two</div><div class="line">      &lt;/div&gt;</div><div class="line">  &lt;button type="button" name="button" ng-click="change()"&gt;change2&lt;/button&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">  &lt;script type="text/javascript"&gt;</div><div class="line">      angular.module('myApp', [])</div><div class="line">          .controller('demoCtrl', function($scope) &#123;</div><div class="line">              $scope.pattern = true;</div><div class="line">              $scope.change = function() &#123;</div><div class="line">                  $scope.pattern = !$scope.pattern;</div><div class="line">              &#125;</div><div class="line">          &#125;)</div><div class="line">  &lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<p>这样的代码change2 是有理想的效果的，但是change1 就没有理想的效果的，错误我们就看出来了就出在两个ng-controller中。即便这两个controller 是同一个。</p>
+<p>这是因为 ng-controller 和服务是不一样的，服务是单例的只会实例化一次，而控制器会根据需要实例化，在这里也就是会实例化两次，虽然是同一套代码，但是在第一次ng-controller 中调用更改的pattern 是不会影响到第二个 pattern值的。这种错误若是调试，表现的就是pattern 值确实更改了，但是ng-show就是不变（ng-show 说我好无辜啊。。。。）</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -115,7 +111,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/Tags/工具集/">工具集</a>
+  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/ng/">ng</a>
   </div>
 
 </div>
@@ -124,7 +120,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/09/20/resources/" data-title="好文章收集 | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/12/08/ngPit(一)/" data-title="AngularJs 遇见的坑 | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -138,18 +134,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/09/24/异步/" title="总算弄懂的关于异步的四个知识点">
+ <a href="/2016/12/10/weex学习(一)/" title="weex 学习(一) --- 实现好看的单选组件">
   <strong>上一篇：</strong><br/>
   <span>
-  总算弄懂的关于异步的四个知识点</span>
+  weex 学习(一) --- 实现好看的单选组件</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/09/15/IFE笔记(二)/"  title="IFE任务练习笔记(二)">
+<a href="/2016/12/02/ngEvent/"  title="AngularJs学习--- 事件通信机制">
  <strong>下一篇：</strong><br/> 
- <span>IFE任务练习笔记(二)
+ <span>AngularJs学习--- 事件通信机制
 </span>
 </a>
 </div>
@@ -158,7 +154,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/09/20/resources/" data-title="好文章收集" data-url="http://yoursite.com/2016/09/20/resources/"></div>
+	<div class="ds-thread" data-thread-key="2016/12/08/ngPit(一)/" data-title="AngularJs 遇见的坑" data-url="http://yoursite.com/2016/12/08/ngPit(一)/"></div>
 </section>
 
 
@@ -168,7 +164,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具类"><span class="toc-number">1.</span> <span class="toc-text">工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Js学习"><span class="toc-number">2.</span> <span class="toc-text">Js学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css学习"><span class="toc-number">3.</span> <span class="toc-text">css学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#心灵鸡汤"><span class="toc-number">4.</span> <span class="toc-text">心灵鸡汤</span></a></li></ol>
+ 
  
   </div>
 

@@ -4,23 +4,23 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>好文章收集 | Lx15</title>
+    <title>HTML5地理定位 --- geolocation | Lx15</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta name="description" content="有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。">
+    <meta name="description" content="最近在 用weex 实现一个小应用要用到地理定位，所以找来看看咯。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="好文章收集">
-<meta property="og:url" content="http://yoursite.com/2016/09/20/resources/index.html">
+<meta property="og:title" content="HTML5地理定位 --- geolocation">
+<meta property="og:url" content="http://yoursite.com/2016/12/12/Geolocation API/index.html">
 <meta property="og:site_name" content="Lx15">
-<meta property="og:description" content="有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。">
-<meta property="og:updated_time" content="2016-10-06T13:15:38.000Z">
+<meta property="og:description" content="最近在 用weex 实现一个小应用要用到地理定位，所以找来看看咯。">
+<meta property="og:updated_time" content="2016-12-24T08:43:01.179Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="好文章收集">
-<meta name="twitter:description" content="有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。">
+<meta name="twitter:title" content="HTML5地理定位 --- geolocation">
+<meta name="twitter:description" content="最近在 用weex 实现一个小应用要用到地理定位，所以找来看看咯。">
 
     
     
@@ -78,14 +78,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/09/20/resources/" title="好文章收集" itemprop="url">好文章收集</a>
+      <a href="/2016/12/12/Geolocation API/" title="HTML5地理定位 --- geolocation" itemprop="url">HTML5地理定位 --- geolocation</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-09-19T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-20</time>
+    <time datetime="2016-12-11T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-12-12</time>
     
   </p>
 </header>
@@ -94,20 +94,50 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具类"><span class="toc-number">1.</span> <span class="toc-text">工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Js学习"><span class="toc-number">2.</span> <span class="toc-text">Js学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css学习"><span class="toc-number">3.</span> <span class="toc-text">css学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#心灵鸡汤"><span class="toc-number">4.</span> <span class="toc-text">心灵鸡汤</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#应用"><span class="toc-number">1.</span> <span class="toc-text">应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例"><span class="toc-number">2.</span> <span class="toc-text">实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">3.</span> <span class="toc-text">参考</span></a></li></ol>
 		
 		</div>
 		
-		<p>有时候在网页上看到一篇好文章，但是之后怎么也找不到了，所以呢，不如记录在这里，每次从这里出去不就好啦….哈哈。。。我好聪明。。。</p>
+		<p>  最近在 用weex 实现一个小应用要用到地理定位，所以找来看看咯。</p>
 <a id="more"></a>
-<h3 id="工具类"><a href="#工具类" class="headerlink" title="工具类"></a>工具类</h3><ol>
-<li><a href="http://www.ruanyifeng.com/blog/2012/06/sass.html" target="_blank" rel="external">SASS用法指南</a></li>
-<li><a href="http://www.cnblogs.com/vajoy/p/5341664.html" target="_blank" rel="external">浅谈浏览器http的缓存机制</a></li>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>  地理定位其实是一个很容易实现的功能，对于web应用开发者来说。因为Geolocation 是HTML5 规范中第一批被完整包含并实现的功能，并且可在所有主流浏览器中使用它。</p>
+<ol>
+<li><p>当然对于早期的浏览器来说最好做一下浏览器支持性检查:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadCheck</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span>(navigator.geolocation)&#123;</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"support"</span>).innerHTML = <span class="string">"supported"</span>;</div><div class="line">  &#125;<span class="keyword">else</span>&#123;</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">"support"</span>).innerHTML = <span class="string">"not supported"</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>目前有两种位置请求：</p>
+<blockquote>
+<p>单次定位请求  navigator.geolocation.getCurrentPosition(successCallback,errorCallback,options);<br>重复性的位置更新请求 navigator.geolocation.watchPosition(successCallback,errorCallback);</p>
+</blockquote>
+<p>我们在实际使用的时候主要也就是使用这两个核心的API。所以其实很简单的。<br>navigator.geolocation.getCurrentPosition() 这个函数因为像获取位置数据这样的操作可能需要较长时间才能完成，所以是异步的处理。</p>
+</li>
+<li><p>successCallback 是收到实际位置信息并进行处理的地方。这个successCallback 函数只接收一个参数：位置对象。这个对象包含坐标（coords 特性）和一个获取位置数据事的时间戳。这个coords前三个特性:</p>
+<blockquote>
+<p>latitude（纬度）<br>longitude (经度)<br>accuracy  （准确度）</p>
+</blockquote>
+<p>latitude 与longitude 将包含HTML5 Geolocation 服务测定的最佳的十进制用户位置。accuracy 将以m 为单位指定纬度和经度值与实际位置间的差距。对于在移动端的浏览器可能还支持其他的特性。</p>
+<blockquote>
+<p>altitude  用户位置的海拔高度<br>altitudeAccuracy  海拔高度的准确度<br>heading 行进方向，对于正北而言<br>speed 地面速度</p>
+</blockquote>
+<p>位置计算服务很可能会出差错，所以Geolocation应用程序来说错误处理非常重要。errorCallback定义了所有需要处理的错误情况的错误编号，错误编号设置在错误对象中，错误对象作为code参数传递给错误处理程序。</p>
+<blockquote>
+<p>PERMISSION_DENIED(错误编号1)—用户选择拒绝浏览器获得其位置信息<br>POSITION_UNAVAILABLE(错误编号2)—尝试获取用户位置信息，但是失败了。<br>TIMEOUT (错误编号3)—设置了可选的timeout值，尝试确定用户位置的过程超时。</p>
+</blockquote>
+<p>对于可选参数对象来说，有三个值可以设置：enableHighAccuracy timeout 和maximumAge 。这三个参数可以使用JSON对象传递，这样更便于添加到HTML5 Geolocation 请求调用中。</p>
+<blockquote>
+<p>enableHighAccuracy ： 默认是false、是否通知浏览器启用HTML5 Geolocation服务的高精度模式。如果启用此参数，可能没有任何差别，也可能会导致更多的时间和资源来确定位置。<br>timeout：ms 为单位 ，告诉浏览器计算当前位置所允许的最长时间。如果在这个事件段内未完成计算，就会调用错误处理程序，其默认值是Infinity 。<br>maximumAge :表示浏览器重亲计算位置的时间间隔，ms 为单位。默认值是0，即 浏览器每次请求时必须立即重新计算位置。</p>
+</blockquote>
+</li>
+<li><p>重复性的位置更新请求 ： navigator.geolocation.watchPosition(successCallback,errorCallback). 只要用户位置发生变化，geolocation 服务会调用successCallback 处理程序，它的效果就像是程序在监视用户的位置，并会在其变化时及时通知用户。<br>若应用程序不再需要接收有关用户的持续位置更新，可调用clearWatch()函数 navigator.geolocation.clearWatch(watchId).这个watchId 表示一个唯一的监视请求以便将来取消监视。</p>
+</li>
 </ol>
-<h3 id="Js学习"><a href="#Js学习" class="headerlink" title="Js学习"></a>Js学习</h3><ol>
-<li><a href="https://github.com/ericdum/mujiang.info/issues/6/" target="_blank" rel="external">npm的package.json中文文档</a></li>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>可以使用watchPisition()来进行计算距离：每当有新的位置返回，就将其与最后保存的位置进行比较。距离计算可以使用Haversine公式，代码实现如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Number</span>.prototype.toRadians = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>.Math.PI/<span class="number">180</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">distance</span>(<span class="params">latitude1,longitude1,latitude2,longitude2</span>)</span>&#123;</div><div class="line">  <span class="comment">// R 地球半径</span></div><div class="line">  <span class="keyword">var</span> R = <span class="number">6371</span>;</div><div class="line">  <span class="keyword">var</span> detalLatitude = (latitude2- latitude1).toRadians();</div><div class="line">  <span class="keyword">var</span> detalLongitude = (longitude2 - longitude1).toRadians();</div><div class="line">  latitude1 = latitude1.toRadians(), latitude2 = latitude2.toRadians();</div><div class="line">  <span class="keyword">var</span> a = <span class="built_in">Math</span>.sin(detalLatitude/<span class="number">2</span>)*</div><div class="line">          <span class="built_in">Math</span>.sin(detalLatitude/<span class="number">2</span>)+</div><div class="line">          <span class="built_in">Math</span>.cos(latitude1)*</div><div class="line">          <span class="built_in">Math</span>.cos(latitude2)*</div><div class="line">          <span class="built_in">Math</span>.sin(deltaLongitude/<span class="number">2</span>)*</div><div class="line">          <span class="built_in">Math</span>.sin(deltaLongitude/<span class="number">2</span>);</div><div class="line">  <span class="keyword">var</span> c = <span class="number">2</span>* <span class="built_in">Math</span>.atan2(<span class="built_in">Math</span>.sqrt(a),<span class="built_in">Math</span>.sqrt(<span class="number">1</span>-a));</div><div class="line">  <span class="keyword">var</span> d = R*C;</div><div class="line">  <span class="keyword">return</span> d;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>计算距离<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>((lastLat != <span class="literal">null</span>) &amp;&amp; (lastLong != <span class="literal">null</span>))&#123;</div><div class="line">   <span class="keyword">var</span> currentDistance = distance(latitude,longitude,lastLat,lastLong);</div><div class="line">   totalDistance += currentDistance;</div><div class="line">&#125;</div><div class="line">lastLat = latitude;</div><div class="line">lastLong = longitude;</div></pre></td></tr></table></figure></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li>《HTML5程序设计(第2版)》第5章</li>
 </ol>
-<h3 id="css学习"><a href="#css学习" class="headerlink" title="css学习"></a>css学习</h3><h3 id="心灵鸡汤"><a href="#心灵鸡汤" class="headerlink" title="心灵鸡汤"></a>心灵鸡汤</h3>  
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -115,7 +145,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/Tags/工具集/">工具集</a>
+  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/html5/">html5</a>
   </div>
 
 </div>
@@ -124,7 +154,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/09/20/resources/" data-title="好文章收集 | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://yoursite.com/2016/12/12/Geolocation API/" data-title="HTML5地理定位 --- geolocation | Lx15" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -137,19 +167,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/09/24/异步/" title="总算弄懂的关于异步的四个知识点">
-  <strong>上一篇：</strong><br/>
-  <span>
-  总算弄懂的关于异步的四个知识点</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/09/15/IFE笔记(二)/"  title="IFE任务练习笔记(二)">
+<a href="/2016/12/10/weex学习(一)/"  title="weex 学习(一) --- 实现好看的单选组件">
  <strong>下一篇：</strong><br/> 
- <span>IFE任务练习笔记(二)
+ <span>weex 学习(一) --- 实现好看的单选组件
 </span>
 </a>
 </div>
@@ -158,7 +180,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/09/20/resources/" data-title="好文章收集" data-url="http://yoursite.com/2016/09/20/resources/"></div>
+	<div class="ds-thread" data-thread-key="2016/12/12/Geolocation API/" data-title="HTML5地理定位 --- geolocation" data-url="http://yoursite.com/2016/12/12/Geolocation API/"></div>
 </section>
 
 
@@ -168,7 +190,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#工具类"><span class="toc-number">1.</span> <span class="toc-text">工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Js学习"><span class="toc-number">2.</span> <span class="toc-text">Js学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css学习"><span class="toc-number">3.</span> <span class="toc-text">css学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#心灵鸡汤"><span class="toc-number">4.</span> <span class="toc-text">心灵鸡汤</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#应用"><span class="toc-number">1.</span> <span class="toc-text">应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实例"><span class="toc-number">2.</span> <span class="toc-text">实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">3.</span> <span class="toc-text">参考</span></a></li></ol>
  
   </div>
 

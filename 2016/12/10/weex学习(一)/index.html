@@ -1,0 +1,572 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>weex 学习(一) --- 实现好看的单选组件 | Lx15</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;最近阿里刚刚开源的weex觉得很不错，因为类似vue的双向数据绑定、组件化让我能很快的上手，另外 weex 的特性使得我这种不会android、ios开发的人也能快速也出一个app。 但是因为是刚刚开发，所以肯定有很多地方是有问题的。但是这绝对拦不住我踩坑的热情，哈哈哈哈。。。
+  我在使用的weex 的版本是 0.6.3 ，在这个版本中还是有很">
+<meta property="og:type" content="article">
+<meta property="og:title" content="weex 学习(一) --- 实现好看的单选组件">
+<meta property="og:url" content="http://yoursite.com/2016/12/10/weex学习(一)/index.html">
+<meta property="og:site_name" content="Lx15">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;最近阿里刚刚开源的weex觉得很不错，因为类似vue的双向数据绑定、组件化让我能很快的上手，另外 weex 的特性使得我这种不会android、ios开发的人也能快速也出一个app。 但是因为是刚刚开发，所以肯定有很多地方是有问题的。但是这绝对拦不住我踩坑的热情，哈哈哈哈。。。
+  我在使用的weex 的版本是 0.6.3 ，在这个版本中还是有很">
+<meta property="og:image" content="http://yoursite.com/../imgs/myRadio.jpg">
+<meta property="og:updated_time" content="2016-12-24T08:38:06.389Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="weex 学习(一) --- 实现好看的单选组件">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;最近阿里刚刚开源的weex觉得很不错，因为类似vue的双向数据绑定、组件化让我能很快的上手，另外 weex 的特性使得我这种不会android、ios开发的人也能快速也出一个app。 但是因为是刚刚开发，所以肯定有很多地方是有问题的。但是这绝对拦不住我踩坑的热情，哈哈哈哈。。。
+  我在使用的weex 的版本是 0.6.3 ，在这个版本中还是有很">
+<meta name="twitter:image" content="http://yoursite.com/../imgs/myRadio.jpg">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15" title="Lx15"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15">Lx15</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/12/10/weex学习(一)/" title="weex 学习(一) --- 实现好看的单选组件" itemprop="url">weex 学习(一) --- 实现好看的单选组件</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2016-12-09T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-12-10</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境及运行"><span class="toc-number">1.</span> <span class="toc-text">环境及运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现单选组件"><span class="toc-number">2.</span> <span class="toc-text">实现单选组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单选组件的实现"><span class="toc-number">2.1.</span> <span class="toc-text">单选组件的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单选组件的调用"><span class="toc-number">2.2.</span> <span class="toc-text">单选组件的调用</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p>  &nbsp;&nbsp;&nbsp;&nbsp;最近阿里刚刚开源的weex觉得很不错，因为类似vue的双向数据绑定、组件化让我能很快的上手，另外 weex 的特性使得我这种不会android、ios开发的人也能快速也出一个app。 但是因为是刚刚开发，所以肯定有很多地方是有问题的。但是这绝对拦不住我踩坑的热情，哈哈哈哈。。。</p>
+<p>  我在使用的weex 的版本是 0.6.3 ，在这个版本中还是有很多在web 页面支持的html、css 特性在weex 中是不支持的，比如我在想做一个app过程中用到一个类似单选的组件是没有的，所以我就想着自己实现一下。<br><a id="more"></a></p>
+<h2 id="环境及运行"><a href="#环境及运行" class="headerlink" title="环境及运行"></a>环境及运行</h2><p>  要使用weex 必须要先解决环境安装问题，这些阿里团队都做好了只要安装几个包就好了。</p>
+<ol>
+<li><p>在 Node.js command prompt 下面</p>
+<blockquote>
+<p>更新npm, cnpm  cnpm install -g cnpm<br>安装 node-gyp  cnpm install -g node-gyp<br>安装 weex-toolkit  cnpm install -g weex-toolkit</p>
+</blockquote>
+<p>前两步是用来更新环境，若是之后的weex-toolkit 出现问题，有可能是你当前的node、npm、node-gyp版本太低了，具体版本支持去看weex-toolkit就好啦。</p>
+</li>
+<li><p>在手机上 安装playground ,用来扫描之后生成的二维码。</p>
+</li>
+<li><p>在空文件夹下 创建自己的myRadio.we文件</p>
+</li>
+<li><p>在上步的文件目录下在命令行中 输入 weex  myRadio.we 即可以启动 服务器及热部署在浏览器中。</p>
+</li>
+<li><p>想部署在手机上 启动weex myRadio.we –qr 然后会生成二维码 ，在手机上打开weex playground 扫描二维码就可以看到效果了。</p>
+<p>若是扫描二维码出现’network error’可以按下面几步来查看问题：</p>
+<blockquote>
+<p>最重要的是确保手机和电脑在同一个局域网中<br>最好关掉翻墙软件、关掉防火墙<br>若是有打开虚拟机最好也关掉，否则会造成ip 不一样<br>可尝试ping 手机ip 保证手机电脑是相互连通的</p>
+</blockquote>
+</li>
+<li><p>还有另一种快速运行的方式：        </p>
+<blockquote>
+<p>建立一个空文件夹 ，在空文件夹中运行 weex  init<br>然后 npm install<br>运行 npm run serve</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="实现单选组件"><a href="#实现单选组件" class="headerlink" title="实现单选组件"></a>实现单选组件</h2><h3 id="单选组件的实现"><a href="#单选组件的实现" class="headerlink" title="单选组件的实现"></a>单选组件的实现</h3><p>  想要实现的组件的功能就是html 中单选的功能：一堆选项可以选其中的一个。 功能效果如下<br>  <img src="../imgs/myRadio.jpg" alt="myRadio组件截图"></p>
+<p>  一堆选项的 样式是相同的，所以就可以写成一个radio组件，然后在点击的时候能够知道 是点击了哪个就可以了。 在这个过程中会用到父子组件的通信。因为会将子组件的点击消息发送给父组件，因为会在父组件中使用点击的消息。 先看代码实现吧，一看其实就明白了。。。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">&lt;div class="container"&gt;</div><div class="line">    &lt;image class="a" onclick="clickevent($event)"  src="&#123;&#123;bgimg&#125;&#125;" index="&#123;&#123;index&#125;&#125;" flag="&#123;&#123;flag&#125;&#125;"&gt;</div><div class="line">        &lt;text style="font-size:30;"&gt;&#123;&#123;text&#125;&#125;&lt;/text&gt;</div><div class="line">        &lt;image class="icon-ok-flag" src="&#123;&#123;okSrc&#125;&#125;" if="&#123;&#123;flag&#125;&#125;"&gt;&lt;/image&gt;</div><div class="line">        &lt;image class="icon-blank-flag"  if="&#123;&#123;!flag&#125;&#125;"&gt;&lt;/image&gt;</div><div class="line">    &lt;/image&gt;</div><div class="line">&lt;/div&gt;</div><div class="line">&lt;/template&gt;</div><div class="line"></div><div class="line">&lt;style&gt;</div><div class="line">.container&#123;</div><div class="line">     font-family: Microsoft Yahei;</div><div class="line">     border-width:1;</div><div class="line">     border-radius:15;</div><div class="line">     margin:20;</div><div class="line">&#125;</div><div class="line">.a&#123;</div><div class="line">    border-width:1;</div><div class="line">    border-radius:15;</div><div class="line">    width:250;</div><div class="line">    height: 250;</div><div class="line">    justify-content:center;</div><div class="line">    align-items:center;</div><div class="line">    margin: 20;</div><div class="line">&#125;</div><div class="line">.icon-ok-flag&#123;</div><div class="line">    width:120;</div><div class="line">    height:80;</div><div class="line">&#125;</div><div class="line">.icon-blank-flag&#123;</div><div class="line">    width:120;</div><div class="line">    height:80;</div><div class="line">&#125;</div><div class="line">&lt;/style&gt;</div><div class="line"></div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line">    module.exports = &#123;</div><div class="line">        data: &#123;</div><div class="line">           bgimg:null,</div><div class="line">           index:null,</div><div class="line">           text:null,</div><div class="line">           flag:false,</div><div class="line">           okSrc:'http://d2.freep.cn/3tb_16122215573816yt581069.jpg'</div><div class="line">        &#125;,</div><div class="line">        methods: &#123;</div><div class="line">             clickevent:function(e)&#123;</div><div class="line">                this._parent.$emit("notify",&#123;</div><div class="line">                   index:this.index</div><div class="line">                &#125;);</div><div class="line">             &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<p>在上面中class 为a 的image 是个总的radio，可以为从父组件传过来的任意图片，text 为从父组件传过来的任意的文字 icon-ok-image 用来存放选中标志， icon-blank-flag 是个占位的标志。clickevent这个事件使用 <code>this._parent.$emit</code>与父组件进行通信，notify 是自定义的事件类型，后面index 对象是通信的具体细节用来表示具体点击了哪个radio。</p>
+<h3 id="单选组件的调用"><a href="#单选组件的调用" class="headerlink" title="单选组件的调用"></a>单选组件的调用</h3><p> 父组件通过<code>this.$on</code>监听子组件的事件，并设置显示的标志flag 用来控制子组件的选中图片的显示。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">  &lt;div class="container"&gt;</div><div class="line">      &lt;div class="box"&gt;</div><div class="line">        &lt;div  repeat ="(index,val) in formyas" class="people"&gt;</div><div class="line">          &lt;mya class="item" index="&#123;&#123;index&#125;&#125;" text="&#123;&#123;val.text&#125;&#125;" bgimg="&#123;&#123;val.bgimg&#125;&#125;" flag="&#123;&#123;val.flag&#125;&#125;" &gt;&lt;mya&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">     &lt;/div&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/template&gt;</div><div class="line">&lt;style&gt;</div><div class="line">    .box&#123;</div><div class="line">        flex-direction:row;</div><div class="line">        justify-content: center;</div><div class="line">        align-items:center;</div><div class="line">        flex-wrap:wrap;</div><div class="line">    &#125;</div><div class="line">    .item&#123;</div><div class="line">        justify-content: center;</div><div class="line">        align-items:center;</div><div class="line">    &#125;</div><div class="line">&lt;/style&gt;</div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line">    module.exports = &#123;</div><div class="line">        data: &#123;</div><div class="line">            header: "选择吃饭人数",</div><div class="line">            btntext:"确定选择",</div><div class="line">            formyas: [</div><div class="line">                &#123;bgimg:"http://bpic.588ku.com/element_origin_min_pic/16/06/09/1457590684eb27d.jpg",</div><div class="line">                 text:"一人",</div><div class="line">                 flag:true&#125;,</div><div class="line">                &#123;bgimg: "http://bpic.588ku.com/element_origin_min_pic/16/06/09/1457590684eb27d.jpg",</div><div class="line">                 text:"双人",</div><div class="line">                 flag:false&#125;,</div><div class="line">                &#123;bgimg: "http://bpic.588ku.com/element_origin_min_pic/16/06/09/1457590684eb27d.jpg",</div><div class="line">                 text:"三人帮",</div><div class="line">                 flag:false&#125;,</div><div class="line">                &#123;bgimg: "http://bpic.588ku.com/element_origin_min_pic/16/06/09/1457590684eb27d.jpg",</div><div class="line">                 text:"多人组",</div><div class="line">                 flag:false&#125;</div><div class="line">            ],</div><div class="line">            choosed:&#123;</div><div class="line">               index:0</div><div class="line">            &#125;</div><div class="line">        &#125;,</div><div class="line">        created: function() &#123;</div><div class="line">           this.$on('notify', function(event) &#123;</div><div class="line">              var choosedIndex = event.detail.index;</div><div class="line">              this.choosed.index =choosedIndex;</div><div class="line">              for(var i=0,ii=this.formyas.length;i&lt;ii;i++)&#123;</div><div class="line">                  if(i===choosedIndex)&#123;</div><div class="line">                    this.formyas[i].flag =true;</div><div class="line">                  &#125;else&#123;</div><div class="line">                    this.formyas[i].flag =false;</div><div class="line">                  &#125;</div><div class="line">              &#125;</div><div class="line">           &#125;)</div><div class="line">       &#125;</div><div class="line">    &#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<p>所以 由上面的过程就能明白写组件的过程啦。。。。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/weex/">weex</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2016/12/10/weex学习(一)/" data-title="weex 学习(一) --- 实现好看的单选组件 | Lx15" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/12/12/Geolocation API/" title="HTML5地理定位 --- geolocation">
+  <strong>上一篇：</strong><br/>
+  <span>
+  HTML5地理定位 --- geolocation</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/12/08/ngPit(一)/"  title="AngularJs 遇见的坑">
+ <strong>下一篇：</strong><br/> 
+ <span>AngularJs 遇见的坑
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/12/10/weex学习(一)/" data-title="weex 学习(一) --- 实现好看的单选组件" data-url="http://yoursite.com/2016/12/10/weex学习(一)/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境及运行"><span class="toc-number">1.</span> <span class="toc-text">环境及运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现单选组件"><span class="toc-number">2.</span> <span class="toc-text">实现单选组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单选组件的实现"><span class="toc-number">2.1.</span> <span class="toc-text">单选组件的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单选组件的调用"><span class="toc-number">2.2.</span> <span class="toc-text">单选组件的调用</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="Lx15.github.io" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/Tags/js/" title="js">js<sup>26</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/css/" title="css">css<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/ng/" title="ng">ng<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/html5/" title="html5">html5<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/util/" title="util">util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/Tags/weex/" title="weex">weex<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="undefined" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=undefined&verifier=&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/Lx15.github.io" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
