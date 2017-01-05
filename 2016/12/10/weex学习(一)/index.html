@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>weex 学习(一) --- 实现好看的单选组件 | Lx15</title>
+    <title>weex 学习(一) --- 实现好看的单选组件 | Lx15的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
@@ -15,17 +15,17 @@
   我在使用的weex 的版本是 0.6.3 ，在这个版本中还是有很">
 <meta property="og:type" content="article">
 <meta property="og:title" content="weex 学习(一) --- 实现好看的单选组件">
-<meta property="og:url" content="http://yoursite.com/2016/12/10/weex学习(一)/index.html">
-<meta property="og:site_name" content="Lx15">
+<meta property="og:url" content="http://lx15.github.io/2016/12/10/weex学习(一)/index.html">
+<meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;最近阿里刚刚开源的weex觉得很不错，因为类似vue的双向数据绑定、组件化让我能很快的上手，另外 weex 的特性使得我这种不会android、ios开发的人也能快速也出一个app。 但是因为是刚刚开发，所以肯定有很多地方是有问题的。但是这绝对拦不住我踩坑的热情，哈哈哈哈。。。
   我在使用的weex 的版本是 0.6.3 ，在这个版本中还是有很">
-<meta property="og:image" content="http://yoursite.com/../imgs/myRadio.jpg">
-<meta property="og:updated_time" content="2016-12-24T08:38:06.389Z">
+<meta property="og:image" content="http://lx15.github.io/../imgs/myRadio.jpg">
+<meta property="og:updated_time" content="2017-01-05T02:24:30.193Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="weex 学习(一) --- 实现好看的单选组件">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;最近阿里刚刚开源的weex觉得很不错，因为类似vue的双向数据绑定、组件化让我能很快的上手，另外 weex 的特性使得我这种不会android、ios开发的人也能快速也出一个app。 但是因为是刚刚开发，所以肯定有很多地方是有问题的。但是这绝对拦不住我踩坑的热情，哈哈哈哈。。。
   我在使用的weex 的版本是 0.6.3 ，在这个版本中还是有很">
-<meta name="twitter:image" content="http://yoursite.com/../imgs/myRadio.jpg">
+<meta name="twitter:image" content="http://lx15.github.io/../imgs/myRadio.jpg">
 
     
     
@@ -44,11 +44,11 @@
 <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Lx15" title="Lx15"/></a>
+				<a href="/"><img src="/img/logo.png" alt="Lx15的博客" title="Lx15的博客"/></a>
 			</div>
 			
 			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Lx15">Lx15</a></h1>
+				<h1 class="site-name"><a href="/" title="Lx15的博客">Lx15的博客</a></h1>
 				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
 			</div>
 			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
@@ -68,7 +68,7 @@
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
 						<label>Search</label>
 						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:yoursite.com">
+						<input type="hidden" name="q" value="site:lx15.github.io">
 					</form>
 					
 					</li>
@@ -104,7 +104,7 @@
 		</div>
 		
 		<p>  &nbsp;&nbsp;&nbsp;&nbsp;最近阿里刚刚开源的weex觉得很不错，因为类似vue的双向数据绑定、组件化让我能很快的上手，另外 weex 的特性使得我这种不会android、ios开发的人也能快速也出一个app。 但是因为是刚刚开发，所以肯定有很多地方是有问题的。但是这绝对拦不住我踩坑的热情，哈哈哈哈。。。</p>
-<p>  我在使用的weex 的版本是 0.6.3 ，在这个版本中还是有很多在web 页面支持的html、css 特性在weex 中是不支持的，比如我在想做一个app过程中用到一个类似单选的组件是没有的，所以我就想着自己实现一下。<br><a id="more"></a></p>
+<p>  我在使用的weex 的版本是 0.6.3 ，在这个版本中还是有很多在web 页面支持的html、css 特性在weex 中是不支持的，比如我在想做一个app过程中用到一个类似单选的组件是没有的，所以我就想着自己实现一下。<br><a id="more"></a><br>  首先对于weex技术来说，经常会遇见三个名词，而且经常容易混淆。首先是weex-toolkit，在Android代码中，无法直接加载.we文件的，但是可以加载.js文件的，所以我们需要把.we文件转换成.js文件，Weex给我们提供了一个工具weex-toolkit。这个是个帮助快速初始化项目、运行热部署的工具其中会有weex的代码，这里的weex-toolkit 的版本和weex的版本是不一样的。更新weex-toolkit 并不能更新weex 的版本，若是想要更新weex版本可以在android中更改配置文件重新编译运行。另一个是 weex-pack 这个是帮助快速初始化项目以及打包成apk的工具。</p>
 <h2 id="环境及运行"><a href="#环境及运行" class="headerlink" title="环境及运行"></a>环境及运行</h2><p>  要使用weex 必须要先解决环境安装问题，这些阿里团队都做好了只要安装几个包就好了。</p>
 <ol>
 <li><p>在 Node.js command prompt 下面</p>
@@ -125,9 +125,14 @@
 <p>最重要的是确保手机和电脑在同一个局域网中<br>最好关掉翻墙软件、关掉防火墙<br>若是有打开虚拟机最好也关掉，否则会造成ip 不一样<br>可尝试ping 手机ip 保证手机电脑是相互连通的</p>
 </blockquote>
 </li>
-<li><p>还有另一种快速运行的方式：        </p>
+<li><p>第二种快速运行的方式：        </p>
 <blockquote>
 <p>建立一个空文件夹 ，在空文件夹中运行 weex  init<br>然后 npm install<br>运行 npm run serve</p>
+</blockquote>
+</li>
+<li><p>第三种快速运行的方式：</p>
+<blockquote>
+<p>安装 cnpm install -g weexpack<br>weexpack init projectName<br>之后运行时 weexpac run android</p>
 </blockquote>
 </li>
 </ol>
@@ -144,7 +149,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/Tags/js/">js</a><a href="/Tags/weex/">weex</a>
+  <span></span> <a href="/tags/js/">js</a><a href="/tags/weex/">weex</a>
   </div>
 
 </div>
@@ -153,7 +158,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2016/12/10/weex学习(一)/" data-title="weex 学习(一) --- 实现好看的单选组件 | Lx15" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://lx15.github.io/2016/12/10/weex学习(一)/" data-title="weex 学习(一) --- 实现好看的单选组件 | Lx15的博客" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -187,7 +192,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/12/10/weex学习(一)/" data-title="weex 学习(一) --- 实现好看的单选组件" data-url="http://yoursite.com/2016/12/10/weex学习(一)/"></div>
+	<div class="ds-thread" data-thread-key="2016/12/10/weex学习(一)/" data-title="weex 学习(一) --- 实现好看的单选组件" data-url="http://lx15.github.io/2016/12/10/weex学习(一)/"></div>
 </section>
 
 
@@ -208,7 +213,7 @@
   
 <div class="github-card">
 <p class="asidetitle">Github 名片</p>
-<div class="github-card" data-github="Lx15.github.io" data-width="220" data-height="119" data-theme="medium">
+<div class="github-card" data-github="https://github.com/Lx15" data-width="220" data-height="119" data-theme="medium">
 <script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
 </div>
   </div>
@@ -223,96 +228,70 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/Tags/js/" title="js">js<sup>26</sup></a></li>
+				<li><a href="/tags/js/" title="js">js<sup>27</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/css/" title="css">css<sup>8</sup></a></li>
+				<li><a href="/tags/css/" title="css">css<sup>10</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/ng/" title="ng">ng<sup>5</sup></a></li>
+				<li><a href="/tags/ng/" title="ng">ng<sup>5</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/html5/" title="html5">html5<sup>2</sup></a></li>
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+				<li><a href="/tags/util/" title="util">util<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/algo/" title="algo">algo<sup>2</sup></a></li>
+				<li><a href="/tags/html5/" title="html5">html5<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/json/" title="json">json<sup>1</sup></a></li>
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/C/" title="C">C<sup>1</sup></a></li>
+				<li><a href="/tags/algo/" title="algo">algo<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+				<li><a href="/tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/git/" title="git">git<sup>1</sup></a></li>
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/web/" title="web">web<sup>1</sup></a></li>
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/util/" title="util">util<sup>1</sup></a></li>
+				<li><a href="/tags/json/" title="json">json<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/this/" title="this">this<sup>1</sup></a></li>
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/Tags/weex/" title="weex">weex<sup>1</sup></a></li>
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
 			
 		
 		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
-        
-          <li>
-            
-            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
-            
-          </li>
-        
-    </ul>
-</div>
-
-  
-
-
-  <div class="rsspart">
-	<a href="undefined" target="_blank" title="rss">RSS 订阅</a>
-</div>
-
-  <div class="weiboshow">
-  <p class="asidetitle">新浪微博</p>
-    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=undefined&verifier=&dpc=1"></iframe>
 </div>
 
 
@@ -335,7 +314,7 @@
 	<div class="social-font" class="clearfix">
 		
 		
-		<a href="https://github.com/Lx15.github.io" target="_blank" class="icon-github" title="github"></a>
+		<a href="https://github.com/https://github.com/Lx15" target="_blank" class="icon-github" title="github"></a>
 		
 		
 		
@@ -352,7 +331,7 @@
 		
 
 		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
 		
 		<a href="/about" target="_blank" title="Lx15">Lx15</a>
 		
