@@ -1,0 +1,548 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>weex 学习(二) --- weexpack打包weex项目为apk时错误汇总 | Lx15的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="在写完weex项目后，将项目变成一个native应用。在这里使用weexpack，这个打包工具帮助没有android开发经验的前端开发者迅速打包，打包过程参见如何用weexpack创建weex项目并构建app,但是整个过程极易出错，所以记录了我整个过程中的错误，但是大家有问题先看Issues。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="weex 学习(二) --- weexpack打包weex项目为apk时错误汇总">
+<meta property="og:url" content="http://lx15.github.io/2016/12/20/weex学习(二)/index.html">
+<meta property="og:site_name" content="Lx15的博客">
+<meta property="og:description" content="在写完weex项目后，将项目变成一个native应用。在这里使用weexpack，这个打包工具帮助没有android开发经验的前端开发者迅速打包，打包过程参见如何用weexpack创建weex项目并构建app,但是整个过程极易出错，所以记录了我整个过程中的错误，但是大家有问题先看Issues。">
+<meta property="og:image" content="http://lx15.github.io/环境变量.png">
+<meta property="og:image" content="http://lx15.github.io/path.png">
+<meta property="og:image" content="http://lx15.github.io/synerror.png">
+<meta property="og:image" content="http://lx15.github.io/runerror.png">
+<meta property="og:image" content="http://lx15.github.io/builderror.png">
+<meta property="og:image" content="http://lx15.github.io/builderror1.png">
+<meta property="og:image" content="http://lx15.github.io/builderror3.png">
+<meta property="og:image" content="http://lx15.github.io/gradleerror.png">
+<meta property="og:image" content="http://lx15.github.io/success.png">
+<meta property="og:image" content="http://lx15.github.io/rendererror.png">
+<meta property="og:image" content="http://lx15.github.io/changeLogo.png">
+<meta property="og:image" content="http://lx15.github.io/changeString.png">
+<meta property="og:image" content="http://lx15.github.io/actionBar.png">
+<meta property="og:updated_time" content="2017-01-05T03:29:41.919Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="weex 学习(二) --- weexpack打包weex项目为apk时错误汇总">
+<meta name="twitter:description" content="在写完weex项目后，将项目变成一个native应用。在这里使用weexpack，这个打包工具帮助没有android开发经验的前端开发者迅速打包，打包过程参见如何用weexpack创建weex项目并构建app,但是整个过程极易出错，所以记录了我整个过程中的错误，但是大家有问题先看Issues。">
+<meta name="twitter:image" content="http://lx15.github.io/环境变量.png">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15的博客" title="Lx15的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15的博客">Lx15的博客</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lx15.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/12/20/weex学习(二)/" title="weex 学习(二) --- weexpack打包weex项目为apk时错误汇总" itemprop="url">weex 学习(二) --- weexpack打包weex项目为apk时错误汇总</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2016-12-19T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-12-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.</span> <span class="toc-text">总结</span></a></li></ol>
+		
+		</div>
+		
+		<p>  在写完weex项目后，将项目变成一个native应用。在这里使用weexpack，这个打包工具帮助没有android开发经验的前端开发者迅速打包，打包过程参见<a href="https://github.com/weexteam/weex-pack/wiki/如何用weexpack创建weex项目并构建app" target="_blank" rel="external">如何用weexpack创建weex项目并构建app</a>,但是整个过程极易出错，所以记录了我整个过程中的错误，但是大家有问题先看Issues。<br><a id="more"></a></p>
+<ol>
+<li>安装 android studio 时配置系统变量path 到 gradle 下的bin 目录。</li>
+<li>配置环境变量<br><img src="环境变量.png" alt="系统变量名"><br><img src="path.png" alt="path"><br>path 增加变量值是%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools; （注意有分号分隔，并且都是英文符号）         </li>
+<li><p>用android studio 新建一个工程时，在初始化界面 要在project stucture 时配置sdk 路径，这个路径要一直配置到Android\Sdk 这个目录</p>
+</li>
+<li><p>编译时遇到错误<br>解决办法： <a href="http://blog.csdn.net/gaolei1201/article/details/49842337" target="_blank" rel="external">Android Studio实践运用中遇到问题总结</a>             </p>
+</li>
+<li><p><code>weexpack init projectName</code> 时 遇到语法错误<br><img src="synerror.png" alt="语法错误"><br>解决办法:升级 node 版本到&gt;=6.0                           </p>
+</li>
+<li><p>运行weexpack run Android 检测不到设备             </p>
+</li>
+</ol>
+<p>检测不到手机的原因是 在安卓上并未信任手机，你可以看一下这个链接<br><a href="http://www.hihuyue.com/hihuyue/andoid/android0-android-studio%E6%A3%80%E6%B5%8B%E4%B8%8D%E5%88%B0%E6%89%8B%E6%9C%BA%E8%AE%BE%E5%A4%87" target="_blank" rel="external">Android: Android Studio检测不到手机设备</a><br>在设置了这些之后 ，若是还是检测不到手机，你可以在手机上的开发者选项-&gt; 选择调试应用-&gt; 调试应用：weex 然后重新运行 weexpack run android ，这样就可以了。            </p>
+<ol>
+<li><p><code>weexpack run android</code> 出错            </p>
+<p><img src="runerror.png" alt="运行android出错"><br><img src="builderror.png" alt="gradle版本出错"><br><img src="builderror1.png" alt="shared出错"><br><img src="builderror3.png" alt="再次出错"><br><img src="gradleerror.png" alt="更改gradle"><br>按照提示更改了gradle-wrapper.properties 文件下的distributionUrl=https\://services.gradle.org/distributions/gradle-2.14.1-all.zip<br>然后重新运行<code>weexpack run android</code></p>
+<blockquote>
+<p>注意： 最重要的是 网要好！整个过程需要下载很多东西，若是网不好，一天也别想编译成功。<br><img src="success.png" alt="终于成功了"></p>
+</blockquote>
+</li>
+<li><p>这只是打包成功了，但是在android手机上运行可能会出现下面的错误，<br><img src="rendererror.png" alt="rendererror"><br>出现这样的情况，原因多是出现在js代码部分，可能是引入了不能用的模块，也可能是代码某些部分本身是有错误的。</p>
+</li>
+<li><p>使用weexpack 打包时容易出现的错误是将自己的代码放在src 目录后，如果依赖了其他的包而在weex init 下的package.json中忘记添加依赖的包，则自己依赖的包就不会install，这样就容易出错。</p>
+</li>
+<li><p>代码功能调通后，就是修改代码的logo和文字。<br>在 Android Studio 中打开用weexpack 打包的android/playground/app/main/src/AndroidManifest.xml 文件<br><img src="changeLogo.png" alt="修改配置文件"><br>在android/playground/app/main/src/res/下面增加一个目录放入自己的logo,<br>在icon字段输入自己的logo名字，这里注意logo 名字 是英文小写、数字、或下划线,不能是汉字或者大写字母。<br><img src="changeString.png" alt="修改配置文件"><br>在android/playground/app/main/src/res/values下面修改自己的logo String.</p>
+</li>
+<li><p>最后是apk的位置：android/playground/app/build/outputs/apk/playground.apk<br>这个 playground 用Android Studio 也是可以打开运行的，若是中间编译或者运行出错，可以先 <a href="http://jingyan.baidu.com/article/0aa223754935c888cd0d6453.html" target="_blank" rel="external">clear project</a></p>
+</li>
+<li><p>去掉头部导航条<br><img src="actionBar.png" alt="头部导航条"><br>将 WXPageActivity.java 文件下的这段代码注释掉</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);</div><div class="line">setSupportActionBar(toolbar);</div><div class="line"></div><div class="line">ActionBar actionBar = getSupportActionBar();</div><div class="line">actionBar.setDisplayHomeAsUpEnabled(<span class="literal">true</span>);</div><div class="line">actionBar.setTitle(mUri.toString().substring(mUri.toString().lastIndexOf(File.separator) + <span class="number">1</span>));</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>  出错了总是有原因的，不要着急，肯定是有什么你不知道的地方，不可能有无缘无故的bug。^^</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/js/">js</a><a href="/tags/weex/">weex</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lx15.github.io/2016/12/20/weex学习(二)/" data-title="weex 学习(二) --- weexpack打包weex项目为apk时错误汇总 | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/12/24/fiddler/" title="前端web调试工具---fiddler">
+  <strong>上一篇：</strong><br/>
+  <span>
+  前端web调试工具---fiddler</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/12/16/CSS Sprite/"  title="CSS sprite 雪碧图应用">
+ <strong>下一篇：</strong><br/> 
+ <span>CSS sprite 雪碧图应用
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/12/20/weex学习(二)/" data-title="weex 学习(二) --- weexpack打包weex项目为apk时错误汇总" data-url="http://lx15.github.io/2016/12/20/weex学习(二)/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.</span> <span class="toc-text">总结</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/js/" title="js">js<sup>27</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ng/" title="ng">ng<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/util/" title="util">util<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/html5/" title="html5">html5<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/json/" title="json">json<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Lx15" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
