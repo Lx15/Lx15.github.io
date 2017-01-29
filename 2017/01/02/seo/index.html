@@ -1,0 +1,575 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>网页制作中的seo | Lx15的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="SEO为搜索引擎优化，较好的SEO可以增加网站访问量。本文是对于慕课网 seo在网站制作中的应用的学习笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网页制作中的seo">
+<meta property="og:url" content="http://lx15.github.io/2017/01/02/seo/index.html">
+<meta property="og:site_name" content="Lx15的博客">
+<meta property="og:description" content="SEO为搜索引擎优化，较好的SEO可以增加网站访问量。本文是对于慕课网 seo在网站制作中的应用的学习笔记。">
+<meta property="og:image" content="http://lx15.github.io/扁平化目录.jpg">
+<meta property="og:image" content="http://lx15.github.io/面包屑导航.jpg">
+<meta property="og:image" content="http://lx15.github.io/分页导航.jpg">
+<meta property="og:image" content="http://lx15.github.io/导航菜单实现1.jpg">
+<meta property="og:image" content="http://lx15.github.io/导航菜单实现2.jpg">
+<meta property="og:updated_time" content="2017-01-29T09:28:28.512Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网页制作中的seo">
+<meta name="twitter:description" content="SEO为搜索引擎优化，较好的SEO可以增加网站访问量。本文是对于慕课网 seo在网站制作中的应用的学习笔记。">
+<meta name="twitter:image" content="http://lx15.github.io/扁平化目录.jpg">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15的博客" title="Lx15的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15的博客">Lx15的博客</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lx15.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/01/02/seo/" title="网页制作中的seo" itemprop="url">网页制作中的seo</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2017-01-01T16:00:00.000Z" itemprop="datePublished"> 发表于 2017-01-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SEO-基本介绍"><span class="toc-number">1.</span> <span class="toc-text">SEO 基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网站结构布局优化"><span class="toc-number">2.</span> <span class="toc-text">网站结构布局优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网页代码优化"><span class="toc-number">3.</span> <span class="toc-text">网页代码优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">4.</span> <span class="toc-text">参考文献</span></a></li></ol>
+		
+		</div>
+		
+		<p>SEO为搜索引擎优化，较好的SEO可以增加网站访问量。本文是对于慕课网 <a href="http://www.imooc.com/learn/204" target="_blank" rel="external">seo在网站制作中的应用</a>的学习笔记。<br><a id="more"></a></p>
+<h2 id="SEO-基本介绍"><a href="#SEO-基本介绍" class="headerlink" title="SEO 基本介绍"></a>SEO 基本介绍</h2><ol>
+<li><p>SEO是由英文Search Engine Optimization缩写而来， 中文意译为“搜索引擎优化”。SEO是指通过站内优化比如网站结构<br>调整、网站内容建设、网站代码优化等以及站外优化，比如网站站外推广、网站品牌建设等，使网站满足搜索引擎收录排名需求，<br>在搜索引擎中提高关键词排名，从而吸引精准用户进入网站，获得免费流量，产生直接销售或品牌推广。如常用的搜索引擎百度，<br>关键字对应着网址，百度之蛛用来将网站和关键字联系在一起。</p>
+</li>
+<li><p>白帽SEO ： 可以通过下面的方法增加seo</p>
+<blockquote>
+<p>网站标题、关键字、描述<br>网站内容优化<br>Robot.txt文件<br>网站地图<br>增加外链引用            </p>
+</blockquote>
+<p>黑帽SEO : 使用当前较热的关键字增加访问量，但关键字与自己的网站并无关系</p>
+<p>为了增加SEO的效果，可以在实现网站时通过如下的两个方面来进行： </p>
+</li>
+</ol>
+<h2 id="网站结构布局优化"><a href="#网站结构布局优化" class="headerlink" title="网站结构布局优化"></a>网站结构布局优化</h2><ol>
+<li><p>扁平化的目录层次 ： 目录层次不要超过三层<br><img src="扁平化目录.jpg" alt="扁平化目录"><br>扁平化目录是使得导航不至于太深。</p>
+</li>
+<li><p>控制首页链接数量：不可过少 、也不可过多</p>
+</li>
+<li><p>导航SEO优化 ：应含有主导航 副导航  面包屑导航。<br>经典布局如下：<br><img src="面包屑导航.jpg" alt="面包屑导航"></p>
+<p>分页导航的形式如下<br><img src="分页导航.jpg" alt="分页导航的形式"><br>对于分页导航最好的形式是第三种。应为蜘蛛在爬的过程中可以直接在下拉列表中直接看到共有多少页，不用一页页的进行向下翻。。</p>
+</li>
+</ol>
+<h2 id="网页代码优化"><a href="#网页代码优化" class="headerlink" title="网页代码优化"></a>网页代码优化</h2><ol>
+<li><p><code>&lt;title&gt;</code>标题 : 每个页面都尽量不相同</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>your title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>&lt;meta keywords&gt;</code>关键字  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"keywords"</span> <span class="attr">contact</span>=<span class="string">"your keywords"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>&lt;meta description&gt;</code>网页描述 ： 高度概括网页</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"description"</span> <span class="attr">contact</span>=<span class="string">"your description"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>&lt;meta author&gt;</code>网页描述 ： 高度概括网页</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"author"</span> <span class="attr">contact</span>=<span class="string">" author ,email address"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>定义网页搜索引擎索引方式，robotterms 是一组使用英文逗号分隔的值，通常有如下几种取值：none,noindex,nofollow,all,index 和 follow。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"robots"</span> <span class="attr">content</span>=<span class="string">"index,follow"</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>语义化代码：合适的位置使用合适的代码</p>
+<p>(1) <code>h1~h6</code>标签多用于标题</p>
+<p>(2)<code>ul</code> 无序列表 <code>ol</code> 有序列表 <code>DL</code> 用于定义数据列表 <code>em</code>,<code>strong</code> 表示强调</p>
+<p><img src="导航菜单实现1.jpg" alt="导航菜单实现1"> 应实现为 <img src="导航菜单实现2.jpg" alt="导航菜单实现2"></p>
+<p>(3)<code>&lt;a&gt;</code>标签 添加<code>title</code> 以及<code>rel=&quot;noflow&quot;</code>为蜘蛛不用继续爬</p>
+<p>(4)<code>&lt;h1&gt;</code>标签 ： h1 标题最重要 ，正文用h1,副标题 h2 ，其他就不用h 标签了。。。</p>
+<p>(5)<code>&lt;p&gt;</code>与<code>&lt;br&gt;</code>标签： <code>&lt;br&gt;</code>标签应只用于文本内容的换行</p>
+<p>(6)表格 ： 应使用 <caption></caption></p>
+ <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;table &gt;</div><div class="line">&lt;caption&gt;表格标题&lt;/caption&gt;</div><div class="line">&lt;tr&gt;</div><div class="line">    &lt;th&gt;Month&lt;/th&gt;</div><div class="line">    &lt;th&gt;....&lt;/th&gt;</div><div class="line">&lt;/tr&gt;</div><div class="line">&lt;tr&gt;</div><div class="line">    &lt;td&gt;jj&lt;/td&gt;</div><div class="line">    &lt;td&gt;,,,&lt;/td&gt;</div><div class="line">&lt;/tr&gt;</div><div class="line">&lt;/table&gt;</div></pre></td></tr></table></figure>
+<p>(7)<code>&lt;img&gt;</code>标签 应使用alt 说明</p>
+<p>(8) 只是文字的强调效果 用<code>&lt;b&gt;</code>或者<code>&lt;i&gt;</code> ,<code>&lt;strong&gt;``&lt;em&gt;</code>会影响到SEO的效果</p>
+<p>(9) 重要内容HTML代码放在最前面，页面布局使用css 就好</p>
+<p>(10) 重要的内容不要用JS输出</p>
+<p>(11) 尽少使用iframe框架</p>
+<p>(12) 对于暂时不想显示的文字应设置z-index或者浏览器的显示范围外，应谨慎使用display:none;</p>
+</li>
+</ol>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a href="http://www.imooc.com/learn/204" target="_blank" rel="external">seo在网站制作中的应用</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/seo/">seo</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lx15.github.io/2017/01/02/seo/" data-title="网页制作中的seo | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/01/06/nodejs(一)-----基础知识点/" title="nodejs学习(一)----基础知识">
+  <strong>上一篇：</strong><br/>
+  <span>
+  nodejs学习(一)----基础知识</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/12/24/fiddler/"  title="前端web调试工具---fiddler">
+ <strong>下一篇：</strong><br/> 
+ <span>前端web调试工具---fiddler
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/01/02/seo/" data-title="网页制作中的seo" data-url="http://lx15.github.io/2017/01/02/seo/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SEO-基本介绍"><span class="toc-number">1.</span> <span class="toc-text">SEO 基本介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网站结构布局优化"><span class="toc-number">2.</span> <span class="toc-text">网站结构布局优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网页代码优化"><span class="toc-number">3.</span> <span class="toc-text">网页代码优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">4.</span> <span class="toc-text">参考文献</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="https://github.com/Lx15" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/js/" title="js">js<sup>27</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ng/" title="ng">ng<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/html5/" title="html5">html5<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/util/" title="util">util<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/json/" title="json">json<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/seo/" title="seo">seo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Lx15" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
