@@ -4,20 +4,26 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Cesium 笔记 （一） | Lx15的博客</title>
+    <title>webSocket 与 用Socket.io实现简单的实时聊天室 | Lx15的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
     
 
     
-    <meta property="og:type" content="article">
-<meta property="og:title" content="Cesium 笔记 （一）">
-<meta property="og:url" content="http://lx15.github.io/2016/08/12/2016-8-12-Cesium(1)/index.html">
+    <meta name="description" content="在学习nodejs与h5，所以实现一个简单的实时聊天室功能。首先先学习一下websocket,然后是利用实现webSocket的Socket.io类库实现聊天室，跳转这里见代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webSocket 与 用Socket.io实现简单的实时聊天室">
+<meta property="og:url" content="http://lx15.github.io/2017/01/15/webSocket/index.html">
 <meta property="og:site_name" content="Lx15的博客">
-<meta property="og:updated_time" content="2016-09-30T08:25:55.897Z">
+<meta property="og:description" content="在学习nodejs与h5，所以实现一个简单的实时聊天室功能。首先先学习一下websocket,然后是利用实现webSocket的Socket.io类库实现聊天室，跳转这里见代码">
+<meta property="og:image" content="http://lx15.github.io/chat-1.jpg">
+<meta property="og:image" content="http://lx15.github.io/chat-2.jpg">
+<meta property="og:updated_time" content="2017-02-07T03:10:34.608Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Cesium 笔记 （一）">
+<meta name="twitter:title" content="webSocket 与 用Socket.io实现简单的实时聊天室">
+<meta name="twitter:description" content="在学习nodejs与h5，所以实现一个简单的实时聊天室功能。首先先学习一下websocket,然后是利用实现webSocket的Socket.io类库实现聊天室，跳转这里见代码">
+<meta name="twitter:image" content="http://lx15.github.io/chat-1.jpg">
 
     
     
@@ -75,14 +81,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/08/12/2016-8-12-Cesium(1)/" title="Cesium 笔记 （一）" itemprop="url">Cesium 笔记 （一）</a>
+      <a href="/2017/01/15/webSocket/" title="webSocket 与 用Socket.io实现简单的实时聊天室" itemprop="url">webSocket 与 用Socket.io实现简单的实时聊天室</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-08-11T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-08-12</time>
+    <time datetime="2017-01-14T16:00:00.000Z" itemprop="datePublished"> 发表于 2017-01-15</time>
     
   </p>
 </header>
@@ -91,11 +97,25 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#long-poll-和-ajax轮询"><span class="toc-number">1.</span> <span class="toc-text">long poll 和 ajax轮询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#轮询"><span class="toc-number">1.1.</span> <span class="toc-text">轮询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#长轮询（long-poll）"><span class="toc-number">1.2.</span> <span class="toc-text">长轮询（long poll）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webSocket"><span class="toc-number">2.</span> <span class="toc-text">webSocket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Socket-io"><span class="toc-number">3.</span> <span class="toc-text">Socket.io</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Socket-io类库实现聊天室"><span class="toc-number">4.</span> <span class="toc-text">使用Socket.io类库实现聊天室</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">5.</span> <span class="toc-text">参考文献</span></a></li></ol>
 		
 		</div>
 		
-		  
+		<p>  在学习nodejs与h5，所以实现一个简单的实时聊天室功能。首先先学习一下websocket,然后是利用实现webSocket的Socket.io类库实现聊天室，跳转<a href="https://github.com/Lx15/chatRoom" target="_blank" rel="external">这里</a>见代码</p>
+<a id="more"></a>
+<h2 id="long-poll-和-ajax轮询"><a href="#long-poll-和-ajax轮询" class="headerlink" title="long poll 和 ajax轮询"></a>long poll 和 ajax轮询</h2><p>  web应用的信息交互过程通常是客户端通过 浏览器发出一个请求，服务器端接收和审核完请求后进行处理并返回结果给客户端，然后客户端将结果展示出来。这样的请求显示机制对于信息变化不是频繁的应用是可以的，但是对于实时性要求比较高的应用如设备监控，实时聊天等就会产生信息延迟。在websocket之前为了保持客户端和服务器端的信息同步主要的采用的是poll。</p>
+<h3 id="轮询"><a href="#轮询" class="headerlink" title="轮询"></a>轮询</h3><p> 最早的一种实现实时Web应用的方案。客户端以一定的时间间隔向服务器发出请求，以频繁请求的方式来保持客户端和服务器端的同步。当客户端以固定频率向服务器发起请求的时候，服务器端的数据可能并没有更新，这样会带来很多无谓的网络传输。</p>
+<h3 id="长轮询（long-poll）"><a href="#长轮询（long-poll）" class="headerlink" title="长轮询（long poll）"></a>长轮询（long poll）</h3><p>  长轮询是对定时轮询的改进和提高，目地是为了降低无效的网络传输。当服务器端没有数据更新的时候，连接会保持一段时间周期直到数据或状态改变或者时间过期，通过这种机制来减少无效的客户端和服务器间的交互。当然，如果服务端的数据变更非常频繁的话，这种机制和定时轮询比较起来没有本质上的性能的提高。</p>
+<h2 id="webSocket"><a href="#webSocket" class="headerlink" title="webSocket"></a>webSocket</h2><p> WebSocket是用于 Web 应用程序的新一代双向通信技术，运行在单一套接字之上，它通过 JavaScript 接口暴露在 HTML5 兼容的浏览器中。</p>
+<p> 一个 WebSocket 就是客户端和服务端之间的标准双向 TCP 套接字。套接字以 HTTP 连接开始，在 HTTP 握手之后“升级”为 TCP 套接字。握手之后，任意一端都<br>可以发送数据。      </p>
+<p>WebSocket 连接本质上就是一个 TCP 连接，所以在数据传输的稳定性和数据传输量的大小方面，和轮询以及 Comet 技术比较，具有很大的性能优势。<br>为了建立一个Websocket连接，客户端浏览器首先要向服务器发起一个HTTP请求，这个请求和通常的HTTP请求不同，包含了一些附加头信息，其中附加头信息”Upgrade:WebSocket”表明这是一个申请协议升级的HTTP请求，服务器端解析这些附加的头信息然后产生应答信息返回给客户端，客户端和服务器端的Websocket连接就建立起来了，双方就可以通过这个连接通道自由的传递信息，并且这个连接会持续存在直到客户端或者服务器端的某一方主动的关闭连接。</p>
+<h2 id="Socket-io"><a href="#Socket-io" class="headerlink" title="Socket.io"></a>Socket.io</h2><p><a href="https://github.com/socketio/socket.io" target="_blank" rel="external">Socket.io</a>可以用于实现 HTML5中的WebSocket通信，可在Flash中使用WebSocket通信，XHR轮询，JSONP轮询，Forever Iframe这些通信方式。Socket.io类库可以接收所有与服务器端相连接的客户端发送的信息，也可以向这些客户端发送消息。该类库的一个显著特征是在服务器端与浏览器端之间提供一个共享接口，也就是当客户端与服务器端建立连接后，在处理消息时，开发者可以在客户端使用服务器端js代码。<br>socket.io 是基于事件的支持实时双向的通信，Socket.io 最先建立一个long polling 连接，然后尝试升级到更好的方式如 WebSocket。这个类库支持广播消息，和命名空间等。</p>
+<h2 id="使用Socket-io类库实现聊天室"><a href="#使用Socket-io类库实现聊天室" class="headerlink" title="使用Socket.io类库实现聊天室"></a>使用Socket.io类库实现聊天室</h2><p>聊天室实现效果如下<br><img src="chat-1.jpg" alt="用户1"><br><img src="chat-2.jpg" alt="用户2"><br>跳转<a href="https://github.com/Lx15/chatRoom" target="_blank" rel="external">这里</a>见代码。<br>Socket.io 类库使用方法很简单，创建一个Socket.io服务器即可，但是该服务器依赖于一个已经创建的HTTP服务器。在HTTP服务器运行之后，使用listen方法为该服务器附加一个Socket.io服务器。<br>在一个Socket.io服务器创建之后，当客户端与服务器建立连接时，触发Socket.io服务器的connection事件。用on方法来监听事件，emit方法来触发事件，同时还有broadcast来广播消息等。具体使用方法可以查看<a href="https://github.com/socketio/socket.io" target="_blank" rel="external">Socket.io</a></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li>陆凌牛 《Node.js权威指南》</li>
+<li><a href="https://www.ibm.com/developerworks/cn/web/1112_huangxa_websocket/" target="_blank" rel="external">使用 HTML5 WebSocket 构建实时 Web 应用</a></li>
+</ol>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -103,7 +123,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/js/">js</a><a href="/tags/Cesium/">Cesium</a>
+  <span></span> <a href="/tags/nodejs/">nodejs</a><a href="/tags/h5/">h5</a>
   </div>
 
 </div>
@@ -112,7 +132,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://lx15.github.io/2016/08/12/2016-8-12-Cesium(1)/" data-title="Cesium 笔记 （一） | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://lx15.github.io/2017/01/15/webSocket/" data-title="webSocket 与 用Socket.io实现简单的实时聊天室 | Lx15的博客" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -125,19 +145,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/08/20/JS语言精粹笔记(三)-----继承/" title="JS语言精粹笔记(三)------继承">
-  <strong>上一篇：</strong><br/>
-  <span>
-  JS语言精粹笔记(三)------继承</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/08/03/JS语言精粹笔记(二)--- 函数/"  title="JS语言精粹笔记(二)------函数&amp;&amp;数组">
+<a href="/2017/01/06/nodejs(一)-----基础知识点/"  title="nodejs学习(一)----基础知识">
  <strong>下一篇：</strong><br/> 
- <span>JS语言精粹笔记(二)------函数&amp;&amp;数组
+ <span>nodejs学习(一)----基础知识
 </span>
 </a>
 </div>
@@ -146,7 +158,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/08/12/2016-8-12-Cesium(1)/" data-title="Cesium 笔记 （一）" data-url="http://lx15.github.io/2016/08/12/2016-8-12-Cesium(1)/"></div>
+	<div class="ds-thread" data-thread-key="2017/01/15/webSocket/" data-title="webSocket 与 用Socket.io实现简单的实时聊天室" data-url="http://lx15.github.io/2017/01/15/webSocket/"></div>
 </section>
 
 
@@ -156,7 +168,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#long-poll-和-ajax轮询"><span class="toc-number">1.</span> <span class="toc-text">long poll 和 ajax轮询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#轮询"><span class="toc-number">1.1.</span> <span class="toc-text">轮询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#长轮询（long-poll）"><span class="toc-number">1.2.</span> <span class="toc-text">长轮询（long poll）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webSocket"><span class="toc-number">2.</span> <span class="toc-text">webSocket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Socket-io"><span class="toc-number">3.</span> <span class="toc-text">Socket.io</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Socket-io类库实现聊天室"><span class="toc-number">4.</span> <span class="toc-text">使用Socket.io类库实现聊天室</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">5.</span> <span class="toc-text">参考文献</span></a></li></ol>
  
   </div>
 
