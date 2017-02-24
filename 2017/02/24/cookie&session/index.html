@@ -1,0 +1,538 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Cookie、Session Cookie 、Cookie-Session 、Session及Storage | Lx15的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="看过Cookie和Session的解析多次，但每次都是只站在前端的角度去看，缺少后端的使用经验，所以理解总是不到位，毕竟Cookie 和Session的多数操作都是在后端，所以对于Cookie和Session 的理解要前后端结合。 还有sessionStorage 和localStorage 这两个平日里也只是用来存储数据，对于我使用的场景到也都能实现，但他俩肯定是有区别的，不然有一个就够了啊。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cookie、Session Cookie 、Cookie-Session 、Session及Storage">
+<meta property="og:url" content="http://lx15.github.io/2017/02/24/cookie&session/index.html">
+<meta property="og:site_name" content="Lx15的博客">
+<meta property="og:description" content="看过Cookie和Session的解析多次，但每次都是只站在前端的角度去看，缺少后端的使用经验，所以理解总是不到位，毕竟Cookie 和Session的多数操作都是在后端，所以对于Cookie和Session 的理解要前后端结合。 还有sessionStorage 和localStorage 这两个平日里也只是用来存储数据，对于我使用的场景到也都能实现，但他俩肯定是有区别的，不然有一个就够了啊。">
+<meta property="og:updated_time" content="2017-02-24T12:10:05.322Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cookie、Session Cookie 、Cookie-Session 、Session及Storage">
+<meta name="twitter:description" content="看过Cookie和Session的解析多次，但每次都是只站在前端的角度去看，缺少后端的使用经验，所以理解总是不到位，毕竟Cookie 和Session的多数操作都是在后端，所以对于Cookie和Session 的理解要前后端结合。 还有sessionStorage 和localStorage 这两个平日里也只是用来存储数据，对于我使用的场景到也都能实现，但他俩肯定是有区别的，不然有一个就够了啊。">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15的博客" title="Lx15的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15的博客">Lx15的博客</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lx15.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/24/cookie&session/" title="Cookie、Session Cookie 、Cookie-Session 、Session及Storage" itemprop="url">Cookie、Session Cookie 、Cookie-Session 、Session及Storage</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-23T16:00:00.000Z" itemprop="datePublished"> 发表于 2017-02-24</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie"><span class="toc-number">1.</span> <span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#session-cookie"><span class="toc-number">2.</span> <span class="toc-text">session cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cookie-session"><span class="toc-number">3.</span> <span class="toc-text">cookie-session</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#signedCookie"><span class="toc-number">4.</span> <span class="toc-text">signedCookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session"><span class="toc-number">5.</span> <span class="toc-text">Session</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Storage类型"><span class="toc-number">6.</span> <span class="toc-text">Storage类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sessionStorage"><span class="toc-number">6.1.</span> <span class="toc-text">sessionStorage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#localStorage"><span class="toc-number">6.2.</span> <span class="toc-text">localStorage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">7.</span> <span class="toc-text">参考文献</span></a></li></ol>
+		
+		</div>
+		
+		<p> 看过Cookie和Session的解析多次，但每次都是只站在前端的角度去看，缺少后端的使用经验，所以理解总是不到位，毕竟Cookie 和Session的多数操作都是在后端，所以对于Cookie和Session 的理解要前后端结合。<br> 还有sessionStorage 和localStorage 这两个平日里也只是用来存储数据，对于我使用的场景到也都能实现，但他俩肯定是有区别的，不然有一个就够了啊。。。所以有了这篇笔记。。^_^<br><a id="more"></a></p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>Cookie、Session等出现的原因就是为了克服http协议是个无状态协议的问题，这种缺点就导致了请求状态无法保持如用户的登录信息及个性化设置等。   </p>
+<p>Cookie 实现的思想就是服务器在http响应头中添加Set-Cookie信息，浏览器收到响应后会根据头中的字段保存cookie，下一次访问时在请求头中附带cookie内容，供服务器根据cookie值进行后续处理。<br>在Node + Express 4.x 中 使用<a href="https://github.com/expressjs/cookie-parser" target="_blank" rel="external"> cookie-parser</a> 模块。 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</div><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</div><div class="line"><span class="keyword">var</span> app = express()</div><div class="line"><span class="keyword">var</span> router = express.Router()</div><div class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>)</div><div class="line"></div><div class="line">app.use(cookieParser())</div><div class="line">app.use(express.static(<span class="string">'./'</span>))</div><div class="line">app.all(<span class="string">'*'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</div><div class="line">    res.set(&#123;</div><div class="line">    <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>,</div><div class="line">    <span class="string">'Access-Control-Allow-Origin'</span>:<span class="string">'*'</span></div><div class="line">    &#125;);</div><div class="line">&#125;)</div><div class="line">app.get(<span class="string">'/ajax'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line">    res.cookie(<span class="string">'rememberme'</span>, <span class="string">'1'</span>, &#123; expires: <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">Date</span>.now() + <span class="number">900000000000</span>)&#125;);</div><div class="line">    <span class="built_in">console</span>.log(req.cookies)</div><div class="line">    res.send(<span class="string">"hi..........."</span>);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>这种情况在前后端不分离的情况下是可以发送Cookie成功的，即有<code>app.use(express.static(&#39;./&#39;))</code>这个语句。</p>
+<p>若是没有这个语句，经将页面改成前后端分离的情况，cookie是不能够发送到浏览器端的。出现这种情况的原因是同源策略。 虽然浏览器的CORS可以处理跨源请求，但是 默认情况下，跨源请求是不会携带凭据的（cookie,HTTP认证及客户端SSL证明）</p>
+<p>若是在前后端分离的情况下若想发送Cookie，应在前端设置 <code>xhr.withCredentials = true</code>,后端设置<code>Access-Control-Allow-Credentials : true</code> 就可以进行发送Cookie了。。</p>
+<p> 在cookie-parser这个模块中的cookie设置主要有以下几点：</p>
+<blockquote>
+<p>path：表示 cookie 影响到的路径，匹配该路径才发送这个 cookie。<br>expires 和 maxAge：告诉浏览器这个 cookie 什么时候过期，expires 是 UTC 格式时间，maxAge 是 cookie 多久后过期的相对时间。当不设置这两个选项时，会产生 session cookie，session cookie 是 transient 的，当用户关闭浏览器时，就被清除。一般用来保存 session 的 session_id。<br>secure：当 secure 值为 true 时，cookie 在 HTTP 中是无效，在 HTTPS 中才有效。<br>httpOnly：浏览器不允许脚本操作 document.cookie 去更改 cookie。一般情况下都应该设置这个为 true，这样可以避免被 xss 攻击拿到 cookie。              </p>
+</blockquote>
+<p>对于httpOnly 这点，通常Web页面内还可以对Cookie进行读取操作，但使用Javascript的document.cookie就无法读取附加HttpOnly 属性后的Cookie 内容了。因此也就无法在XSS中利用Javascript劫持Cookie了。       </p>
+<p>Cookie 只存在于当前标签页，在其他标签页中不存在，另外Ｃｏｏｋｉｅ的生命周期取决于expires, 作用范围由domain 和 path决定。</p>
+<p>Cookie 可用于多个页面。即两个窗口中是都可以有的。</p>
+<p>Cookie 是可以自己独自使用的，不用和session同时使用就可以，但是因为session的使用会用到cookie，所以让我以为Cookie必定会用到session。</p>
+<h2 id="session-cookie"><a href="#session-cookie" class="headerlink" title="session cookie"></a>session cookie</h2><p><code>session_id</code> 在 cookie 中的存储方式是 session cookie。即当浏览器一关闭，浏览器中 cookie 中的 session_id 字段就会消失。但是根据你设置的cookie的maxAge 或者expire ，存储在Application 下的Cookies中的<code>session_id</code>不一定会消失。因为cookie的生命周期取决于maxAge或者expire 和浏览器关闭无关。</p>
+<h2 id="cookie-session"><a href="#cookie-session" class="headerlink" title="cookie-session"></a>cookie-session</h2><p>我之前是没有搞清楚 <code>session cookie</code> 和<code>cookie session</code>然后特意问了下<a href="https://github.com/alsotang/node-lessons/issues/126" target="_blank" rel="external">alsotang</a>老师，老师解释 <code>cookie session</code>是cookie-session 说的是 session 中的大量数据是存在 cookie 而非 redis 中。</p>
+<h2 id="signedCookie"><a href="#signedCookie" class="headerlink" title="signedCookie"></a>signedCookie</h2><p>cookie的缺点是明文存储在浏览器端容易被修改，假如根据什么算法把它加个密再存储就好了。在计算机领域，有个<code>信息摘要算法</code>,说的是在服务器端设置个秘密字符串，然后把本来要明文发送的cookie，在首部添加上这个秘密的字符串然后经过这个算法得到一堆加密的字符串，然后再存储在cookie中。</p>
+<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2><p>cookie 的不安全的问题也有了session的出现。session 中的数据是保留在服务器端的。session 的使用通过一个 <code>session_id</code> 来进行，<code>session_id</code> 通常是存放在客户端的 cookie 中。这个<code>session_id</code>是服务端随机产生一个 1024 比特长的字符串，位数足够长并且是随机的，所以比较安全。<br>我觉得 Session 和 signedCookie 类似的是 将存储在cookie 中的明文进行加密了。</p>
+<h2 id="Storage类型"><a href="#Storage类型" class="headerlink" title="Storage类型"></a>Storage类型</h2><p>Storage 类型提供最大的存储空间来存储键值对。 存在如下方法：</p>
+<blockquote>
+<p>clear()<br>getItem(name)<br>key(index)<br>removeItem(name)<br>setItem(name,value)<br>  Storage类型只能存储字符串。非字符串的数据在村吃之前会被转换成字符串。      </p>
+</blockquote>
+<h3 id="sessionStorage"><a href="#sessionStorage" class="headerlink" title="sessionStorage"></a>sessionStorage</h3><p>sessionStorage 存储的数据只能保持到浏览器关闭。 在页面刷新时保存的值仍存在，但是不能跨越多页面，cookie 可以。</p>
+<h3 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h3><p>localStorage 用于持久的保存客户端数据。 要访问localStorage 对象，页面必须同源。 对于localStorage 数据会保留到JS 删除或者是用户清楚浏览器缓存。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li>alsotang <a href="https://github.com/alsotang/node-lessons/tree/master/lesson16" target="_blank" rel="external">cookie 和 session</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/js/">js</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lx15.github.io/2017/02/24/cookie&session/" data-title="Cookie、Session Cookie 、Cookie-Session 、Session及Storage | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/02/21/Ajax_Json_Jsonp/"  title="原生Ajax使用实现、同源策略及CORS等跨域方案">
+ <strong>下一篇：</strong><br/> 
+ <span>原生Ajax使用实现、同源策略及CORS等跨域方案
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/02/24/cookie&session/" data-title="Cookie、Session Cookie 、Cookie-Session 、Session及Storage" data-url="http://lx15.github.io/2017/02/24/cookie&session/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie"><span class="toc-number">1.</span> <span class="toc-text">Cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#session-cookie"><span class="toc-number">2.</span> <span class="toc-text">session cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cookie-session"><span class="toc-number">3.</span> <span class="toc-text">cookie-session</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#signedCookie"><span class="toc-number">4.</span> <span class="toc-text">signedCookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Session"><span class="toc-number">5.</span> <span class="toc-text">Session</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Storage类型"><span class="toc-number">6.</span> <span class="toc-text">Storage类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sessionStorage"><span class="toc-number">6.1.</span> <span class="toc-text">sessionStorage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#localStorage"><span class="toc-number">6.2.</span> <span class="toc-text">localStorage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">7.</span> <span class="toc-text">参考文献</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="https://github.com/Lx15" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/js/" title="js">js<sup>29</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ng/" title="ng">ng<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/html5/" title="html5">html5<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/util/" title="util">util<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/seo/" title="seo">seo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Lx15" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

