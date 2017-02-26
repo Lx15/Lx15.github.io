@@ -1,0 +1,579 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>浏览器缓存与Express简单实现 | Lx15的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="浏览器缓存这个问题也是我心心念念了很久的一个问题，这个问题和Cookie、Session一个是涉及到后端的一个问题，所以颤颤巍巍的祭出我刚学不久的Node和Express，来个实践终归记忆更深刻。若是发现我有错误出现，多谢留言指正哈 ^^">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器缓存与Express简单实现">
+<meta property="og:url" content="http://lx15.github.io/2017/02/26/浏览器缓存/index.html">
+<meta property="og:site_name" content="Lx15的博客">
+<meta property="og:description" content="浏览器缓存这个问题也是我心心念念了很久的一个问题，这个问题和Cookie、Session一个是涉及到后端的一个问题，所以颤颤巍巍的祭出我刚学不久的Node和Express，来个实践终归记忆更深刻。若是发现我有错误出现，多谢留言指正哈 ^^">
+<meta property="og:image" content="http://lx15.github.io/staticNoSet.jpg">
+<meta property="og:image" content="http://lx15.github.io/urlResend.jpg">
+<meta property="og:image" content="http://lx15.github.io/staticWithSet-1.jpg">
+<meta property="og:image" content="http://lx15.github.io/staticWithSet-2.jpg">
+<meta property="og:updated_time" content="2017-02-26T00:48:58.122Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浏览器缓存与Express简单实现">
+<meta name="twitter:description" content="浏览器缓存这个问题也是我心心念念了很久的一个问题，这个问题和Cookie、Session一个是涉及到后端的一个问题，所以颤颤巍巍的祭出我刚学不久的Node和Express，来个实践终归记忆更深刻。若是发现我有错误出现，多谢留言指正哈 ^^">
+<meta name="twitter:image" content="http://lx15.github.io/staticNoSet.jpg">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15的博客" title="Lx15的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15的博客">Lx15的博客</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lx15.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/26/浏览器缓存/" title="浏览器缓存与Express简单实现" itemprop="url">浏览器缓存与Express简单实现</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2017-02-25T16:00:00.000Z" itemprop="datePublished"> 发表于 2017-02-26</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是浏览器缓存"><span class="toc-number">1.</span> <span class="toc-text">什么是浏览器缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器缓存分类"><span class="toc-number">2.</span> <span class="toc-text">浏览器缓存分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非HTTP-缓存"><span class="toc-number">3.</span> <span class="toc-text">非HTTP 缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP缓存"><span class="toc-number">4.</span> <span class="toc-text">HTTP缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Express实现"><span class="toc-number">5.</span> <span class="toc-text">Express实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文章"><span class="toc-number">7.</span> <span class="toc-text">参考文章</span></a></li></ol>
+		
+		</div>
+		
+		<p>浏览器缓存这个问题也是我心心念念了很久的一个问题，这个问题和Cookie、Session一个是涉及到后端的一个问题，所以颤颤巍巍的祭出我刚学不久的Node和Express，来个实践终归记忆更深刻。若是发现我有错误出现，多谢留言指正哈 ^^</p>
+<a id="more"></a>
+<h2 id="什么是浏览器缓存"><a href="#什么是浏览器缓存" class="headerlink" title="什么是浏览器缓存"></a>什么是浏览器缓存</h2><p>   浏览器缓存我理解的就是浏览器中的网站发出请求，浏览器根据后端的响应或者html页面规定进行web资源（如html页面，图片，js,数据等）的存储。当下次浏览器再发出请求时依据缓存规则或者是从浏览器直接返回副本，或者是向后端确认此副本是否可用，若可用则返回此副本，若不可用，则从后端返回数据。</p>
+<p>所以我们就可以看出浏览器缓存确实有很多好处，如加快了页面的反应速度，增加了用户体验，节省了带宽等等。那浏览器缓存究竟是怎么实现？接着看。。。。</p>
+<h2 id="浏览器缓存分类"><a href="#浏览器缓存分类" class="headerlink" title="浏览器缓存分类"></a>浏览器缓存分类</h2><p>  浏览器缓存实际上也就可以分成两类，即非HTTP缓存与HTTP缓存。非常好理解啊，就是用HTTP 和不用HTTP两种。</p>
+<h2 id="非HTTP-缓存"><a href="#非HTTP-缓存" class="headerlink" title="非HTTP 缓存"></a>非HTTP 缓存</h2><p>  非HTTP缓存呢也很简单，就是在html页面中使用meta标签进行设置。<br>  http-equiv类似于HTTP的头部协议，它回应给浏览器一些有用的信息，以帮助正确和精确地显示网页内容。<br>  <code>Expires</code>指定网页在缓存中的过期时间，一旦网页过期，必须到服务器上重新获取.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Expires"</span> <span class="attr">Content</span>=<span class="string">"0″ /&gt;</span></span></div></pre></td></tr></table></figure>
+<p> <code>Pragma</code>禁止浏览器从本地的缓存中获取页面内容。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Pragma"</span> <span class="attr">Content</span>=<span class="string">"No-cache"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="HTTP缓存"><a href="#HTTP缓存" class="headerlink" title="HTTP缓存"></a>HTTP缓存</h2><p>  除了上面那种情况外剩下的就是通过设置HTTP的头部字段进行浏览器缓存了。。。。     </p>
+<p>浏览器在发出请求后，后端服务器收到响应时可以在响应的首部字段添加请求数据的有效时间，也就是保质期，浏览器将请求到的数据进行存储，下次请求的时候呢和这个有效时间进行对比，若是没有超过保质期则可以直接将存储的数据返回，这就达到了浏览器的缓存效。</p>
+<p>但若是超出了保质期，浏览器就需要将请求发送到服务器后端，但是这个时候也会出现服务器端的数据是没有变化的，也就服务器端的数据和浏览器中的副本是一样的，若是再次将服务器中的数据进行发送又会浪费带宽，所以呢这个时候就产生了两种方式来避免这种就是过了保质期但是实际还可以用的情况。</p>
+<p>一种方法是 ：在上一次在服务器告诉客户端保质期时，同时也在响应头部添加<code>最后修改时间</code>,当浏览器发现超过了保质期，再次发送请求时就核对一下和服务器端数据的最后修改时间，若是时间一致，则可读取缓存副本，否则，直接从服务器端读取数据。</p>
+<p>另一种方法是： 在上一次服务端告诉客户端保质期的同时，同时也在响应头部添加<code>版本号</code>，当服务器端数据更改的时候，版本号就会发生变化，当浏览器发现副本数据超过了保质期再次向服务器发送请求时就会先对比一下版本号，若是一致，则可以直接读取缓存，否则，直接从服务器端读取数据。</p>
+<p>  以上就是浏览器缓存的思想了。。。对于这些实现http的首部字段约定就够了、、、</p>
+<p>第一个就是对·保质期·的实现—Expires与Cache-Control</p>
+<p>  <code>Expire</code>是http1.0 的实现，用来表示什么时候过期。<code>Cache-Control</code>是对http1.1的实现，在<code>Cache-Control</code>中可以设置<code>max-age</code>的值，单位是秒(s)。理论上这两个值计算出的有效时间应该是相同的（上图好像不一致）。Expires是HTTP1.0的东西，而Cache-Control是HTTP1.1的，规定如果max-age和Expires同时存在，前者优先级高于后者。</p>
+<p>  <code>Expire</code>是在响应首部中的字段，在请求首部中不存在，指定一个日期/时间，超过该时间则认为此回应已经过期。<br>  请求字段中的<code>Cache-Control</code> 是用来指定在这次的请求/响应链中的所有缓存机制 都必须 遵守的指令<br>  响应字段中的<code>Cache-Control</code> 是用来向从服务器直到客户端在内的所有缓存机制告知，它们是否可以缓存这个对象。其单位为秒</p>
+<p>接下来就是超过了·保质期·之后，对<code>最后修改时间</code>方法的实现—Last-Modified/If-Modified-Since        </p>
+<p> <code>Last-Modified</code>的值是设置在响应头中的，<code>If-Modified-Since</code>是设置在请求头中的。当浏览器发现超过了保质期，再次发送请求时就核对一下<code>If-Modified-Since</code>和<code>last-Modified</code>的值，若是一致，返回304，则可读取缓存副本;否则，返回200，直接从服务器端读取数据。</p>
+<p>最后就是另一种处理超过了·保质期·之后方法，对<code>版本号</code>方法的实现—ETag/If-None-Match</p>
+<p> <code>ETag</code>是设置在响应头中，<code>If-None-Match</code>是设置在请求头中的。实际上ETag并不是文件的版本号，而是一串可以代表该文件唯一的字符串（Apache中，ETag的值，默认是对文件的索引节（INode），大小（Size）和最后修改时间（MTime）进行Hash后得到的。），当客户端发现过了保质期，就在请求中发送If-None-Match选项，值即为上次请求后响应头的ETag值，该值在服务端和服务端代表该文件唯一的字符串对比（如果服务端该文件改变了，该值就会变），若是一致，返回304，则可读取缓存副本;否则，返回200，直接从服务器端读取数据。</p>
+<p>以上就是http 首部字段对于浏览器缓存的支持了。。。。 </p>
+<p>但是有时候<code>If-Modified-Since</code>与<code>If-None-Match</code>会相遇，这时候谁会获胜呢？ 答案回是后者。因为HTTP1.1中ETag的出现主要是为了解决几个Last-Modified比较难解决的问题：</p>
+<p>  1) Last-Modified标注的最后修改只能精确到秒级，如果某些文件在1秒钟以内，被修改多次的话，它将不能准确标注文件的修改时间<br>  2) 如果某些文件会被定期生成，但有时内容并没有任何变化（仅仅改变了时间），但Last-Modified却改变了，导致文件没法使用缓存<br>  3) 有可能存在服务器没有准确获取文件修改时间，或者与代理服务器时间不一致等情形           </p>
+<p>还有一些用户的操作会影响到缓存： </p>
+<p>  1) 浏览器中输入url后直接回车的请求若是不过期，则会返回200，从缓存中取数据。<br>  2) <code>Ctrl+r</code> 刷新：是默认跳过了max-age 和expire是检验直接向服务器发送请求<br>  3) <code>Ctrl+shift+r</code> 刷新： 强制从服务器去数据，返回200</p>
+<p>还有一些情况是不能被缓存的请求：</p>
+<p>  1) HTTP信息头中包含Cache-Control:no-cache，pragma:no-cache（HTTP1.0），或Cache-Control:max-age=0等告诉浏览器不用缓存的请求         </p>
+<p>  2) 需要根据Cookie，认证信息等决定输入内容的动态请求是不能被缓存的</p>
+<p>  3) 经过HTTPS安全加密的请求（有人也经过测试发现，ie其实在头部加入Cache-Control：max-age信息，firefox在头部加入Cache-Control:Public之后，能够对HTTPS的资源进行缓存，参考《HTTPS的七个误解》）</p>
+<p>  4) POST请求无法被缓存</p>
+<p>  5) HTTP响应头中不包含Last-Modified/Etag，也不包含Cache-Control/Expires的请求无法被缓存</p>
+<p>以上就是对于浏览器缓存的解释，但是光说不练假把式，看我用Express实现之。。。。。</p>
+<h2 id="Express实现"><a href="#Express实现" class="headerlink" title="Express实现"></a>Express实现</h2><p>在Express 中设置缓存可以分成2种：静态文件、非静态文件。</p>
+<ol>
+<li>对于静态文件，默认是有etag ,last-Modified 这两个字段，maxAge =0 。具体可以参见express.static(root,[options])这个API。<br>那我们来看一下默认设置下的http首部</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</div><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</div><div class="line"><span class="keyword">var</span> app = express()</div><div class="line">app.use(express.static(<span class="string">'./'</span>))</div><div class="line">app.listen(<span class="number">3000</span>)</div></pre></td></tr></table></figure>
+<p>我们请求静态文件 index.html ,得到<img src="staticNoSet.jpg" alt="静态文件不设置情况"><br>可以看到关于etag ,last-Modified 这两个字段，maxAge =0的设置，若是我们回车重新发送 请求会发现：<img src="urlResend.jpg" alt="重发静态请求"><br>可以看到状态是304，应为maxAge 设置是0，所以肯定是超过了保质期，所以重新请求但是数据未更改，自然304，从浏览器取副本。</p>
+<p>我们看一下自己设置了静态文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</div><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</div><div class="line"><span class="keyword">var</span> app = express()</div><div class="line">app.use(express.static(<span class="string">'./'</span>,&#123;</div><div class="line">  <span class="string">'etag'</span>:<span class="literal">false</span>,</div><div class="line">  <span class="string">'lastModified'</span> : <span class="literal">false</span></div><div class="line">&#125;))</div><div class="line">app.listen(<span class="number">4000</span>)</div></pre></td></tr></table></figure>
+<p>这是将etag与 last-Modified标签去掉了，默认maxAge=0 ，第一次进行请求时会发现：<img src="staticWithSet-1.jpg" alt="静态文件取消缓存且第一次请求"><br>可以看到并没有etag ,last-Modified 这两个字段，然后我们重新回车刷新<img src="staticWithSet-2.jpg" alt="静态文件取消缓存且第一次请求"><br>可以看到并没有缓存，所以状态码是200。</p>
+<p>除了上面的设置之外 ，还有其他的设置，具体就参见<a href="http://expressjs.com/en/4x/api.html#res.set" target="_blank" rel="external">API</a>咯。</p>
+<ol>
+<li>对于非静态文件 默认是有etag 。可以使用下面的代码请求 <a href="http://localhost:4000/ajax" target="_blank" rel="external">http://localhost:4000/ajax</a> 进行查看<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</div><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</div><div class="line"><span class="keyword">var</span> app = express()</div><div class="line">app.use(express.static(<span class="string">'./'</span>,&#123;</div><div class="line">  <span class="string">'etag'</span>:<span class="literal">false</span>,</div><div class="line">  <span class="string">'lastModified'</span> : <span class="literal">false</span></div><div class="line">&#125;))</div><div class="line">app.listen(<span class="number">4000</span>)</div><div class="line"></div><div class="line">app.get(<span class="string">'/ajax'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"访问了Ajax"</span>)</div><div class="line">  res.send(<span class="string">"hi....."</span>)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>对于非静态文件的设置可以是</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</div><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</div><div class="line"><span class="keyword">var</span> app = express()</div><div class="line">app.use(express.static(<span class="string">'./'</span>,&#123;</div><div class="line">  <span class="string">'etag'</span>:<span class="literal">false</span>,</div><div class="line">  <span class="string">'lastModified'</span> : <span class="literal">false</span></div><div class="line">&#125;))</div><div class="line">app.listen(<span class="number">4000</span>)</div><div class="line"></div><div class="line">app.get(<span class="string">'/ajax'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line"></div><div class="line">  res.set(&#123;</div><div class="line">  <span class="string">'ETag'</span>: <span class="string">'12345'</span></div><div class="line"> &#125;);</div><div class="line"></div><div class="line">  <span class="built_in">console</span>.log(<span class="string">"访问了Ajax"</span>)</div><div class="line">  res.send(<span class="string">"hi....."</span>)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>也可以进行设置<code>app.set(&#39;etag&#39;,false)</code> 来关闭缓存。效果是和上面的静态文件是一样的，这会太晚了，好困。。。就不分析了。。^^      </p>
+<p>当然还有其他的设置，自己看API咯。。。</p>
+<p>除了上面的设置方法外，还可以在 <code>res.sendFile(path,[option])</code>中进行设置。</p>
+<p>OK啦。。。。<br>=====================================我是分隔符============================================</p>
+<p> 其实从浏览器的缓存实现来看，避免缓存的一个很简单的办法就是发送不一样的url请求。像下面的这几种方式：<br>   1) 在ajax发送前添加 xhr.setRequestHeader(‘If-Modified-since’,’0’)<br>   2) 在ajax发送前添加 xhr.setRequestHeader(‘Cache-Control’,’no-cache’)<br>   3) 在URL后面添加随机数 ：’a=’+Math.random()<br>   4) 在URL后面添加时间戳’time=’+new Date().getTime()<br>   5) 如果是jQUery，可以$.ajaxSetup({cache:false})           
+　　</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>  其实想更清楚的了解web缓存，我更推荐这个资料<a href="http://www.alloyteam.com/2012/03/web-cache-1-web-cache-overview/" target="_blank" rel="external">腾讯全端 AlloyTeam 团队 Blog：WEB 缓存机制系列</a>，这个比我的更细致，来龙去脉更清楚，当然字也更多^^ </p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzAxODE2MjM1MA==&amp;mid=2651551769&amp;idx=1&amp;sn=3a422455b5cc240f8625842d31d81ab8&amp;chksm=8025afd8b75226cec68e1e0e4b36334bb1d88e51a7fdba0cf7884d9f1d6597e4e4475cffaa38&amp;mpshare=1&amp;scene=23&amp;srcid=02165iLjiWOfqwgzFOGLU5WZ#rd" target="_blank" rel="external">浏览器缓存机制浅析</a></li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/http/">http</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lx15.github.io/2017/02/26/浏览器缓存/" data-title="浏览器缓存与Express简单实现 | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/02/24/cookie&session/"  title="Cookie、Session Cookie 、Cookie-Session 、Session及Storage">
+ <strong>下一篇：</strong><br/> 
+ <span>Cookie、Session Cookie 、Cookie-Session 、Session及Storage
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/02/26/浏览器缓存/" data-title="浏览器缓存与Express简单实现" data-url="http://lx15.github.io/2017/02/26/浏览器缓存/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是浏览器缓存"><span class="toc-number">1.</span> <span class="toc-text">什么是浏览器缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器缓存分类"><span class="toc-number">2.</span> <span class="toc-text">浏览器缓存分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非HTTP-缓存"><span class="toc-number">3.</span> <span class="toc-text">非HTTP 缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP缓存"><span class="toc-number">4.</span> <span class="toc-text">HTTP缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Express实现"><span class="toc-number">5.</span> <span class="toc-text">Express实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文章"><span class="toc-number">7.</span> <span class="toc-text">参考文章</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="https://github.com/Lx15" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/js/" title="js">js<sup>29</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ng/" title="ng">ng<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/util/" title="util">util<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/html5/" title="html5">html5<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algo/" title="algo">algo<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/seo/" title="seo">seo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/http/" title="http">http<sup>1</sup></a></li>
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Lx15" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
