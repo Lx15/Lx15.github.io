@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://lx15.github.io/2016/12/12/chFont/index.html">
 <meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="这是关于网页中中文字体的知识点摘要笔记。主要来源是中文字体网页开发指南。">
-<meta property="og:updated_time" content="2017-01-05T03:24:39.688Z">
+<meta property="og:updated_time" content="2017-02-26T09:37:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="font-family 与 @font-face">
 <meta name="twitter:description" content="这是关于网页中中文字体的知识点摘要笔记。主要来源是中文字体网页开发指南。">
@@ -116,11 +116,19 @@ STXihei, &quot;华文细黑&quot;,
 serif;
 </code></pre><p>使用规则是：<br>（1）优先使用排在前面的字体。<br>（2）如果找不到该种字体，或者该种字体不包括所要渲染的文字，则使用下一种字体。<br>（3）如果所列出的字体，都无法满足需要，则让操作系统自行决定使用哪种字体。<br>根据这些规则，font-family应该优先指定英文字体，然后再指定中文字体。否则，中文字体所包含的英文字母，会取代英文字体，这往往很丑陋。</p>
 </li>
-<li><p>由于Windows和Mac的中文字体没有交叉，所以应该同时为两个平台指定字体。<br>常见的做法是，Windows平台指定”微软雅黑”（Microsoft YaHei），Mac平台指定”华文细黑”（STXihei）。<br>一般来说，衬线体装饰性强，往往用于标题；无衬线体清晰度好，往往用于正文。对于简体字来说，微软雅黑（Microsoft yahei）是无衬线体，宋体（SimSun）是衬线体。<br>楷体也是衬线体，装饰性与仿宋体接近，但是宽度更大，笔画更清楚一些。这种字体也不应该在小于14px的情况下使用。<br>它在Mac平台的对应字体是”华文楷体”（STKaiti）。<br>仿宋也是衬线体，最好在字号大于14px的情况下使用，在mac平台对应的字体是”华文仿宋”(STFangsong)。</p>
+<li><p>由于Windows和Mac的中文字体没有交叉，所以应该同时为两个平台指定字体。<br>常见的做法是，Windows平台指定”微软雅黑”（Microsoft YaHei），Mac平台指定”华文细黑”（STXihei）。     </p>
 </li>
+</ol>
+<p>一般来说，衬线体装饰性强，往往用于标题；无衬线体清晰度好，往往用于正文。对于简体字来说，微软雅黑（Microsoft yahei）是无衬线体，宋体（SimSun）是衬线体。<br>楷体也是衬线体，装饰性与仿宋体接近，但是宽度更大，笔画更清楚一些。这种字体也不应该在小于14px的情况下使用。      </p>
+<p>它在Mac平台的对应字体是”华文楷体”（STKaiti）。<br>仿宋也是衬线体，最好在字号大于14px的情况下使用，在mac平台对应的字体是”华文仿宋”(STFangsong)。</p>
+<ol>
 <li><p>@font-face命令<br>若是不想在开发中只使用os支持的字体就要使用@font-face命令，格式如下：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> @font-face &#123;</div><div class="line">  font-family: &lt;YourWebFontName&gt;;</div><div class="line">  src: &lt;source&gt; [&lt;format&gt;][,&lt;source&gt; [&lt;format&gt;]]*;</div><div class="line">  [font-weight: &lt;weight&gt;];</div><div class="line">  [font-style: &lt;style&gt;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里面涉及到format格式问题。<br>(1).TureTpe(.ttf)格式： .ttf字体是Windows和Mac的最常见的字体，是一种RAW格式，因此他不为网站优化,支持这种字体的浏览器有【IE9+,Firefox3.5+,Chrome4+,Safari3+,Opera10+,iOS Mobile Safari4.2+】；<br>(2).OpenType(.otf)格式：otf字体被认为是一种原始的字体格式，其内置在TureType的基础上，所以也提供了更多的功能,支持这种字体的浏览器有【Firefox3.5+,Chrome4.0+,Safari3.1+,Opera10.0+,iOS Mobile Safari4.2+】；<br>(3). Web Open Font Format(.woff)格式：.woff字体是Web字体中最佳格式，他是一个开放的TrueType/OpenType的压缩版本，同时也支持元数据包的分离,支持这种字体的浏览器有【IE9+,Firefox3.5+,Chrome6+,Safari3.6+,Opera11.1+】；<br>(4). Embedded Open Type(.eot)格式：.eot字体是IE专用字体，可以从TrueType创建此格式字体,支持这种字体的浏览器有【IE4+】；<br>(5). SVG(.svg)格式：.svg字体是基于SVG字体渲染的一种格式,支持这种字体的浏览器有【Chrome4+,Safari3.1+,Opera10.0+,iOS Mobile Safari3.2+】<br>这就意味着在@font-face中我们至少需要.woff,.eot两种格式字体，甚至还需要.svg等字体达到更多种浏览版本的支持.</p>
+<p>这里面涉及到format格式问题。<br>(1). TureTpe(.ttf)格式： .ttf字体是Windows和Mac的最常见的字体，是一种RAW格式，因此他不为网站优化,支持这种字体的浏览器有【IE9+,Firefox3.5+,Chrome4+,Safari3+,Opera10+,iOS Mobile Safari4.2+】；     </p>
+<p>(2). OpenType(.otf)格式：otf字体被认为是一种原始的字体格式，其内置在TureType的基础上，所以也提供了更多的功能,支持这种字体的浏览器有【Firefox3.5+,Chrome4.0+,Safari3.1+,Opera10.0+,iOS Mobile Safari4.2+】；       </p>
+<p>(3). Web Open Font Format(.woff)格式：.woff字体是Web字体中最佳格式，他是一个开放的TrueType/OpenType的压缩版本，同时也支持元数据包的分离,支持这种字体的浏览器有【IE9+,Firefox3.5+,Chrome6+,Safari3.6+,Opera11.1+】；</p>
+<p>(4). Embedded Open Type(.eot)格式：.eot字体是IE专用字体，可以从TrueType创建此格式字体,支持这种字体的浏览器有【IE4+】；     </p>
+<p>(5). SVG(.svg)格式：.svg字体是基于SVG字体渲染的一种格式,支持这种字体的浏览器有【Chrome4+,Safari3.1+,Opera10.0+,iOS Mobile Safari3.2+】<br>这就意味着在@font-face中我们至少需要.woff,.eot两种格式字体，甚至还需要.svg等字体达到更多种浏览版本的支持.</p>
 </li>
 <li><p>在在线字体网站中下载的特殊字体可能格式并不全，这需要用到第三方的工具来进行转换 <a href="https://www.fontsquirrel.com/tools/webfont-generator" target="_blank" rel="external">fontsquirrel</a></p>
 </li>

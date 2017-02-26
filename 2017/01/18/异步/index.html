@@ -14,11 +14,11 @@
     <meta name="description" content="之前一直搞不懂异步、Promise之类的是怎么回事，今天认真看了一下，总算把自己以前迷糊的点弄清楚了。下面是这篇文章主要讲的四个问题，若是你看到这里，可以看一下下面几个问题是否你也同样存在，如果存在，那这篇文章应该也适合你….那就拿走不谢啦…">
 <meta property="og:type" content="article">
 <meta property="og:title" content="总算弄懂的关于异步的四个知识点">
-<meta property="og:url" content="http://lx15.github.io/2016/09/24/异步/index.html">
+<meta property="og:url" content="http://lx15.github.io/2017/01/18/异步/index.html">
 <meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="之前一直搞不懂异步、Promise之类的是怎么回事，今天认真看了一下，总算把自己以前迷糊的点弄清楚了。下面是这篇文章主要讲的四个问题，若是你看到这里，可以看一下下面几个问题是否你也同样存在，如果存在，那这篇文章应该也适合你….那就拿走不谢啦…">
 <meta property="og:image" content="http://lx15.github.io/异步过程图">
-<meta property="og:updated_time" content="2016-10-28T09:19:10.400Z">
+<meta property="og:updated_time" content="2017-02-26T12:55:44.307Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="总算弄懂的关于异步的四个知识点">
 <meta name="twitter:description" content="之前一直搞不懂异步、Promise之类的是怎么回事，今天认真看了一下，总算把自己以前迷糊的点弄清楚了。下面是这篇文章主要讲的四个问题，若是你看到这里，可以看一下下面几个问题是否你也同样存在，如果存在，那这篇文章应该也适合你….那就拿走不谢啦…">
@@ -80,14 +80,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/09/24/异步/" title="总算弄懂的关于异步的四个知识点" itemprop="url">总算弄懂的关于异步的四个知识点</a>
+      <a href="/2017/01/18/异步/" title="总算弄懂的关于异步的四个知识点" itemprop="url">总算弄懂的关于异步的四个知识点</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
 		
   <p class="article-time">
-    <time datetime="2016-09-23T16:00:00.000Z" itemprop="datePublished"> 发表于 2016-09-24</time>
+    <time datetime="2017-01-17T16:00:00.000Z" itemprop="datePublished"> 发表于 2017-01-18</time>
     
   </p>
 </header>
@@ -96,7 +96,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先是第一个问题："><span class="toc-number">1.</span> <span class="toc-text">首先是第一个问题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#然后是第二个问题："><span class="toc-number">2.</span> <span class="toc-text">然后是第二个问题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#那就第三个问题啦"><span class="toc-number">3.</span> <span class="toc-text">那就第三个问题啦</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后第四个问题"><span class="toc-number">4.</span> <span class="toc-text">最后第四个问题~~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先是第一个问题："><span class="toc-number">1.</span> <span class="toc-text">首先是第一个问题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#然后是第二个问题："><span class="toc-number">2.</span> <span class="toc-text">然后是第二个问题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#那就第三个问题啦"><span class="toc-number">3.</span> <span class="toc-text">那就第三个问题啦</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后第四个问题"><span class="toc-number">4.</span> <span class="toc-text">最后第四个问题~~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章"><span class="toc-number">5.</span> <span class="toc-text">参考文章</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
 		
 		</div>
 		
@@ -149,7 +149,7 @@
             callbackFn(response);
         }
 </code></pre><p>主线程在执行完当前循环中的所有代码后，就会到消息队列取出这条消息(也就是message函数)，并执行它。到此为止，就完成了工作线程对主线程的通知，回调函数也就得到了执行。</p>
-<p>特别好的一个图用来说明上面的过程：<br>   <img src="异步过程图" alt="https://sfault-image.b0.upaiyun.com/325/916/3259161542-575018ce29d44_articlex"></p>
+<p>特别好的一个图，图片来源(<a href="https://sfault-image.b0.upaiyun.com/325/916/3259161542-575018ce29d44_articlex)用来说明上面的过程：" target="_blank" rel="external">https://sfault-image.b0.upaiyun.com/325/916/3259161542-575018ce29d44_articlex)用来说明上面的过程：</a><br>   <img src="异步过程图" alt="异步过程图"></p>
 <p>上面过程说了消息队列和事件循环，那什么是“事件”？事件在这里的概念实际上并不是必须的，事件机制实际上就是异步过程的通知机制。</p>
 <p>好了~~第二个问题也解决了….撒花….普天同庆….</p>
 <h3 id="那就第三个问题啦"><a href="#那就第三个问题啦" class="headerlink" title="那就第三个问题啦"></a>那就第三个问题啦</h3><p>首先来说这个CommomJs，CommonJS 是以在浏览器环境之外构建 JavaScript 生态系统为目标而产生的项目，比如在服务器和桌面环境中。这个CommonJS规范中有个Promise/A规范，注意啊这只是规范。何为规范就是一种约定俗成的模式，大家都遵守，这并没有具体的实现。所以才会有了各种库对于Promise/A的实现，如Jquery。</p>
@@ -203,6 +203,13 @@ var p2 = p1.then(c,d);
 <h3 id="最后第四个问题"><a href="#最后第四个问题" class="headerlink" title="最后第四个问题~~"></a>最后第四个问题~~</h3><p>总算到最后一个问题啦，，，重中之重！！！既然Promise是规范，那怎样实现？上面说了那么多，实际是怎么样做啊？<br>根据上面执行机制的解释就很容易能看出递归来啦，所以实现肯定是用递归啦。。。</p>
 <p>这里有一个<a href="https://github.com/cuipengfei/Spikes/blob/master/js/promise/RWPromise.js" target="_blank" rel="external"> 只要88行的代码实现Promise</a></p>
 <p>那在常用的Jquery中异步是怎样实现的？<br>在Jquery中常用的异步主要就是ajax。那就是很常用的了。。。。。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
+<li><a href="https://segmentfault.com/a/1190000004322358" target="_blank" rel="external">JavaScript:彻底理解同步、异步和事件循环</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2012/12/asynchronous%EF%BC%BFjavascript.html" target="_blank" rel="external">Javascript异步编程的4种方法</a></li>
+<li><a href="https://blog.coding.net/blog/how-do-promises-work" target="_blank" rel="external">理解Promise的工作原理</a></li>
+<li><a href="http://cuipengfei.me/blog/2016/05/15/promise/" target="_blank" rel="external">自己动手实现Promises/A+规范</a></li>
+<li><a href="http://liubin.org/promises-book/" target="_blank" rel="external">JavaScript Promise迷你书（中文版）</a></li>
+</ul>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以前发现自己做了很多无用功，问题出现了，甚至还没弄清楚问题具体是什么、根源究竟在哪里，就着急去解决，这肯定就会耗时长又不能解决问题。庆幸的是自己总算认识到了，估计以后的学习方法在我没有新的认识之前都会是这样的，先弄清楚自己的问题点在哪，然后对症下药。</p>
   
 	</div>
@@ -221,7 +228,7 @@ var p2 = p1.then(c,d);
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://lx15.github.io/2016/09/24/异步/" data-title="总算弄懂的关于异步的四个知识点 | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://lx15.github.io/2017/01/18/异步/" data-title="总算弄懂的关于异步的四个知识点 | Lx15的博客" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -235,18 +242,18 @@ var p2 = p1.then(c,d);
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/09/28/图解HTTP(一)/" title="图解HTTP笔记(一)">
+ <a href="/2017/02/08/Javascript模块化编程/" title="Javascript模块化编程">
   <strong>上一篇：</strong><br/>
   <span>
-  图解HTTP笔记(一)</span>
+  Javascript模块化编程</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/09/20/resources/"  title="好文章收集">
+<a href="/2017/01/15/webSocket/"  title="webSocket 与 用Socket.io实现简单的实时聊天室">
  <strong>下一篇：</strong><br/> 
- <span>好文章收集
+ <span>webSocket 与 用Socket.io实现简单的实时聊天室
 </span>
 </a>
 </div>
@@ -255,7 +262,7 @@ var p2 = p1.then(c,d);
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/09/24/异步/" data-title="总算弄懂的关于异步的四个知识点" data-url="http://lx15.github.io/2016/09/24/异步/"></div>
+	<div class="ds-thread" data-thread-key="2017/01/18/异步/" data-title="总算弄懂的关于异步的四个知识点" data-url="http://lx15.github.io/2017/01/18/异步/"></div>
 </section>
 
 
@@ -265,7 +272,7 @@ var p2 = p1.then(c,d);
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先是第一个问题："><span class="toc-number">1.</span> <span class="toc-text">首先是第一个问题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#然后是第二个问题："><span class="toc-number">2.</span> <span class="toc-text">然后是第二个问题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#那就第三个问题啦"><span class="toc-number">3.</span> <span class="toc-text">那就第三个问题啦</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后第四个问题"><span class="toc-number">4.</span> <span class="toc-text">最后第四个问题~~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#首先是第一个问题："><span class="toc-number">1.</span> <span class="toc-text">首先是第一个问题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#然后是第二个问题："><span class="toc-number">2.</span> <span class="toc-text">然后是第二个问题：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#那就第三个问题啦"><span class="toc-number">3.</span> <span class="toc-text">那就第三个问题啦</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最后第四个问题"><span class="toc-number">4.</span> <span class="toc-text">最后第四个问题~~</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文章"><span class="toc-number">5.</span> <span class="toc-text">参考文章</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
  
   </div>
 

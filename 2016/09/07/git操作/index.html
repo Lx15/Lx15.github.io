@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://lx15.github.io/2016/09/07/git操作/index.html">
 <meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。">
-<meta property="og:updated_time" content="2016-11-06T05:50:24.719Z">
+<meta property="og:updated_time" content="2017-02-26T03:54:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="日常常用git操作">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。">
@@ -106,20 +106,25 @@
 <p>这样会直接创建一个新的分支dev-test。</p>
 </li>
 <li><p>在本地Dev分支创建分支dev-test</p>
+</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch dev-test</div></pre></td></tr></table></figure>
-<p>这个dev-test分支会直接从dev中复制过来内容，而（1）中的dev-test则在创建时为空。</p>
-</li>
-<li><p>切换到dev分支</p>
+<p>   这个dev-test分支会直接从dev中复制过来内容，而（1）中的dev-test则在创建时为空。</p>
+<ol>
+<li>切换到dev分支</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout dev</div></pre></td></tr></table></figure>
-</li>
+<ol>
 <li><p>合并dev-test到dev</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git merge dev-test</div></pre></td></tr></table></figure>
 </li>
 <li><p>删除dev-test分支</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch <span class="_">-d</span> dev-test</div></pre></td></tr></table></figure>
 <p>强制删除dev-test分支</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch -D dev-test</div></pre></td></tr></table></figure>
 </li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch -D dev-test</div></pre></td></tr></table></figure>
+<ol>
 <li><p>推送本地分支dev-test到远程dev</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin dev-test:dev</div></pre></td></tr></table></figure>
 </li>
@@ -131,12 +136,13 @@
 <li><p>从现有仓库连接这个刚刚clone的仓库</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git remote add &lt;name&gt; /e/aaanow/remote/<span class="built_in">test</span>Git/.git</div></pre></td></tr></table></figure>
 </li>
+</ol>
+<ol>
 <li><p><code>git stash</code>与<code>git stash pop</code><br> <code>git stash</code> 用来暂存当前正在进行的工作。用于当想pull 最新代码， 又不想加新commit， 或者另外一种情况，为了修复一个紧急的bug,先stash, 使返回到自己上一个commit, 改完bug之后再stash pop, 继续原来的工作。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> stash</div><div class="line"><span class="variable">$do</span> some work</div><div class="line"><span class="variable">$git</span> stash pop</div></pre></td></tr></table></figure>
 <p><code>git stash save</code>与<code>git stash list</code>      </p>
-<pre><code>Git stash save &quot;work in progress for foo feature&quot;
-当你多次使用’git stash’命令后，你的栈里将充满了未提交的代码，这时候你会对将哪个版本应用回来有些困惑，
-</code></pre><p><code>git stash list</code> 命令可以将当前的Git栈信息打印出来，你只需要找到对应的版本号，例如使用’git stash apply stash@{1}’就可以将你指定版本号为stash@{1}的工作取出来，当你将所有的栈都应用回来的时候，可以使用’git stash clear’来将栈清空。</p>
+<p>Git stash save “work in progress for foo feature”</p>
+<p>当你多次使用’git stash’命令后，你的栈里将充满了未提交的代码，这时候你会对将哪个版本应用回来有些困惑，<br><code>git stash list</code> 命令可以将当前的Git栈信息打印出来，你只需要找到对应的版本号，例如使用’git stash apply stash@{1}’就可以将你指定版本号为stash@{1}的工作取出来，当你将所有的栈都应用回来的时候，可以使用’git stash clear’来将栈清空。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">git stash          <span class="comment"># save uncommitted changes</span></div><div class="line"><span class="comment"># pull, edit, etc.</span></div><div class="line">git stash list     <span class="comment"># list stashed changes in this git</span></div><div class="line">git show stash@&#123;0&#125; <span class="comment"># see the last stash</span></div><div class="line">git stash pop      <span class="comment"># apply last stash and remove it from the list</span></div><div class="line"></div><div class="line">git stash --help   <span class="comment"># for more info</span></div></pre></td></tr></table></figure>
 </li>
 <li><p><code>git commit --amend</code>用于修复上次已提交的文字</p>

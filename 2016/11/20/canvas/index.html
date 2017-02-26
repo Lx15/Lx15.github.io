@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://lx15.github.io/2016/11/20/canvas/index.html">
 <meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="Canvas API 可以用来动态生成和展示图形、图表、图像以及动画。最近用到了canvas，整理一下canvas的知识点。">
-<meta property="og:updated_time" content="2016-11-27T12:06:14.259Z">
+<meta property="og:updated_time" content="2017-02-26T09:07:50.917Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CANVAS">
 <meta name="twitter:description" content="Canvas API 可以用来动态生成和展示图形、图表、图像以及动画。最近用到了canvas，整理一下canvas的知识点。">
@@ -121,10 +121,12 @@
 </li>
 <li><p>关于可重用代码： 一般绘制都应从原点（坐标系的0,0点）开始，应用变换（缩放、平移、旋转），然后不断修改代码直到达到希望的效果。所以经常会用到 translate()、save()、 restore() 函数。</p>
 </li>
-<li><p><code>使用图像数据</code>   可以通过context的getImageData()取得原始图像数据，返回的是ImageData 的实例。每个ImageData对象都有三个属性：width、height 和data。其中data属性是一个数组，保存着图像中每一个像素的数据。在data数组中，每一个像素用4个元素来保存，分别表示红、绿、蓝和透明度值。因此，第一个像素的数据就保存在数组的第0到第3个元素中，我们可以在直接访问到这些袁术图像数据，并且能以各种方式来修改这些数据。修改之后使用context.putImageData()将图像数据绘制到画布上。<br>由于安全问题，在getImageData() 调用时，如果canvas中的图像来自其他域，就会抛出安全异常。因为在没有canvas API之前，无法使用编程的方式获取下载图片的像素信息，来自其他网站的私有图片可以显示在本地，但无法被读取或者复制。</p>
+<li><p><code>使用图像数据</code>   可以通过context的getImageData()取得原始图像数据，返回的是ImageData 的实例。每个ImageData对象都有三个属性：width、height 和data。其中data属性是一个数组，保存着图像中每一个像素的数据。在data数组中，每一个像素用4个元素来保存，分别表示红、绿、蓝和透明度值。因此，第一个像素的数据就保存在数组的第0到第3个元素中，我们可以在直接访问到这些元素图像数据，并且能以各种方式来修改这些数据。修改之后使用context.putImageData()将图像数据绘制到画布上。</p>
 </li>
-<li><p>两个会应用到context中所有绘制操作的属性：globalAlpha 和 globalCompositionOperation 。</p>
-</li>
+</ol>
+<p>由于安全问题，在getImageData() 调用时，如果canvas中的图像来自其他域，就会抛出安全异常。因为在没有canvas API之前，无法使用编程的方式获取下载图片的像素信息，来自其他网站的私有图片可以显示在本地，但无法被读取或者复制。</p>
+<ol>
+<li>两个会应用到context中所有绘制操作的属性：globalAlpha 和 globalCompositionOperation 。</li>
 </ol>
 <h2 id="有趣的demo"><a href="#有趣的demo" class="headerlink" title="有趣的demo"></a>有趣的demo</h2><ol>
 <li><p>模拟热图的实现：</p>

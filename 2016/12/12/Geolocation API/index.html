@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://lx15.github.io/2016/12/12/Geolocation API/index.html">
 <meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="最近在 用weex 实现一个小应用要用到地理定位，所以找来看看咯。">
-<meta property="og:updated_time" content="2016-12-24T08:43:01.179Z">
+<meta property="og:updated_time" content="2017-02-26T08:38:16.551Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTML5地理定位 --- geolocation">
 <meta name="twitter:description" content="最近在 用weex 实现一个小应用要用到地理定位，所以找来看看咯。">
@@ -111,7 +111,7 @@
 </blockquote>
 <p>我们在实际使用的时候主要也就是使用这两个核心的API。所以其实很简单的。<br>navigator.geolocation.getCurrentPosition() 这个函数因为像获取位置数据这样的操作可能需要较长时间才能完成，所以是异步的处理。</p>
 </li>
-<li><p>successCallback 是收到实际位置信息并进行处理的地方。这个successCallback 函数只接收一个参数：位置对象。这个对象包含坐标（coords 特性）和一个获取位置数据事的时间戳。这个coords前三个特性:</p>
+<li><p>successCallback 是收到实际位置信息并进行处理的地方。这个successCallback 函数只接收一个参数：位置对象。这个对象包含坐标（coords 特性）和一个获取位置数据时的时间戳。这个coords前三个特性:</p>
 <blockquote>
 <p>latitude（纬度）<br>longitude (经度)<br>accuracy  （准确度）</p>
 </blockquote>

@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://lx15.github.io/2017/01/06/nodejs(一)-----基础知识点/index.html">
 <meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="关于nodejs基础的知识点。以前有些模糊的概念，现在弄清楚了。">
-<meta property="og:updated_time" content="2017-01-29T09:26:03.825Z">
+<meta property="og:updated_time" content="2017-02-26T03:47:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nodejs学习(一)----基础知识">
 <meta name="twitter:description" content="关于nodejs基础的知识点。以前有些模糊的概念，现在弄清楚了。">
@@ -99,12 +99,12 @@
 		</div>
 		
 		<p>   关于nodejs基础的知识点。以前有些模糊的概念，现在弄清楚了。<br><a id="more"></a></p>
-<h2 id="nodejs适用问题"><a href="#nodejs适用问题" class="headerlink" title="nodejs适用问题"></a>nodejs适用问题</h2><p>   在Java、php 或 Asp.net等服务器语言中，为每一个客户端连接创建一个新的线程，而每个线程需要消耗大约2MB的内存，如果想让web应用程序支持更多的用户，就<br>需要增加服务器的数量，而web应用程序的硬件成本会增加，并且当同一个用户的不同客户端请求可能会被不同的服务器处理，因此必须在所有的服务器之间共享所有的资源。<br>所以，在一个web应用程序中，一个主要的瓶颈是服务器所支持的最大同时连接用户量。         </p>
-<p>   Nodejs修改了客户端到服务器端的连接办法，解决论文这个问题。因为它并不为每个客户端连接创建一个新的线程，而是为每个客户端连接触发一个在Node.js内部进行<br>处理的事件，因此，如果使用Node.js,可以同时处理多达几万个用户的客户端连接。因此如果需要使Web应用程序能够支持大量用户的并发连接的时候，可以考虑使用Node.js。<br>如聊天服务器和综合服务类网站或电子商务网站的服务器。</p>
+<h2 id="nodejs适用问题"><a href="#nodejs适用问题" class="headerlink" title="nodejs适用问题"></a>nodejs适用问题</h2><p>在Java、php 或 Asp.net等服务器语言中，为每一个客户端连接创建一个新的线程，而每个线程需要消耗大约2MB的内存，如果想让web应用程序支持更多的用户，就需要增加服务器的数量，而web应用程序的硬件成本会增加，并且当同一个用户的不同客户端请求可能会被不同的服务器处理，因此必须在所有的服务器之间共享所有的资源。所以，在一个web应用程序中，一个主要的瓶颈是服务器所支持的最大同时连接用户量。         </p>
+<p>Nodejs修改了客户端到服务器端的连接办法，解决论文这个问题。因为它并不为每个客户端连接创建一个新的线程，而是为每个客户端连接触发一个在Node.js内部进行处理的事件，因此，如果使用Node.js,可以同时处理多达几万个用户的客户端连接。因此如果需要使Web应用程序能够支持大量用户的并发连接的时候，可以考虑使用Node.js。如聊天服务器和综合服务类网站或电子商务网站的服务器。</p>
 <h2 id="nodejs中的模块"><a href="#nodejs中的模块" class="headerlink" title="nodejs中的模块"></a>nodejs中的模块</h2><ol>
-<li><p>在nodejs中是以模块为单位进行划分所有的功能的，每个模块为一个js文件，每一个模块中定义的全局变量或函数的作用范围也被限定在这个模块之内，只有使用exports<br>对象对象才能将其传递到外部。</p>
+<li><p>在nodejs中是以模块为单位进行划分所有的功能的，每个模块为一个js文件，每一个模块中定义的全局变量或函数的作用范围也被限定在这个模块之内，只有使用exports对象对象才能将其传递到外部。</p>
 </li>
-<li><p>在node.js 中提供了一些核心模块，直接使用require函数加载，参数为模块名。除了核心模块，还有全局作用域下的有些类、函数与对象。这些可以在不引用任何模块的情况下<br>直接使用这些类、函数与对象。如require函数、module对象等。</p>
+<li><p>在node.js 中提供了一些核心模块，直接使用require函数加载，参数为模块名。除了核心模块，还有全局作用域下的有些类、函数与对象。这些可以在不引用任何模块的情况下直接使用这些类、函数与对象。如require函数、module对象等。</p>
 </li>
 <li><p>nodejs中定义的一个global对象，代表Node.js中的全局命名空间，任何全局变量、函数或对象都是该对象的一个属性值。 </p>
 </li>
@@ -112,25 +112,25 @@
  <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node app.js</div></pre></td></tr></table></figure>
 <p>使用require.main 变量来检测一个模块是否是应用程序的主模块，将下面的代码写在模块文件中。</p>
  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(<span class="built_in">module</span> === <span class="built_in">require</span>.main)&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"this is the main module of application"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p> 使用require加载模块时将运行模块文件中的每一行代码，模块在首次加载后将缓存在内存缓存区中。这意味着，对于相同模块的多次引用得到的都是同一个模块对象，这也意味着，<br>杜对于相同模块的多次引用不会引起模块内代码的多次执行。     </p>
+<p>使用require加载模块时将运行模块文件中的每一行代码，模块在首次加载后将缓存在内存缓存区中。这意味着，对于相同模块的多次引用得到的都是同一个模块对象，这也意味着，对于相同模块的多次引用不会引起模块内代码的多次执行。     </p>
 <p>使用require函数时函数中的参数为要加载模块的地址。可以是”./“(代表当前目录)，可以是”/“(在Unix 中指根目录，在windows中指磁盘根目录)。  </p>
 <p>使用require.resolve函数查询完整的模块名，但是并不会加载该模块。           </p>
 <p>使用require.cache对象，该对象代表缓存了所有已被加载模块的缓存区。当使用delete关键字删除缓存区的某个模块对象后，下次加载该模块时将重新运行该模块中的代码。     </p>
 </li>
 <li><p>可以将模块文件内的exports对象写成“module.exports”但是在需要将模块定义为一个类时，只能使用“module.exports”的书写方法。</p>
 </li>
-<li><p>将自己的文件写成模块直接将自定义的文件按照加载核心模块的方式进行加载。方法是：在根目录下创建node_modules子目录，以模块名为目录名，在文件内添加package.json<br>文件。在文件中写入下面的代码   </p>
+<li><p>将自己的文件写成模块直接将自定义的文件按照加载核心模块的方式进行加载。方法是：在根目录下创建node_modules子目录，以模块名为目录名，在文件内添加package.json文件。在文件中写入下面的代码   </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"name"</span>:<span class="string">"foo"</span>,</div><div class="line">    <span class="string">"main"</span>:<span class="string">"./foo.js"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>在node.js 中，预定义了两个变量：用于获取当前模块文件名的 <code>__filename</code> 变量与用于获取当前目录名的<code>__dirname</code>变量。</p>
 </li>
-<li><p>在nodejs的用于实现各种事件处理的event模块中，定义了一个EventEmitter类。所有可能触发事件的对象都是一个继承了EventEmitter类的子类的实例对象。在node.js中，<br>为靠这些方法的调用来执行。 </p>
+<li><p>在nodejs的用于实现各种事件处理的event模块中，定义了一个EventEmitter类。所有可能触发事件的对象都是一个继承了EventEmitter类的子类的实例对象。在node.js中，靠这些方法的调用来执行。 </p>
 </li>
 <li><p>nodejs中的交互式运行环境—REPL(Read-Eval-Print-Loop)可以用于测试js代码，一些命令如.break,.load,.save;</p>
 </li>
 <li><p>node 调试工具node-inspector，这个工具在版本1.1.1时要求node版本不能超过6.3.0 。</p>
 </li>
-<li><p>多个版本的node 管理在windows端可以使用node版本管理工具node-windows。这个版本在安装时需先卸载之前安装的node,并且symlink的安装路径不可再系统盘下面的program files<br>下面，在安装时需使用管理员权限。</p>
+<li><p>多个版本的node 管理在windows端可以使用node版本管理工具node-windows。这个版本在安装时需先卸载之前安装的node,并且symlink的安装路径不可在系统盘下面的program files下面，在安装时需使用管理员权限。</p>
 </li>
 <li><p>下面的代码在运行时会在终端输出两个目标URL地址。</p>
 </li>
