@@ -17,12 +17,12 @@
 <meta property="og:url" content="http://lx15.github.io/2017/01/18/异步/index.html">
 <meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="之前一直搞不懂异步、Promise之类的是怎么回事，今天认真看了一下，总算把自己以前迷糊的点弄清楚了。下面是这篇文章主要讲的四个问题，若是你看到这里，可以看一下下面几个问题是否你也同样存在，如果存在，那这篇文章应该也适合你….那就拿走不谢啦…">
-<meta property="og:image" content="http://lx15.github.io/异步过程图">
-<meta property="og:updated_time" content="2017-02-26T12:55:44.307Z">
+<meta property="og:image" content="http://lx15.github.io/../异步过程图.png">
+<meta property="og:updated_time" content="2017-02-26T13:57:04.176Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="总算弄懂的关于异步的四个知识点">
 <meta name="twitter:description" content="之前一直搞不懂异步、Promise之类的是怎么回事，今天认真看了一下，总算把自己以前迷糊的点弄清楚了。下面是这篇文章主要讲的四个问题，若是你看到这里，可以看一下下面几个问题是否你也同样存在，如果存在，那这篇文章应该也适合你….那就拿走不谢啦…">
-<meta name="twitter:image" content="http://lx15.github.io/异步过程图">
+<meta name="twitter:image" content="http://lx15.github.io/../异步过程图.png">
 
     
     
@@ -149,7 +149,7 @@
             callbackFn(response);
         }
 </code></pre><p>主线程在执行完当前循环中的所有代码后，就会到消息队列取出这条消息(也就是message函数)，并执行它。到此为止，就完成了工作线程对主线程的通知，回调函数也就得到了执行。</p>
-<p>特别好的一个图，图片来源(<a href="https://sfault-image.b0.upaiyun.com/325/916/3259161542-575018ce29d44_articlex)用来说明上面的过程：" target="_blank" rel="external">https://sfault-image.b0.upaiyun.com/325/916/3259161542-575018ce29d44_articlex)用来说明上面的过程：</a><br>   <img src="异步过程图" alt="异步过程图"></p>
+<p>特别好的一个图，图片来源(<a href="https://sfault-image.b0.upaiyun.com/325/916/3259161542-575018ce29d44_articlex)用来说明上面的过程：" target="_blank" rel="external">https://sfault-image.b0.upaiyun.com/325/916/3259161542-575018ce29d44_articlex)用来说明上面的过程：</a><br>   <img src="../异步过程图.png" alt="异步过程图"></p>
 <p>上面过程说了消息队列和事件循环，那什么是“事件”？事件在这里的概念实际上并不是必须的，事件机制实际上就是异步过程的通知机制。</p>
 <p>好了~~第二个问题也解决了….撒花….普天同庆….</p>
 <h3 id="那就第三个问题啦"><a href="#那就第三个问题啦" class="headerlink" title="那就第三个问题啦"></a>那就第三个问题啦</h3><p>首先来说这个CommomJs，CommonJS 是以在浏览器环境之外构建 JavaScript 生态系统为目标而产生的项目，比如在服务器和桌面环境中。这个CommonJS规范中有个Promise/A规范，注意啊这只是规范。何为规范就是一种约定俗成的模式，大家都遵守，这并没有具体的实现。所以才会有了各种库对于Promise/A的实现，如Jquery。</p>
