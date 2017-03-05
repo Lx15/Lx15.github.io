@@ -11,16 +11,16 @@
     
 
     
-    <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。">
+    <meta name="description" content="学习廖雪峰git教程简单的笔记以及日常中的git操作心得。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="日常常用git操作">
 <meta property="og:url" content="http://lx15.github.io/2016/09/07/git操作/index.html">
 <meta property="og:site_name" content="Lx15的博客">
-<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。">
-<meta property="og:updated_time" content="2017-02-26T03:54:15.000Z">
+<meta property="og:description" content="学习廖雪峰git教程简单的笔记以及日常中的git操作心得。">
+<meta property="og:updated_time" content="2017-03-03T03:28:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="日常常用git操作">
-<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。">
+<meta name="twitter:description" content="学习廖雪峰git教程简单的笔记以及日常中的git操作心得。">
 
     
     
@@ -94,41 +94,98 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于git"><span class="toc-number">1.</span> <span class="toc-text">关于git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建版本库"><span class="toc-number">2.</span> <span class="toc-text">创建版本库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作区与暂存区"><span class="toc-number">3.</span> <span class="toc-text">工作区与暂存区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理修改"><span class="toc-number">4.</span> <span class="toc-text">管理修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#撤销修改"><span class="toc-number">5.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除文件"><span class="toc-number">6.</span> <span class="toc-text">删除文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#远程仓库"><span class="toc-number">7.</span> <span class="toc-text">远程仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分支管理"><span class="toc-number">8.</span> <span class="toc-text">分支管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bug分支"><span class="toc-number">9.</span> <span class="toc-text">bug分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签管理"><span class="toc-number">10.</span> <span class="toc-text">标签管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#github"><span class="toc-number">11.</span> <span class="toc-text">github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gitignore"><span class="toc-number">12.</span> <span class="toc-text">.gitignore</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日常操作记录"><span class="toc-number">13.</span> <span class="toc-text">日常操作记录</span></a></li></ol>
 		
 		</div>
 		
-		<p>&nbsp;&nbsp;&nbsp;&nbsp;在平时中有些常用的git操作，随手记录一下，日后翻看也是和方便的。</p>
+		<p>学习<a href="http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000" target="_blank" rel="external">廖雪峰git教程</a>简单的笔记以及日常中的git操作心得。</p>
 <a id="more"></a>
-<ol>
-<li><p>从远程pull一个分支dev到本地分支dev-test</p>
+<h2 id="关于git"><a href="#关于git" class="headerlink" title="关于git"></a>关于git</h2><p>git 分布式版本控制系统，分布式版本控制系统没有中央服务器，每个人的电脑上都是一个完整的版本库，所以工作的时候就不用联网了。多人协作的时候，只需要把自己的修改推送给对方。但是在实际使用的时候，其实很少在两人之间的电脑上推送版本库的修改，因为可能两个人不在同一个局域网内，两台电脑互相访问不了。所以分布式版本控制系统通常也有一台充当“中央服务器”的电脑。</p>
+<h2 id="创建版本库"><a href="#创建版本库" class="headerlink" title="创建版本库"></a>创建版本库</h2><p>版本库中的所有文件都可以被git管理起来</p>
+<ul>
+<li><p>git status 查看工作区与最后一次提交的版本之间是哪个文件被修改了，git diff 是看文件被修改了什么                     </p>
+</li>
+<li><p>git log –petty=online 用于查看简化的提交信息                     </p>
+</li>
+<li><p>git reset –hard HEAD^ 回到上一个版本                     </p>
+</li>
+<li><p>git reflog 是用来记录当前所有对分支造成影响的操作，这可以看到版本号                     </p>
+</li>
+<li><p>git reset –hard 版本号 用于回到在git reflog 中显示的任意的版本号                     </p>
+</li>
+</ul>
+<h2 id="工作区与暂存区"><a href="#工作区与暂存区" class="headerlink" title="工作区与暂存区"></a>工作区与暂存区</h2><p>工作区有一个隐藏目录.git,这个不算工作区，而是git的版本库                </p>
+<p>git 的版本库中包括stage的版本区、我们保存的分支和指向当前分支的指针head                </p>
+<p>git add 是将工作区的修改放到暂存区，git commit 是将暂存区的修改一次性的提交到分支                </p>
+<h2 id="管理修改"><a href="#管理修改" class="headerlink" title="管理修改"></a>管理修改</h2><p>git diff HEAD – filename 命令可以查看工作区和版本库里面最新版本的区别                 </p>
+<h2 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h2><p>git checkout – file可以丢弃工作区的修改 ，若是修改后还没有被放到暂存区，撤销修改后会回到和版本库一模一样的状态<br>若是文件已经被添加到暂存区了，但是还没有提交，撤销修改后就回到添加到暂存区后的状态。</p>
+<h2 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h2><p> git rm filename </p>
+<h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><p>git remote add origin 地址/.git 添加远程仓库</p>
+<p>git push origin 。。。</p>
+<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><p>当创建一个分支dev 时，分支的dev指针最先指向的是master</p>
+<ul>
+<li><p>查看分支：git branch</p>
+</li>
+<li><p>创建分支：git branch <name></name></p>
+</li>
+<li><p>切换分支：git checkout <name></name></p>
+</li>
+<li><p>创建+切换分支：git checkout -b <name></name></p>
+</li>
+<li><p>合并某分支到当前分支：git merge <name></name></p>
+</li>
+<li><p>删除分支：git branch -d <name></name></p>
+</li>
+<li><p>用git log –graph命令可以看到分支合并图</p>
+</li>
+</ul>
+<p>合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。</p>
+<p>如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息<br>合并分支时，加上–no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并</p>
+<h2 id="bug分支"><a href="#bug分支" class="headerlink" title="bug分支"></a>bug分支</h2><p> git stash 用来暂存未经commit 的分支现场，然后切换到另一个分支上进行bug修复，<br> 恢复工作现场的方法是：   </p>
+<pre><code>* git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
+* 另一种方式是用git stash pop，恢复的同时把stash内容也删了
+</code></pre><h2 id="标签管理"><a href="#标签管理" class="headerlink" title="标签管理"></a>标签管理</h2><p>Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（跟分支很像对不对？但是分支可以移动，标签不能移动），<br>所以，创建和删除标签都是瞬间完成的。tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。</p>
+<ul>
+<li><p>命令git tag <name>用于新建一个标签，默认为HEAD，也可以指定一个commit id :git tag <name> commit.id ；</name></name></p>
+</li>
+<li><p>git tag -a <tagname> -m “blablabla…”可以指定标签信息；</tagname></p>
+</li>
+<li><p>git tag -s <tagname> -m “blablabla…”可以用PGP签名标签；</tagname></p>
+</li>
+<li><p>命令git tag可以查看所有标签。 git show <tagname>查看标签信息</tagname></p>
+</li>
+<li><p>命令git push origin <tagname>可以推送一个本地标签；</tagname></p>
+</li>
+<li><p>命令git push origin –tags可以推送全部未推送过的本地标签；</p>
+</li>
+<li><p>命令git tag -d <tagname>可以删除一个本地标签；</tagname></p>
+</li>
+<li><p>命令git push origin :refs/tags/<tagname>可以删除一个远程标签</tagname></p>
+</li>
+</ul>
+<h2 id="github"><a href="#github" class="headerlink" title="github"></a>github</h2><p>参与开源项目 先 fork 项目到自己的账户，然后从自己的账户下clone 项目到本地，只有从自己的仓库进行clone,才能推送修改，然后可以送pull request给官方仓库来贡献代码</p>
+<h2 id="gitignore"><a href="#gitignore" class="headerlink" title=".gitignore"></a>.gitignore</h2><p>忽略文件的原则是：          </p>
+<ul>
+<li>忽略操作系统自动生成的文件，比如缩略图等；</li>
+<li>忽略编译生成的中间文件、可执行文件等，也就是如果一个文件是通过另一个文件自动生成的，那自动生成的文件就没必要放进版本库，比如Java编译产生的.class文件；</li>
+<li><p>忽略你自己的带有敏感信息的配置文件，比如存放口令的配置文件</p>
+<p>强制添加被.gitignore忽略的文件：git add -f filename</p>
+<p>发现可能.gitignore存在问题，需要找出来到底哪个规则写错了，可以用git check-ignore命令检查 ：<br>git check-ignore -v filename </p>
+</li>
+</ul>
+<h2 id="日常操作记录"><a href="#日常操作记录" class="headerlink" title="日常操作记录"></a>日常操作记录</h2><ol>
+<li>从远程pull一个分支dev到本地分支dev-test</li>
+</ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git pull origin dev:dev-test</div></pre></td></tr></table></figure>
-<p>这样会直接创建一个新的分支dev-test。</p>
-</li>
-<li><p>在本地Dev分支创建分支dev-test</p>
-</li>
+<p>  这样会直接创建一个新的分支dev-test。</p>
+<ol>
+<li>在本地Dev分支创建分支dev-test</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch dev-test</div></pre></td></tr></table></figure>
 <p>   这个dev-test分支会直接从dev中复制过来内容，而（1）中的dev-test则在创建时为空。</p>
 <ol>
-<li>切换到dev分支</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout dev</div></pre></td></tr></table></figure>
-<ol>
-<li><p>合并dev-test到dev</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git merge dev-test</div></pre></td></tr></table></figure>
-</li>
-<li><p>删除dev-test分支</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch <span class="_">-d</span> dev-test</div></pre></td></tr></table></figure>
-<p>强制删除dev-test分支</p>
-</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git branch -D dev-test</div></pre></td></tr></table></figure>
-<ol>
 <li><p>推送本地分支dev-test到远程dev</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin dev-test:dev</div></pre></td></tr></table></figure>
-</li>
-<li><p>coding.net 的邮箱 938266124@qq.com</p>
 </li>
 <li><p>从一个现有的本地仓库 clone到本地的另一个仓库</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> /e/aaanow/remote/<span class="built_in">test</span>Git.git</div></pre></td></tr></table></figure>
@@ -138,7 +195,7 @@
 </li>
 </ol>
 <ol>
-<li><p><code>git stash</code>与<code>git stash pop</code><br> <code>git stash</code> 用来暂存当前正在进行的工作。用于当想pull 最新代码， 又不想加新commit， 或者另外一种情况，为了修复一个紧急的bug,先stash, 使返回到自己上一个commit, 改完bug之后再stash pop, 继续原来的工作。</p>
+<li><p><code>git stash</code>与<code>git stash pop</code><br>  <code>git stash</code> 用来暂存当前正在进行的工作。用于当想pull 最新代码， 又不想加新commit， 或者另外一种情况，为了修复一个紧急的bug,先stash, 使返回到自己上一个commit, 改完bug之后再stash pop, 继续原来的工作。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$git</span> stash</div><div class="line"><span class="variable">$do</span> some work</div><div class="line"><span class="variable">$git</span> stash pop</div></pre></td></tr></table></figure>
 <p><code>git stash save</code>与<code>git stash list</code>      </p>
 <p>Git stash save “work in progress for foo feature”</p>
@@ -147,19 +204,15 @@
 </li>
 <li><p><code>git commit --amend</code>用于修复上次已提交的文字</p>
 </li>
-<li><p><code>git reset --soft 版本号</code>与<code>git reset --hard 版本号</code><br>  <code>git reset --soft 版本号</code>是回到版本号所在的版本，即不再有这个版本号之后的版本，但是工作区仍存在这个版本号更改之后的代码。此命令可用于 合并几次提交 去除冗余的提交提示 的情况。<br>  <code>git reset --hard 版本号</code> 是回到版本号所在的版本，即不再有这个版本号之后的版本，并且工作区也不存在这个版本号更改之后的代码。此命令可用于去除不用的功能。<br>  若是想找到去除的代码，可用下面的命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git reflog</div><div class="line">git reset --hard 版本号</div></pre></td></tr></table></figure>
+<li><p><code>git reset --soft 版本号</code>与<code>git reset --hard 版本号</code><br><code>git reset --soft 版本号</code>是回到版本号所在的版本，即不再有这个版本号之后的版本，但是工作区仍存在这个版本号更改之后的代码。此命令可用于合并几次提交去除冗余的提交提示 的情况。<br><code>git reset --hard 版本号</code> 是回到版本号所在的版本，即不再有这个版本号之后的版本，并且工作区也不存在这个版本号更改之后的代码。此命令可用于去除不用的功能。<br>   若是想找到去除的代码，可用下面的命令：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git reflog</div><div class="line">git reset --hard 版本号</div></pre></td></tr></table></figure>
 </li>
 <li><p><code>git fetch</code>与<code>git merge</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git fetch origin master</div><div class="line">git <span class="built_in">log</span> -p master..origin/master</div><div class="line">git merge origin/master</div></pre></td></tr></table></figure>
-<p>以上命令的含义：</p>
-<pre><code>首先从远程的origin的master主分支下载最新的版本到origin/master分支上
-然后比较本地的master分支和origin/master分支的差别
-最后进行合并
-</code></pre><p>上述过程其实可以用以下更清晰的方式来进行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git fetch origin master:tmp</div><div class="line">git diff tmp</div><div class="line">git merge tmp</div></pre></td></tr></table></figure>
 </li>
 </ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git fetch origin master</div><div class="line">git <span class="built_in">log</span> -p master..origin/master</div><div class="line">git merge origin/master</div></pre></td></tr></table></figure>
+<p>以上命令的含义：<br>    首先从远程的origin的master主分支下载最新的版本到origin/master分支上<br>    然后比较本地的master分支和origin/master分支的差别<br>    最后进行合并<br>上述过程其实可以用以下更清晰的方式来进行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git fetch origin master:tmp</div><div class="line">git diff tmp</div><div class="line">git merge tmp</div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -221,7 +274,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于git"><span class="toc-number">1.</span> <span class="toc-text">关于git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建版本库"><span class="toc-number">2.</span> <span class="toc-text">创建版本库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#工作区与暂存区"><span class="toc-number">3.</span> <span class="toc-text">工作区与暂存区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#管理修改"><span class="toc-number">4.</span> <span class="toc-text">管理修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#撤销修改"><span class="toc-number">5.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除文件"><span class="toc-number">6.</span> <span class="toc-text">删除文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#远程仓库"><span class="toc-number">7.</span> <span class="toc-text">远程仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分支管理"><span class="toc-number">8.</span> <span class="toc-text">分支管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bug分支"><span class="toc-number">9.</span> <span class="toc-text">bug分支</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#标签管理"><span class="toc-number">10.</span> <span class="toc-text">标签管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#github"><span class="toc-number">11.</span> <span class="toc-text">github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gitignore"><span class="toc-number">12.</span> <span class="toc-text">.gitignore</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日常操作记录"><span class="toc-number">13.</span> <span class="toc-text">日常操作记录</span></a></li></ol>
  
   </div>
 
@@ -247,7 +300,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/js/" title="js">js<sup>29</sup></a></li>
+				<li><a href="/tags/js/" title="js">js<sup>28</sup></a></li>
 			
 		
 			
