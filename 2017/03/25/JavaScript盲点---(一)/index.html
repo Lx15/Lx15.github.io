@@ -1,0 +1,560 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>JavaScript盲点记录----(一) | Lx15的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下,这里是我自己的盲点，所以应该是断断续续的。这是第一篇，定要温故而知新 。^_^">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript盲点记录----(一)">
+<meta property="og:url" content="http://lx15.github.io/2017/03/25/JavaScript盲点---(一)/index.html">
+<meta property="og:site_name" content="Lx15的博客">
+<meta property="og:description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下,这里是我自己的盲点，所以应该是断断续续的。这是第一篇，定要温故而知新 。^_^">
+<meta property="og:updated_time" content="2017-03-25T14:14:15.857Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript盲点记录----(一)">
+<meta name="twitter:description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下,这里是我自己的盲点，所以应该是断断续续的。这是第一篇，定要温故而知新 。^_^">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15的博客" title="Lx15的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15的博客">Lx15的博客</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lx15.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/03/25/JavaScript盲点---(一)/" title="JavaScript盲点记录----(一)" itemprop="url">JavaScript盲点记录----(一)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2017-03-24T16:00:00.000Z" itemprop="datePublished"> 发表于 2017-03-25</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			
+		
+		</div>
+		
+		<p>最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下,这里是我自己的盲点，所以应该是断断续续的。这是第一篇，定要温故而知新 。^_^<br><a id="more"></a></p>
+<ol>
+<li><p>解析url ,window.location.search 是从？向后的部分</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUrlParam</span>(<span class="params">sUrl, sKey</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> search = sUrl.split(<span class="string">"?"</span>)[<span class="number">1</span>].split(<span class="string">"#"</span>)[<span class="number">0</span>];</div><div class="line">    <span class="keyword">var</span> searchArr = search.split(<span class="string">"&amp;"</span>);</div><div class="line">    <span class="keyword">var</span> result=&#123;&#125;;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; searchArr.length; i++) &#123;</div><div class="line">            <span class="keyword">var</span> temp = searchArr[i].split(<span class="string">"="</span>);</div><div class="line">            <span class="keyword">if</span>(temp[<span class="number">0</span>])&#123;</div><div class="line">                 <span class="keyword">if</span>(!result[temp[<span class="number">0</span>]])&#123;</div><div class="line">                     result[temp[<span class="number">0</span>]] =[];</div><div class="line">                 &#125;</div><div class="line">                 result[temp[<span class="number">0</span>]].push(<span class="built_in">decodeURIComponent</span>(temp[<span class="number">1</span>]));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">   <span class="keyword">if</span>(sKey)&#123;</div><div class="line">       <span class="keyword">if</span>(!result[sKey])&#123;</div><div class="line">           result =<span class="string">" "</span>;</div><div class="line">       &#125;<span class="keyword">else</span> <span class="keyword">if</span>(result[sKey].length ==<span class="number">1</span>)&#123;</div><div class="line">           result = result[sKey][<span class="number">0</span>];</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>查询共同的父节点</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">       <span class="function"><span class="keyword">function</span> <span class="title">commonParentNode</span>(<span class="params">oNode1, oNode2</span>) </span>&#123;</div><div class="line">           <span class="keyword">var</span> oNode1Parents = [oNode1];</div><div class="line">           <span class="keyword">var</span> oNode2Parents = [oNode2];</div><div class="line"></div><div class="line">           <span class="keyword">while</span> (oNode1.parentNode) &#123;</div><div class="line">               oNode1Parents.push(oNode1.parentNode);</div><div class="line">               oNode1 = oNode1.parentNode;</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">while</span> (oNode2.parentNode) &#123;</div><div class="line">               oNode2Parents.push(oNode2.parentNode);</div><div class="line">               oNode2 = oNode2.parentNode;</div><div class="line">           &#125;</div><div class="line">           <span class="keyword">var</span> len1 = oNode1Parents.length;</div><div class="line">           <span class="keyword">var</span> len2 = oNode2Parents.length;</div><div class="line">           <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len1; i++) &#123;</div><div class="line">               <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; len2; j++) &#123;</div><div class="line">                   <span class="keyword">if</span> (oNode1Parents[i] == oNode2Parents[j]) &#123;</div><div class="line">                       <span class="keyword">return</span> oNode1Parents[i];</div><div class="line">                   &#125;</div><div class="line">               &#125;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line"><span class="comment">// 更好的方法 node.contains() 方法用来判断一个节点是否是node的后代</span></div><div class="line">       <span class="function"><span class="keyword">function</span> <span class="title">commonParentNode</span>(<span class="params">oNode1, oNode2</span>) </span>&#123;</div><div class="line">           <span class="keyword">if</span> (oNode1.contains(oNode2)) &#123;</div><div class="line">               <span class="keyword">return</span> oNode1;</div><div class="line">           &#125; <span class="keyword">else</span> &#123;</div><div class="line">               <span class="keyword">return</span> commonParentNode(oNode1.parentNode, oNode2);</div><div class="line">           &#125;</div><div class="line">       &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>根据包名，在指定的空间中创建对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">namespace</span>(<span class="params">oNamespace, sPackage</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> packageArr = sPackage.split(<span class="string">'.'</span>);</div><div class="line">    <span class="keyword">var</span> parentNode = oNamespace;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; packageArr.length; i++) &#123;</div><div class="line">        </div><div class="line">        parentNode[packageArr[i]] =<span class="keyword">typeof</span>  parentNode[packageArr[i]] ==<span class="string">'object'</span>? parentNode[packageArr[i]]:&#123;&#125;;</div><div class="line">        parentNode = parentNode[packageArr[i]];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> oNamespace;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>数组去重</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="literal">false</span>, <span class="literal">true</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="number">0</span>, <span class="number">1</span>, &#123;&#125;, &#123;&#125;, <span class="string">'a'</span>, <span class="string">'a'</span>, <span class="literal">NaN</span>];</div><div class="line"><span class="keyword">var</span> result = [<span class="literal">false</span>, <span class="literal">true</span>, <span class="literal">undefined</span>, <span class="literal">null</span>, <span class="literal">NaN</span>, <span class="number">0</span>, <span class="number">1</span>, &#123;&#125;, &#123;&#125;, <span class="string">'a'</span>];</div><div class="line"><span class="built_in">Array</span>.prototype.uniq = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> resArr = [];</div><div class="line">    <span class="keyword">var</span> flag = <span class="literal">true</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</div><div class="line">        <span class="keyword">if</span> (resArr.indexOf(<span class="keyword">this</span>[i]) == <span class="number">-1</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>[i] != <span class="keyword">this</span>[i]) &#123;   <span class="comment">//排除 NaN   </span></div><div class="line">                <span class="keyword">if</span> (flag) &#123;</div><div class="line">                    resArr.push(<span class="keyword">this</span>[i]);</div><div class="line">                    flag = <span class="literal">false</span>;</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                resArr.push(<span class="keyword">this</span>[i]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> resArr;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">Array</span>.prototype.uniq = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.from(<span class="keyword">new</span> <span class="built_in">Map</span>(<span class="keyword">this</span>))</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>判断邮箱格式是否正确</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">isAvailableEmail</span>(<span class="params">sEmail</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> reg = <span class="regexp">/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/</span>;</div><div class="line">    <span class="keyword">return</span> reg.test(sEmail);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>将 rgb 颜色字符串转换为十六进制的形式，如 rgb(255, 255, 255) 转为 #ffffff</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">rgb2hex</span>(<span class="params">sRGB</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> regexp = <span class="regexp">/rgb\((\d+),\s*(\d+),\s*(\d+)\)/</span>;</div><div class="line">    <span class="keyword">var</span> ret = sRGB.match(regexp);</div><div class="line">    <span class="keyword">if</span> (!ret) &#123;</div><div class="line">        <span class="keyword">return</span> sRGB;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">var</span> str = <span class="string">'#'</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= <span class="number">3</span>; i++) &#123;</div><div class="line">            <span class="keyword">var</span> m = <span class="built_in">parseInt</span>(ret[i]);</div><div class="line">            <span class="keyword">if</span> (m &lt;= <span class="number">255</span> &amp;&amp; m &gt;= <span class="number">0</span>) &#123;</div><div class="line">                str += (m &lt; <span class="number">16</span> ? <span class="string">'0'</span> + m.toString(<span class="number">16</span>) : m.toString(<span class="number">16</span>));</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span> sRGB;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">return</span> str;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>parseInt(string,radix),是将string看成是以radix 为基数的字符串，不是转成以radix为基数的数字<br>radix:表示要解析的数字的基数。该值介于 2 ~ 36 之间。<br> 如果省略该参数或其值为 0，则数字将以 10 为基础来解析。如果它以 “0x” 或 “0X” 开头，将以 16为基数。<br> 如果该参数小于 2 或者大于 36，则 parseInt() 将返回 NaN<br> parseInt(‘12px’,10);// 12 按10进制去处理字符串，碰到非数字字符，会将后面的全部无视    </p>
+<blockquote>
+<p>将整型数值以特定基数转换成它的字符串值可以使用 intValue.toString(radix).            </p>
+</blockquote>
+</li>
+<li><p>找出数组中重复出现的元素</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//  方法一 方法二 ： 用object 去计数，方法三：用 数组去计数</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">duplicates</span>(<span class="params">arr</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> result = [];</div><div class="line">    arr.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">elem</span>) </span>&#123;</div><div class="line">        <span class="keyword">if</span> (arr.indexOf(elem) != arr.lastIndexOf(elem) &amp;&amp; result.indexOf(elem) == <span class="number">-1</span>) &#123;</div><div class="line">            result.push(elem);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用闭包，对数组中的每个值执行函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeClosures</span>(<span class="params">arr, fn</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> result =[];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;arr.length;i++)&#123;</div><div class="line">        result[i] =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="keyword">return</span> fn(arr[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>关于arguments</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">        <span class="comment">// 将arguments变成数组</span></div><div class="line">        <span class="built_in">Array</span>.apply(<span class="literal">null</span>,<span class="built_in">arguments</span>);  </div><div class="line">        <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>,<span class="number">0</span>);  </div><div class="line">        <span class="built_in">Array</span>.prototype.splice.call(<span class="built_in">arguments</span>,<span class="number">0</span>,<span class="built_in">arguments</span>.length)</div><div class="line"></div><div class="line">        <span class="comment">// 取arguments的第一个值</span></div><div class="line">        [].push(<span class="built_in">arguments</span>)</div><div class="line"><span class="string">``</span><span class="string">` </span></div><div class="line">11. Curry化是把接受多个参数的函数变换成接收一个单一参数（这个参数就是那个要接收多个参数的函数）的函数</div><div class="line">`<span class="string">``</span>javascript</div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">curryIt</span>(<span class="params">fn</span>) </span>&#123;     </div><div class="line">            <span class="keyword">var</span> n = fn.length;    </div><div class="line">            <span class="keyword">var</span> args = [];   </div><div class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">lx</span> (<span class="params">arg</span>) </span>&#123;</div><div class="line">              </div><div class="line">                args.push(arg);<span class="comment">// 只取一个参数值</span></div><div class="line">                <span class="keyword">if</span> (args.length &lt; n) &#123;</div><div class="line">                    <span class="keyword">return</span> lx;</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">return</span> fn.apply(<span class="literal">null</span>, args);</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>数组与对象的 深拷贝</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> cloneObj = <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> str, newobj = obj.constructor === <span class="built_in">Array</span> ? [] : &#123;&#125;;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> obj !== <span class="string">'object'</span>) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">window</span>.JSON) &#123;</div><div class="line">        str = <span class="built_in">JSON</span>.stringify(obj), <span class="comment">//系列化对象</span></div><div class="line">            newobj = <span class="built_in">JSON</span>.parse(str); <span class="comment">//还原</span></div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> obj) &#123;</div><div class="line">            newobj[i] = <span class="keyword">typeof</span> obj[i] === <span class="string">'object'</span> ?</div><div class="line">                cloneObj(obj[i]) : obj[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> newobj;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>折半查找： 折半查找即二分查找 。使用折半查找的数组必须是对于有序的数组，使用无序的数组是不可以的。 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Search</span>(<span class="params">arrs, findVal</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> low = <span class="number">0</span>, high = arrs.length - <span class="number">1</span>;</div><div class="line">    <span class="keyword">var</span> mid;</div><div class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;</div><div class="line">        mid = <span class="built_in">Math</span>.floor((low + high) / <span class="number">2</span>);</div><div class="line">        <span class="keyword">if</span> (arrs[mid] == findVal) &#123;  <span class="comment">//找到则返回</span></div><div class="line">            <span class="keyword">return</span> mid;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (arrs[mid] &gt; findVal)  <span class="comment">//大于目标，找左边</span></div><div class="line">            high = mid - <span class="number">1</span>;</div><div class="line">        <span class="keyword">else</span>            <span class="comment">//小于目标，找右边</span></div><div class="line">            low = mid + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>折半查找的递归实现</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">binarySearch</span>(<span class="params">arr,findVal,leftIndex,rightIndex</span>) </span>&#123; </div><div class="line">      <span class="keyword">if</span>(leftIndex &gt; rightIndex) &#123; </div><div class="line">          <span class="keyword">return</span> <span class="number">-1</span>; </div><div class="line">      &#125; </div><div class="line">      <span class="keyword">var</span> midIndex = <span class="built_in">Math</span>.floor((leftIndex + rightIndex)/<span class="number">2</span>); </div><div class="line">      <span class="keyword">var</span> midVal = arr[midIndex]; </div><div class="line">      <span class="keyword">if</span>(midVal &gt; findVal) &#123; </div><div class="line">          binarySearch(arr,findVal,leftIndex,midIndex - <span class="number">1</span>); </div><div class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span>(midVal &lt; findVal) &#123; </div><div class="line">          binarySearch(arr,findVal,midIndex+<span class="number">1</span>,rightIndex); </div><div class="line">      &#125; <span class="keyword">else</span> &#123; </div><div class="line">          <span class="keyword">return</span> mid; </div><div class="line">      &#125; </div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>太牛的日期格式转换了。。。。</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">formatDate</span>(<span class="params">t, str</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> obj = &#123;</div><div class="line">        yyyy: t.getFullYear(),</div><div class="line">        yy: (<span class="string">""</span> + t.getFullYear()).slice(<span class="number">-2</span>),</div><div class="line">        M: t.getMonth() + <span class="number">1</span>,</div><div class="line">        MM: (<span class="string">"0"</span> + (t.getMonth() + <span class="number">1</span>)).slice(<span class="number">-2</span>),</div><div class="line">        d: t.getDate(),</div><div class="line">        dd: (<span class="string">"0"</span> + t.getDate()).slice(<span class="number">-2</span>),</div><div class="line">        H: t.getHours(),</div><div class="line">        HH: (<span class="string">"0"</span> + t.getHours()).slice(<span class="number">-2</span>),</div><div class="line">        h: t.getHours() % <span class="number">12</span>,</div><div class="line">        hh: (<span class="string">"0"</span> + t.getHours() % <span class="number">12</span>).slice(<span class="number">-2</span>),</div><div class="line">        m: t.getMinutes(),</div><div class="line">        mm: (<span class="string">"0"</span> + t.getMinutes()).slice(<span class="number">-2</span>),</div><div class="line">        s: t.getSeconds(),</div><div class="line">        ss: (<span class="string">"0"</span> + t.getSeconds()).slice(<span class="number">-2</span>),</div><div class="line">        w: [<span class="string">'日'</span>, <span class="string">'一'</span>, <span class="string">'二'</span>, <span class="string">'三'</span>, <span class="string">'四'</span>, <span class="string">'五'</span>, <span class="string">'六'</span>][t.getDay()]</div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">return</span> str.replace(<span class="regexp">/([a-z]+)/ig</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$1</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> obj[$<span class="number">1</span>]</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> result = formatDate(<span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1409894060000</span>), <span class="string">'yyyy-MM-dd HH:mm:ss 星期w'</span>);</div></pre></td></tr></table></figure>
+<p>关于 <code>new Date()</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>();<span class="comment">// Sun Mar 19 2017 16:00:45 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="keyword">var</span> date1 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">0</span>); <span class="comment">// Thu Jan 01 1970 08:00:00 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="keyword">var</span> date2 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">3000</span>); <span class="comment">// Thu Jan 01 1970 08:00:03 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="keyword">var</span> date3 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1409894060000</span>);<span class="comment">// Fri Sep 05 2014 13:14:20 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="keyword">var</span> date4 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">'Aug 9, 1995'</span>);<span class="comment">// Wed Aug 09 1995 00:00:00 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="keyword">var</span> date5 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1995</span>,<span class="number">11</span>,<span class="number">17</span>);<span class="comment">//Sun Dec 17 1995 00:00:00 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="comment">// 看见没。。。返回的格式都是一样的。</span></div><div class="line"><span class="comment">// 在Date原型上有一些方法，getXX 或者 setXX</span></div></pre></td></tr></table></figure></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/js/">js</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lx15.github.io/2017/03/25/JavaScript盲点---(一)/" data-title="JavaScript盲点记录----(一) | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/03/24/sort/"  title="十种排序算法JavaScript实现">
+ <strong>下一篇：</strong><br/> 
+ <span>十种排序算法JavaScript实现
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/03/25/JavaScript盲点---(一)/" data-title="JavaScript盲点记录----(一)" data-url="http://lx15.github.io/2017/03/25/JavaScript盲点---(一)/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ 
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="https://github.com/Lx15" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/js/" title="js">js<sup>28</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ng/" title="ng">ng<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/util/" title="util">util<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/html5/" title="html5">html5<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/seo/" title="seo">seo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/http/" title="http">http<sup>1</sup></a></li>
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Lx15" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
