@@ -1,0 +1,575 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>JavaScript盲点记录----(二) | Lx15的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下,这里是我自己的盲点，所以应该是断断续续的。这是第二篇，定要温故而知新 。^_^">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript盲点记录----(二)">
+<meta property="og:url" content="http://lx15.github.io/2017/04/01/JavaScript盲点---(二)/index.html">
+<meta property="og:site_name" content="Lx15的博客">
+<meta property="og:description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下,这里是我自己的盲点，所以应该是断断续续的。这是第二篇，定要温故而知新 。^_^">
+<meta property="og:updated_time" content="2017-04-07T08:00:05.507Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript盲点记录----(二)">
+<meta name="twitter:description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下,这里是我自己的盲点，所以应该是断断续续的。这是第二篇，定要温故而知新 。^_^">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15的博客" title="Lx15的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15的博客">Lx15的博客</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lx15.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/04/01/JavaScript盲点---(二)/" title="JavaScript盲点记录----(二)" itemprop="url">JavaScript盲点记录----(二)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2017-03-31T16:00:00.000Z" itemprop="datePublished"> 发表于 2017-04-01</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			
+		
+		</div>
+		
+		<p>最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下,这里是我自己的盲点，所以应该是断断续续的。这是第二篇，定要温故而知新 。^_^</p>
+<a id="more"></a>
+<ol>
+<li><p>动态规划求最长子序列。<br><b>思想:</b><br>动态规划步骤：      </p>
+<blockquote>
+<p>描述最优解的结构<br>递归定义最优解的值<br>按自底向上的方式计算最优解的值<br>由计算出的结果构造一个最优解</p>
+</blockquote>
+<p>对于LCS：   </p>
+<p> if i=0 或者 j=0            c[i][j] = 0<br> if i,j&gt;0 且 xi=yj          c[i][j] = c[i-1,j-1]+1<br> if i,j&gt;0 且 xi!=yj         c[i][j] =max(c[i-1,j],c[i,j-1])</p>
+<p><b>代码:</b></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> UP = <span class="number">0</span>;</div><div class="line"><span class="keyword">const</span> LEFT_UP = <span class="number">1</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">LCS</span>(<span class="params">str1, str2</span>) </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">var</span> l1 = str1.length</div><div class="line">    <span class="keyword">var</span> l2 = str2.length</div><div class="line">    <span class="keyword">var</span> c = [], b = []</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt;= l1; i++) &#123;</div><div class="line">        b[i] = []</div><div class="line">        c[i] = []</div><div class="line">        c[i][<span class="number">0</span>] = <span class="number">0</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt;= l2; j++) &#123;</div><div class="line">        c[<span class="number">0</span>][j] = <span class="number">0</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= l1; i++) &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">1</span>; j &lt;= l2; j++) &#123;</div><div class="line">            <span class="keyword">if</span> (str1[i - <span class="number">1</span>] === str2[j - <span class="number">1</span>]) &#123;  <span class="comment">// 注意取值</span></div><div class="line">                c[i][j] = c[i - <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">1</span></div><div class="line">                b[i][j] = LEFT_UP</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (c[i - <span class="number">1</span>][j] &gt;= c[i][j - <span class="number">1</span>]) &#123;</div><div class="line">                c[i][j] = c[i - <span class="number">1</span>][j]</div><div class="line">                b[i][j] = UP</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                c[i][j] = c[i][j - <span class="number">1</span>]</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        c: c,</div><div class="line">        b: b</div><div class="line">    &#125;;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">printLCS</span>(<span class="params">b, str1, i, j</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (i == <span class="number">0</span> || j == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (b[i][j] == LEFT_UP) &#123;</div><div class="line">        printLCS(b, str1, i - <span class="number">1</span>, j - <span class="number">1</span>)</div><div class="line">        <span class="built_in">console</span>.log(str1[i - <span class="number">1</span>])</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (b[i][j] == UP) &#123;</div><div class="line">        printLCS(b, str1, i - <span class="number">1</span>, j)</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        printLCS(b, str1, i, j - <span class="number">1</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><b>分析:</b><br>LCS 时间复杂度是O(mn)， printLCS 时间复杂度是O(m+n)</p>
+<p>变种题目：给定一个字符串S,可以从中删除一些字符，使得剩下的串是一个回文串，如何删除才能使得回文串最长呢？</p>
+</li>
+<li><p>在一个数的编码中，若任意两个相邻的代码只有一位二进制不同，则这种编码为格雷码，给定一个整数n,请返回n位的格雷码，顺序从0 开始<br><b>思想：</b><br>递归： n4位格雷码是由n-1 位格雷码 生成的。  如n=2 时，格雷码是[00,01,11,10], n=3时，是对n=2 的格雷码首位添加‘0’或‘1’，添加1后应逆序</p>
+<p><b>代码：</b>        </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createGray</span>(<span class="params">n</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> result = [];</div><div class="line">    <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</div><div class="line">        result = [<span class="string">"0"</span>, <span class="string">"1"</span>]</div><div class="line">        <span class="keyword">return</span> result</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">var</span> last_result = createGray(n - <span class="number">1</span>)</div><div class="line">    <span class="keyword">var</span> temp = []</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; last_result.length; i++) &#123;</div><div class="line">        temp.unshift(<span class="string">'1'</span> + last_result[i])</div><div class="line">        result[i] = <span class="string">'0'</span> + last_result[i]</div><div class="line">    &#125;</div><div class="line">    result =  result.concat(temp)</div><div class="line">    <span class="keyword">return</span> result</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>反转一个DOM元素的所有子节点的顺序    </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">reverseChildNodes</span>(<span class="params">node</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> frag = node.ownerDocument.createDocumentFragment()</div><div class="line">    <span class="keyword">while</span>(node.lastChild)&#123;</div><div class="line">      frag.appendChild(node.lastChild)</div><div class="line">    &#125;</div><div class="line">    node.appendChild(frag)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>appendChild()</code>方法不只是可以向document的某节点插入一个手动创建的节点，还可以将document中已经存在的节点移动到所需的插入位置<br><code>DocumentFragments</code>是一些DOM节点，他们不是DOM树的一部分。 通常使用的场景是创建一个文档片段，然后将创建的DOM元素插入到文档片段中，最后把文档片段插入到DOM树中，在DOM树中，文档片段会被替换成它所有的子元素</p>
+</li>
+<li><p>日期格式转换<br>方法一： </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">formatDate</span>(<span class="params">t, str</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> obj = &#123;</div><div class="line">        yyyy: t.getFullYear(),</div><div class="line">        yy: (<span class="string">""</span> + t.getFullYear()).slice(<span class="number">-2</span>),</div><div class="line">        M: t.getMonth() + <span class="number">1</span>,</div><div class="line">        MM: (<span class="string">"0"</span> + (t.getMonth() + <span class="number">1</span>)).slice(<span class="number">-2</span>),</div><div class="line">        d: t.getDate(),</div><div class="line">        dd: (<span class="string">"0"</span> + t.getDate()).slice(<span class="number">-2</span>),</div><div class="line">        H: t.getHours(),</div><div class="line">        HH: (<span class="string">"0"</span> + t.getHours()).slice(<span class="number">-2</span>),</div><div class="line">        h: t.getHours() % <span class="number">12</span>,</div><div class="line">        hh: (<span class="string">"0"</span> + t.getHours() % <span class="number">12</span>).slice(<span class="number">-2</span>),</div><div class="line">        m: t.getMinutes(),</div><div class="line">        mm: (<span class="string">"0"</span> + t.getMinutes()).slice(<span class="number">-2</span>),</div><div class="line">        s: t.getSeconds(),</div><div class="line">        ss: (<span class="string">"0"</span> + t.getSeconds()).slice(<span class="number">-2</span>),</div><div class="line">        w: [<span class="string">'日'</span>, <span class="string">'一'</span>, <span class="string">'二'</span>, <span class="string">'三'</span>, <span class="string">'四'</span>, <span class="string">'五'</span>, <span class="string">'六'</span>][t.getDay()]</div><div class="line">    &#125;;</div><div class="line">    <span class="keyword">return</span> str.replace(<span class="regexp">/([a-z]+)/ig</span>, <span class="function"><span class="keyword">function</span> (<span class="params">$1</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> obj[$<span class="number">1</span>]</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> result = formatDate(<span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1409894060000</span>), <span class="string">'yyyy-MM-dd HH:mm:ss 星期w'</span>);</div></pre></td></tr></table></figure>
+<p>关于 <code>new Date()</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>();<span class="comment">// Sun Mar 19 2017 16:00:45 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="keyword">var</span> date1 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">0</span>); <span class="comment">// Thu Jan 01 1970 08:00:00 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="keyword">var</span> date2 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">3000</span>); <span class="comment">// Thu Jan 01 1970 08:00:03 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="keyword">var</span> date3 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1409894060000</span>);<span class="comment">// Fri Sep 05 2014 13:14:20 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="keyword">var</span> date4 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">'Aug 9, 1995'</span>);<span class="comment">// Wed Aug 09 1995 00:00:00 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="keyword">var</span> date5 = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1995</span>,<span class="number">11</span>,<span class="number">17</span>);<span class="comment">//Sun Dec 17 1995 00:00:00 GMT+0800 (中国标准时间)</span></div><div class="line"><span class="comment">// 看见没。。。返回的格式都是一样的。</span></div><div class="line"><span class="comment">// 在Date原型上有一些方法，getXX 或者 setXX</span></div></pre></td></tr></table></figure>
+<p>方法二：       </p>
+<pre><code class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">formatDate</span>(<span class="params">date, fmt</span>) </span>{
+    <span class="keyword">if</span> (<span class="regexp">/(y+)/</span>.test(fmt)) {
+        fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (date.getFullYear()) + <span class="string">''</span>).substr(<span class="number">4</span> - <span class="built_in">RegExp</span>.$<span class="number">1.</span>length)
+    }
+    <span class="keyword">let</span> o = {
+        <span class="string">'M+'</span>: date.getMonth() + <span class="number">1</span>,
+        <span class="string">'d+'</span>: date.getDate(),
+        <span class="string">'h+'</span>: date.getHours(),
+        <span class="string">'m+'</span>: date.getMinutes(),
+        <span class="string">'s+'</span>: date.getSeconds()
+    }
+    <span class="keyword">for</span> (<span class="keyword">let</span> k <span class="keyword">in</span> o) {
+        <span class="keyword">if</span> (<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">`(<span class="subst">${k}</span>)`</span>).test(fmt)) {
+            <span class="keyword">let</span> str = o[k] + <span class="string">''</span>
+            fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>, (<span class="built_in">RegExp</span>.$<span class="number">1.</span>length === <span class="number">1</span>) ? str : padLeftZero(str))
+        }
+    }
+    <span class="keyword">return</span> fmt
+}
+
+<span class="function"><span class="keyword">function</span> <span class="title">padLeftZero</span>(<span class="params">str</span>) </span>{
+    <span class="keyword">return</span> (<span class="string">'00'</span> + str).substr(str.length)
+}
+</code></pre>
+</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/js/">js</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lx15.github.io/2017/04/01/JavaScript盲点---(二)/" data-title="JavaScript盲点记录----(二) | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/04/07/css-sticky-footers/" title="CSS Sticky footers 三种解决方案">
+  <strong>上一篇：</strong><br/>
+  <span>
+  CSS Sticky footers 三种解决方案</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/03/26/https_SPDY/"  title="HTTP1.x VS HTTPS VS SPDY VS HTTP2.0">
+ <strong>下一篇：</strong><br/> 
+ <span>HTTP1.x VS HTTPS VS SPDY VS HTTP2.0
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/04/01/JavaScript盲点---(二)/" data-title="JavaScript盲点记录----(二)" data-url="http://lx15.github.io/2017/04/01/JavaScript盲点---(二)/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ 
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="https://github.com/Lx15" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/js/" title="js">js<sup>30</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ng/" title="ng">ng<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/http/" title="http">http<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/html5/" title="html5">html5<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/util/" title="util">util<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/seo/" title="seo">seo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Lx15" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
