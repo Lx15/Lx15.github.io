@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>IFE任务练习笔记(二) | Lx15的博客</title>
+    <title>IFE任务练习笔记(二)---居中问题 | Lx15的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lx15">
@@ -13,13 +13,13 @@
     
     <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记之二。这里主要是css中的水平和垂直的的居中问题。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IFE任务练习笔记(二)">
+<meta property="og:title" content="IFE任务练习笔记(二)---居中问题">
 <meta property="og:url" content="http://lx15.github.io/2016/09/15/IFE笔记(二)/index.html">
 <meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记之二。这里主要是css中的水平和垂直的的居中问题。">
-<meta property="og:updated_time" content="2016-10-28T09:22:32.928Z">
+<meta property="og:updated_time" content="2017-04-22T12:46:55.065Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IFE任务练习笔记(二)">
+<meta name="twitter:title" content="IFE任务练习笔记(二)---居中问题">
 <meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;这里记录的是在练习百度的2016IFE任务时的笔记之二。这里主要是css中的水平和垂直的的居中问题。">
 
     
@@ -78,7 +78,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/09/15/IFE笔记(二)/" title="IFE任务练习笔记(二)" itemprop="url">IFE任务练习笔记(二)</a>
+      <a href="/2016/09/15/IFE笔记(二)/" title="IFE任务练习笔记(二)---居中问题" itemprop="url">IFE任务练习笔记(二)---居中问题</a>
   </h1>
   <p class="article-author">By
        
@@ -94,51 +94,62 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#水平居中"><span class="toc-number">1.</span> <span class="toc-text">水平居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是inline-或者-inline-元素"><span class="toc-number">1.1.</span> <span class="toc-text">子元素是inline 或者 inline-* 元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是block元"><span class="toc-number">1.2.</span> <span class="toc-text">子元素是block元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是多个block-元素"><span class="toc-number">1.3.</span> <span class="toc-text">子元素是多个block 元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#垂直居中"><span class="toc-number">2.</span> <span class="toc-text">垂直居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是像text或links-的inline-或-inline-单个元素"><span class="toc-number">2.1.</span> <span class="toc-text">子元素是像text或links 的inline 或 inline-* 单个元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是像text或links-的inline-或-inline-多行元素"><span class="toc-number">2.2.</span> <span class="toc-text">子元素是像text或links 的inline 或 inline-* 多行元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是一个块级元素"><span class="toc-number">2.3.</span> <span class="toc-text">子元素是一个块级元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用flex"><span class="toc-number">2.4.</span> <span class="toc-text">使用flex</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#既有水平居中又有垂直居中"><span class="toc-number">3.</span> <span class="toc-text">既有水平居中又有垂直居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素有固定的宽和高"><span class="toc-number">3.1.</span> <span class="toc-text">子元素有固定的宽和高</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素有未知的宽和高"><span class="toc-number">3.2.</span> <span class="toc-text">子元素有未知的宽和高</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用flex-1"><span class="toc-number">3.3.</span> <span class="toc-text">使用flex</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#水平居中"><span class="toc-number">1.</span> <span class="toc-text">水平居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是inline-或者-inline-元素"><span class="toc-number">1.1.</span> <span class="toc-text">子元素是inline 或者 inline-* 元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是block元素"><span class="toc-number">1.2.</span> <span class="toc-text">子元素是block元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是多个block-元素"><span class="toc-number">1.3.</span> <span class="toc-text">子元素是多个block 元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#垂直居中"><span class="toc-number">2.</span> <span class="toc-text">垂直居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是像text或links-的inline-或-inline-单个元素"><span class="toc-number">2.1.</span> <span class="toc-text">子元素是像text或links 的inline 或 inline-* 单个元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是像text或links-的inline-或-inline-多行元素"><span class="toc-number">2.2.</span> <span class="toc-text">子元素是像text或links 的inline 或 inline-* 多行元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是一个块级元素"><span class="toc-number">2.3.</span> <span class="toc-text">子元素是一个块级元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#既有水平居中又有垂直居中"><span class="toc-number">3.</span> <span class="toc-text">既有水平居中又有垂直居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素有固定的宽和高"><span class="toc-number">3.1.</span> <span class="toc-text">子元素有固定的宽和高</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素有未知的宽和高"><span class="toc-number">3.2.</span> <span class="toc-text">子元素有未知的宽和高</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用flex"><span class="toc-number">3.3.</span> <span class="toc-text">使用flex</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#翻译文献"><span class="toc-number">4.</span> <span class="toc-text">翻译文献</span></a></li></ol>
 		
 		</div>
 		
 		<p>&nbsp;&nbsp;&nbsp;&nbsp;这里记录的是在练习百度的2016IFE任务时的笔记之二。这里主要是css中的水平和垂直的的居中问题。<br><a id="more"></a></p>
-<p>这篇文章我是看<a href="https://css-tricks.com/centering-css-complete-guide/#center-horizontally" target="_blank" rel="external">this</a>的文章进行总结的。</p>
+<p>这篇文章是我对<a href="https://css-tricks.com/centering-css-complete-guide/#center-horizontally" target="_blank" rel="external">this</a>的翻译。</p>
 <h2 id="水平居中"><a href="#水平居中" class="headerlink" title="水平居中"></a>水平居中</h2><h3 id="子元素是inline-或者-inline-元素"><a href="#子元素是inline-或者-inline-元素" class="headerlink" title="子元素是inline 或者 inline-* 元素"></a>子元素是inline 或者 inline-* 元素</h3><p>  在父元素上使用 text-align:center;</p>
-<h3 id="子元素是block元"><a href="#子元素是block元" class="headerlink" title="子元素是block元"></a>子元素是block元</h3><p>  用margin:0 auto 外加 block 的宽度</p>
-<h3 id="子元素是多个block-元素"><a href="#子元素是多个block-元素" class="headerlink" title="子元素是多个block 元素"></a>子元素是多个block 元素</h3><p>  将子元素变成inline-block形式，并在父元素上使用text-align:center;</p>
-<h2 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h2><h3 id="子元素是像text或links-的inline-或-inline-单个元素"><a href="#子元素是像text或links-的inline-或-inline-单个元素" class="headerlink" title="子元素是像text或links 的inline 或 inline-* 单个元素"></a>子元素是像text或links 的inline 或 inline-* 单个元素</h3><p>  设置子元素的padding-top 与padding-bottom<br>  若不能使用padding，可以在父元素上面使用</p>
-<pre><code>{
-   height：100;
-   line-height:100px;
-   white-space:nowrap;  
-}
-</code></pre><p>  即使子元素的行高等于父元素的高度，这样自然就居中了。</p>
-<h3 id="子元素是像text或links-的inline-或-inline-多行元素"><a href="#子元素是像text或links-的inline-或-inline-多行元素" class="headerlink" title="子元素是像text或links 的inline 或 inline-* 多行元素"></a>子元素是像text或links 的inline 或 inline-* 多行元素</h3><p>  可以使用padding-top 或者padding-bootom但当元素在table cell 中时，是不管用的，这时可以用vertical-align.<br>  这里使用flex 也是很好的。关于flex，之后详细看看。<br>  当以上方法都不可用时，可以使用伪元素</p>
-<pre><code>.parent{
-    relative
-}
-.parent ::before{
-    content:&quot;&quot;,
-    display:inline-block;
-    height: 100%;
-    width:1%;
-    vertivcal-align:middle;
-}
-.child{
-    display:inline-block;
-    vertical-align : middle;
-}
-</code></pre><h3 id="子元素是一个块级元素"><a href="#子元素是一个块级元素" class="headerlink" title="子元素是一个块级元素"></a>子元素是一个块级元素</h3><ul>
+<h3 id="子元素是block元素"><a href="#子元素是block元素" class="headerlink" title="子元素是block元素"></a>子元素是block元素</h3><p>  用margin:0 auto 外加 block 的宽度</p>
+<h3 id="子元素是多个block-元素"><a href="#子元素是多个block-元素" class="headerlink" title="子元素是多个block 元素"></a>子元素是多个block 元素</h3><ol>
+<li>将子元素变成inline-block形式，并在父元素上使用text-align:center;</li>
+<li>flex <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span>&#123;</div><div class="line">    <span class="attribute">display</span>: flex ;</div><div class="line">    <span class="attribute">justify-content</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="垂直居中"><a href="#垂直居中" class="headerlink" title="垂直居中"></a>垂直居中</h2><h3 id="子元素是像text或links-的inline-或-inline-单个元素"><a href="#子元素是像text或links-的inline-或-inline-单个元素" class="headerlink" title="子元素是像text或links 的inline 或 inline-* 单个元素"></a>子元素是像text或links 的inline 或 inline-* 单个元素</h3><ol>
+<li><p>设置子元素的padding-top 与padding-bottom</p>
+</li>
+<li><p>若不能使用padding，可以在父元素上面使用<code>line-height</code>属性</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">.parent &#123;</div><div class="line">     height：100px;</div><div class="line">     line-height:100px;</div><div class="line">     white-space:nowrap;  </div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>即使子元素的行高等于父元素的高度，这样自然就居中了。</p>
+</li>
+</ol>
+<h3 id="子元素是像text或links-的inline-或-inline-多行元素"><a href="#子元素是像text或links-的inline-或-inline-多行元素" class="headerlink" title="子元素是像text或links 的inline 或 inline-* 多行元素"></a>子元素是像text或links 的inline 或 inline-* 多行元素</h3><ol>
+<li>可以使用padding-top 或者padding-bootom但当元素在table cell 中时，是不管用的，这时可以用vertical-align.<br>demo1: <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">table</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">tr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">td</span>&gt;</span></div><div class="line">    I'm vertically centered multiple lines of text in a real table cell.</div><div class="line">    <span class="tag">&lt;/<span class="name">td</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">table</span> &#123;</div><div class="line"><span class="attribute">margin</span>: <span class="number">20px</span>;</div><div class="line"><span class="attribute">height</span>: <span class="number">250px</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123;</div><div class="line"><span class="attribute">padding</span>: <span class="number">20px</span>;</div><div class="line"><span class="comment">/* default is vertical-align: middle; */</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>demo2:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"center-table"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>I'm vertically centered multiple lines of text in a CSS-created table layout.<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.center-table</span> &#123;</div><div class="line"><span class="attribute">display</span>: table;</div><div class="line"><span class="attribute">height</span>: <span class="number">250px</span>;</div><div class="line"><span class="attribute">width</span>: <span class="number">240px</span>;</div><div class="line"><span class="attribute">margin</span>: <span class="number">20px</span>;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.center-table</span> <span class="selector-tag">p</span> &#123;</div><div class="line"><span class="attribute">display</span>: table-cell;</div><div class="line"><span class="attribute">margin</span>: <span class="number">0</span>;</div><div class="line"><span class="attribute">padding</span>: <span class="number">20px</span>;</div><div class="line"><span class="attribute">vertical-align</span>: middle;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li><p>flex </p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span>&#123;</div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">    <span class="attribute">flex-direction</span>: column;</div><div class="line">    <span class="attribute">justify-content</span>: center;</div><div class="line">    <span class="attribute">height</span>:<span class="number">200px</span>;<span class="comment">/*设置父容器高度才可以有相对值进行定位*/</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用伪元素：将一个全部高度的伪元素放在父容器中，将显示的高度进行inline-block,并使用vertical进行对齐</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">.parent&#123;</div><div class="line">    relative</div><div class="line">&#125;</div><div class="line">.parent ::before&#123;</div><div class="line">    content:"",</div><div class="line">    display:inline-block;</div><div class="line">    height: 100%;</div><div class="line">    width:1%;</div><div class="line">    vertivcal-align:middle;</div><div class="line">&#125;</div><div class="line">.child&#123;</div><div class="line">    display:inline-block;</div><div class="line">    vertical-align : middle;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="子元素是一个块级元素"><a href="#子元素是一个块级元素" class="headerlink" title="子元素是一个块级元素"></a>子元素是一个块级元素</h3><ol>
 <li><p>知道子元素的高度</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">.parent &#123;</div><div class="line">    position:relative;</div><div class="line">&#125;</div><div class="line">.child &#123;</div><div class="line">    position:absolute;</div><div class="line">    top:50%;</div><div class="line">    height:100px;</div><div class="line">    padding:20px;</div><div class="line">    margin-top：-70px;// 50+20  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>不知道子元素的高度</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">position</span>:relative;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.child</span>  &#123;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">top</span>:<span class="number">50%</span>;</div><div class="line">    <span class="attribute">transform </span>: <span class="built_in">translateY</span>(-50%);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
-</ul>
-<h3 id="使用flex"><a href="#使用flex" class="headerlink" title="使用flex"></a>使用flex</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">    <span class="attribute">flex-direction</span>: column;</div><div class="line">    <span class="attribute">justify-content</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="既有水平居中又有垂直居中"><a href="#既有水平居中又有垂直居中" class="headerlink" title="既有水平居中又有垂直居中"></a>既有水平居中又有垂直居中</h2><h3 id="子元素有固定的宽和高"><a href="#子元素有固定的宽和高" class="headerlink" title="子元素有固定的宽和高"></a>子元素有固定的宽和高</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">  <span class="selector-class">.parent</span>&#123;</div><div class="line">    <span class="attribute">position</span>:relative;</div><div class="line">  &#125;</div><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">padding</span>: <span class="number">20px</span>;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">margin</span>: -<span class="number">70px</span> <span class="number">0</span> <span class="number">0</span> -<span class="number">170px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="子元素有未知的宽和高"><a href="#子元素有未知的宽和高" class="headerlink" title="子元素有未知的宽和高"></a>子元素有未知的宽和高</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%, -50%);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="使用flex-1"><a href="#使用flex-1" class="headerlink" title="使用flex"></a>使用flex</h3><p>  是时候好好学学使用flex了<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">  <span class="attribute">display</span>: flex;</div><div class="line">  <span class="attribute">justify-content</span>: center;</div><div class="line">  <span class="attribute">align-items</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><pre><code>GAME　OVER  !!!
-</code></pre>  
+<li><p>使用flex</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">    <span class="attribute">display</span>: flex;</div><div class="line">    <span class="attribute">flex-direction</span>: column;</div><div class="line">    <span class="attribute">justify-content</span>: center;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="既有水平居中又有垂直居中"><a href="#既有水平居中又有垂直居中" class="headerlink" title="既有水平居中又有垂直居中"></a>既有水平居中又有垂直居中</h2><h3 id="子元素有固定的宽和高"><a href="#子元素有固定的宽和高" class="headerlink" title="子元素有固定的宽和高"></a>子元素有固定的宽和高</h3><p>较好的兼容性方法： 将元素50%、50% 进行absolute 定位之后，使得margin为负的宽高值的一半</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">  <span class="selector-class">.parent</span>&#123;</div><div class="line">    <span class="attribute">position</span>:relative;</div><div class="line">  &#125;</div><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">    <span class="attribute">width</span>: <span class="number">300px</span>;</div><div class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</div><div class="line">    <span class="attribute">padding</span>: <span class="number">20px</span>;</div><div class="line">    <span class="attribute">position</span>: absolute;</div><div class="line">    <span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">    <span class="attribute">margin</span>: -<span class="number">70px</span> <span class="number">0</span> <span class="number">0</span> -<span class="number">170px</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="子元素有未知的宽和高"><a href="#子元素有未知的宽和高" class="headerlink" title="子元素有未知的宽和高"></a>子元素有未知的宽和高</h3><p>将元素50%、50% 进行absolute 定位之后，使用tansform的translate属性 来根据元素的宽高的一半进行设置</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">  <span class="attribute">position</span>: relative;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.child</span> &#123;</div><div class="line">  <span class="attribute">position</span>: absolute;</div><div class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</div><div class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</div><div class="line">  <span class="attribute">transform</span>: <span class="built_in">translate</span>(-50%, -50%);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用flex"><a href="#使用flex" class="headerlink" title="使用flex"></a>使用flex</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.parent</span> &#123;</div><div class="line">  <span class="attribute">display</span>: flex;</div><div class="line">  <span class="attribute">justify-content</span>: center;</div><div class="line">  <span class="attribute">align-items</span>: center;<span class="comment">/*设置交叉轴对齐方式，可以垂直移动主轴*/</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="翻译文献"><a href="#翻译文献" class="headerlink" title="翻译文献"></a>翻译文献</h2><ol>
+<li><a href="https://css-tricks.com/centering-css-complete-guide/#center-horizontally" target="_blank" rel="external">Centering in CSS: A Complete Guide</a></li>
+</ol>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -155,7 +166,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://lx15.github.io/2016/09/15/IFE笔记(二)/" data-title="IFE任务练习笔记(二) | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://lx15.github.io/2016/09/15/IFE笔记(二)/" data-title="IFE任务练习笔记(二)---居中问题 | Lx15的博客" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -189,7 +200,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/09/15/IFE笔记(二)/" data-title="IFE任务练习笔记(二)" data-url="http://lx15.github.io/2016/09/15/IFE笔记(二)/"></div>
+	<div class="ds-thread" data-thread-key="2016/09/15/IFE笔记(二)/" data-title="IFE任务练习笔记(二)---居中问题" data-url="http://lx15.github.io/2016/09/15/IFE笔记(二)/"></div>
 </section>
 
 
@@ -199,7 +210,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#水平居中"><span class="toc-number">1.</span> <span class="toc-text">水平居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是inline-或者-inline-元素"><span class="toc-number">1.1.</span> <span class="toc-text">子元素是inline 或者 inline-* 元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是block元"><span class="toc-number">1.2.</span> <span class="toc-text">子元素是block元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是多个block-元素"><span class="toc-number">1.3.</span> <span class="toc-text">子元素是多个block 元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#垂直居中"><span class="toc-number">2.</span> <span class="toc-text">垂直居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是像text或links-的inline-或-inline-单个元素"><span class="toc-number">2.1.</span> <span class="toc-text">子元素是像text或links 的inline 或 inline-* 单个元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是像text或links-的inline-或-inline-多行元素"><span class="toc-number">2.2.</span> <span class="toc-text">子元素是像text或links 的inline 或 inline-* 多行元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是一个块级元素"><span class="toc-number">2.3.</span> <span class="toc-text">子元素是一个块级元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用flex"><span class="toc-number">2.4.</span> <span class="toc-text">使用flex</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#既有水平居中又有垂直居中"><span class="toc-number">3.</span> <span class="toc-text">既有水平居中又有垂直居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素有固定的宽和高"><span class="toc-number">3.1.</span> <span class="toc-text">子元素有固定的宽和高</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素有未知的宽和高"><span class="toc-number">3.2.</span> <span class="toc-text">子元素有未知的宽和高</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用flex-1"><span class="toc-number">3.3.</span> <span class="toc-text">使用flex</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#水平居中"><span class="toc-number">1.</span> <span class="toc-text">水平居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是inline-或者-inline-元素"><span class="toc-number">1.1.</span> <span class="toc-text">子元素是inline 或者 inline-* 元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是block元素"><span class="toc-number">1.2.</span> <span class="toc-text">子元素是block元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是多个block-元素"><span class="toc-number">1.3.</span> <span class="toc-text">子元素是多个block 元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#垂直居中"><span class="toc-number">2.</span> <span class="toc-text">垂直居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是像text或links-的inline-或-inline-单个元素"><span class="toc-number">2.1.</span> <span class="toc-text">子元素是像text或links 的inline 或 inline-* 单个元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是像text或links-的inline-或-inline-多行元素"><span class="toc-number">2.2.</span> <span class="toc-text">子元素是像text或links 的inline 或 inline-* 多行元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素是一个块级元素"><span class="toc-number">2.3.</span> <span class="toc-text">子元素是一个块级元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#既有水平居中又有垂直居中"><span class="toc-number">3.</span> <span class="toc-text">既有水平居中又有垂直居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素有固定的宽和高"><span class="toc-number">3.1.</span> <span class="toc-text">子元素有固定的宽和高</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#子元素有未知的宽和高"><span class="toc-number">3.2.</span> <span class="toc-text">子元素有未知的宽和高</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用flex"><span class="toc-number">3.3.</span> <span class="toc-text">使用flex</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#翻译文献"><span class="toc-number">4.</span> <span class="toc-text">翻译文献</span></a></li></ol>
  
   </div>
 
@@ -225,7 +236,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/js/" title="js">js<sup>30</sup></a></li>
+				<li><a href="/tags/js/" title="js">js<sup>33</sup></a></li>
 			
 		
 			
@@ -237,15 +248,7 @@
 			
 		
 			
-				<li><a href="/tags/http/" title="http">http<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+				<li><a href="/tags/网络/" title="网络">网络<sup>3</sup></a></li>
 			
 		
 			
@@ -257,11 +260,19 @@
 			
 		
 			
-				<li><a href="/tags/util/" title="util">util<sup>2</sup></a></li>
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/http/" title="http">http<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
 			
 		
 			
@@ -281,15 +292,15 @@
 			
 		
 			
-				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+				<li><a href="/tags/util/" title="util">util<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
+				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
 			
 		
 			
@@ -297,9 +308,11 @@
 			
 		
 			
-				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 		</ul>

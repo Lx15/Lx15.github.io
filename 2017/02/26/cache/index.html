@@ -14,14 +14,14 @@
     <meta name="description" content="浏览器缓存这个问题也是我心心念念了很久的一个问题，这个问题和Cookie、Session一样是涉及到后端的一个问题，所以颤颤巍巍的祭出我刚学不久的Node和Express，来个实践终归记忆更深刻。若是发现我有错误出现，多谢留言指正哈 ^^">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浏览器缓存与Express简单实现">
-<meta property="og:url" content="http://lx15.github.io/2017/02/26/浏览器缓存/index.html">
+<meta property="og:url" content="http://lx15.github.io/2017/02/26/cache/index.html">
 <meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="浏览器缓存这个问题也是我心心念念了很久的一个问题，这个问题和Cookie、Session一样是涉及到后端的一个问题，所以颤颤巍巍的祭出我刚学不久的Node和Express，来个实践终归记忆更深刻。若是发现我有错误出现，多谢留言指正哈 ^^">
 <meta property="og:image" content="http://lx15.github.io/staticNoSet.jpg">
 <meta property="og:image" content="http://lx15.github.io/urlResend.jpg">
 <meta property="og:image" content="http://lx15.github.io/staticWithSet-1.jpg">
 <meta property="og:image" content="http://lx15.github.io/staticWithSet-2.jpg">
-<meta property="og:updated_time" content="2017-02-27T02:23:04.376Z">
+<meta property="og:updated_time" content="2017-04-15T12:49:23.008Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浏览器缓存与Express简单实现">
 <meta name="twitter:description" content="浏览器缓存这个问题也是我心心念念了很久的一个问题，这个问题和Cookie、Session一样是涉及到后端的一个问题，所以颤颤巍巍的祭出我刚学不久的Node和Express，来个实践终归记忆更深刻。若是发现我有错误出现，多谢留言指正哈 ^^">
@@ -83,7 +83,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/26/浏览器缓存/" title="浏览器缓存与Express简单实现" itemprop="url">浏览器缓存与Express简单实现</a>
+      <a href="/2017/02/26/cache/" title="浏览器缓存与Express简单实现" itemprop="url">浏览器缓存与Express简单实现</a>
   </h1>
   <p class="article-author">By
        
@@ -113,7 +113,7 @@
 <p> <code>Pragma</code>禁止浏览器从本地的缓存中获取页面内容。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Pragma"</span> <span class="attr">Content</span>=<span class="string">"No-cache"</span> /&gt;</span></div></pre></td></tr></table></figure>
 <h2 id="HTTP缓存"><a href="#HTTP缓存" class="headerlink" title="HTTP缓存"></a>HTTP缓存</h2><p>  除了上面那种情况外剩下的就是通过设置HTTP的头部字段进行浏览器缓存了。。。。     </p>
-<p>浏览器在发出请求后，后端服务器收到响应时可以在响应的首部字段添加请求数据的有效时间，也就是保质期，浏览器将请求到的数据进行存储，下次请求的时候呢和这个有效时间进行对比，若是没有超过保质期则可以直接将存储的数据返回，这就达到了浏览器的缓存效果。</p>
+<p>浏览器在发出请求后，后端服务器收到请求时可以在响应的首部字段添加请求数据的有效时间，也就是保质期，浏览器将请求到的数据进行存储，下次请求的时候呢和这个有效时间进行对比，若是没有超过保质期则可以直接将存储的数据返回，这就达到了浏览器的缓存效果。</p>
 <p>但若是超出了保质期，浏览器就需要将请求发送到服务器后端，但是这个时候也会出现服务器端的数据是没有变化的，也就服务器端的数据和浏览器中的副本是一样的，若是再次将服务器中的数据进行发送又会浪费带宽，所以呢这个时候就产生了两种方式来避免这种就是过了保质期但是实际数据还可以用的情况。</p>
 <p>一种方法是 ：在上一次在服务器告诉客户端保质期时，同时也在响应头部添加<code>最后修改时间</code>,当浏览器发现超过了保质期，再次发送请求时就核对一下和服务器端数据的最后修改时间，若是时间一致，则可读取缓存副本，否则，直接从服务器端读取数据。</p>
 <p>另一种方法是： 在上一次服务端告诉客户端保质期的同时，同时也在响应头部添加<code>版本号</code>，当服务器端数据更改的时候，版本号就会发生变化，当浏览器发现副本数据超过了保质期再次向服务器发送请求时就会先对比一下版本号，若是一致，则可以直接读取缓存，否则，直接从服务器端读取数据。</p>
@@ -180,7 +180,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://lx15.github.io/2017/02/26/浏览器缓存/" data-title="浏览器缓存与Express简单实现 | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://lx15.github.io/2017/02/26/cache/" data-title="浏览器缓存与Express简单实现 | Lx15的博客" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -214,7 +214,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2017/02/26/浏览器缓存/" data-title="浏览器缓存与Express简单实现" data-url="http://lx15.github.io/2017/02/26/浏览器缓存/"></div>
+	<div class="ds-thread" data-thread-key="2017/02/26/cache/" data-title="浏览器缓存与Express简单实现" data-url="http://lx15.github.io/2017/02/26/cache/"></div>
 </section>
 
 
@@ -250,7 +250,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/js/" title="js">js<sup>30</sup></a></li>
+				<li><a href="/tags/js/" title="js">js<sup>33</sup></a></li>
 			
 		
 			
@@ -262,15 +262,7 @@
 			
 		
 			
-				<li><a href="/tags/http/" title="http">http<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+				<li><a href="/tags/网络/" title="网络">网络<sup>3</sup></a></li>
 			
 		
 			
@@ -282,11 +274,19 @@
 			
 		
 			
-				<li><a href="/tags/util/" title="util">util<sup>2</sup></a></li>
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/http/" title="http">http<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
 			
 		
 			
@@ -306,15 +306,15 @@
 			
 		
 			
-				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+				<li><a href="/tags/util/" title="util">util<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
+				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
 			
 		
 			
@@ -322,9 +322,11 @@
 			
 		
 			
-				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 		</ul>

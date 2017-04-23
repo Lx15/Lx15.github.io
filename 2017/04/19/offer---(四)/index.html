@@ -1,0 +1,547 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>JavaScript盲点记录----(四) | Lx15的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下。这是第四篇，定要温故而知新 。^_^">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript盲点记录----(四)">
+<meta property="og:url" content="http://lx15.github.io/2017/04/19/offer---(四)/index.html">
+<meta property="og:site_name" content="Lx15的博客">
+<meta property="og:description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下。这是第四篇，定要温故而知新 。^_^">
+<meta property="og:updated_time" content="2017-04-23T03:37:58.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript盲点记录----(四)">
+<meta name="twitter:description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下。这是第四篇，定要温故而知新 。^_^">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15的博客" title="Lx15的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15的博客">Lx15的博客</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lx15.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/04/19/offer---(四)/" title="JavaScript盲点记录----(四)" itemprop="url">JavaScript盲点记录----(四)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2017-04-18T16:00:00.000Z" itemprop="datePublished"> 发表于 2017-04-19</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安全的类型检测"><span class="toc-number">1.</span> <span class="toc-text">安全的类型检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作用域安全的构造函数"><span class="toc-number">2.</span> <span class="toc-text">作用域安全的构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#惰性载入函数"><span class="toc-number">3.</span> <span class="toc-text">惰性载入函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防篡改对象"><span class="toc-number">4.</span> <span class="toc-text">防篡改对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON-stringify-和-JSON-parse"><span class="toc-number">5.</span> <span class="toc-text">JSON.stringify 和 JSON.parse</span></a></li></ol>
+		
+		</div>
+		
+		<p>最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下。这是第四篇，定要温故而知新 。^_^</p>
+<a id="more"></a>
+<h3 id="安全的类型检测"><a href="#安全的类型检测" class="headerlink" title="安全的类型检测"></a>安全的类型检测</h3><p>最安全的方法<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">isType(param,type)&#123;</div><div class="line"> <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(param) === <span class="string">'[object '</span>+type+<span class="string">']'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>也可以用这种方法来检测是否是原生的JSON<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">isNativeJSON = <span class="built_in">window</span>.JSON &amp;&amp; <span class="built_in">Object</span>.prototype.toString.call(<span class="built_in">JSON</span>) === <span class="string">'[object JSON]'</span></div></pre></td></tr></table></figure></p>
+<h3 id="作用域安全的构造函数"><a href="#作用域安全的构造函数" class="headerlink" title="作用域安全的构造函数"></a>作用域安全的构造函数</h3><p>当使用构造函数创建实例时若是没有使用new关键字，则会使得this指向window对象，会意外给window 对象增改属性。<br>改进： 增加this的类型检测<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">this</span> <span class="keyword">instanceof</span> Person)&#123;</div><div class="line">        <span class="keyword">this</span>.name = name</div><div class="line">        <span class="keyword">this</span>.age = age </div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Person(name,age)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>但是这种情况在只使用构造函数进行继承时会出现错误。 如以下的例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">this</span> <span class="keyword">instanceof</span> Person)&#123;</div><div class="line">        <span class="keyword">this</span>.name = name</div><div class="line">        <span class="keyword">this</span>.age = age </div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Person(name,age)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">sex,name,age</span>)</span>&#123;</div><div class="line">  Person.apply(<span class="keyword">this</span>,name,age)</div><div class="line">  <span class="keyword">this</span>.sex = sex</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这时如果使用Student去创建实例，则会只有sex 属性和一个person的实例</p>
+<p>改进二： 使用继承来解决上述问题<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">this</span> <span class="keyword">instanceof</span> Person)&#123;</div><div class="line">        <span class="keyword">this</span>.name = name</div><div class="line">        <span class="keyword">this</span>.age = age </div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Person(name,age)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">sex,name,age</span>)</span>&#123;</div><div class="line">  Person.apply(<span class="keyword">this</span>,name,age)</div><div class="line">  <span class="keyword">this</span>.sex = sex</div><div class="line">&#125;</div><div class="line">Student.prototype = <span class="keyword">new</span> Person()</div></pre></td></tr></table></figure></p>
+<h3 id="惰性载入函数"><a href="#惰性载入函数" class="headerlink" title="惰性载入函数"></a>惰性载入函数</h3><p>惰性载入即当有一个方法中有多个if 时并且只是进行一些检测之后就只执行其中的一个分支的情况。这种最常见的就是浏览器的类型检测如 在创建XMLHttpRequest 对象时。对于这种经检测只执行其中的一个分支的情况，有两种优化方式：         </p>
+<p>方法一： 在函数在第一次调用的过程中，该函数会被覆盖为另外一个按合适方式运行的函数。如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">function</span> <span class="title">createXHR</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> XMLHttpRequest !== <span class="string">'undefined'</span>) &#123;</div><div class="line">        createXHR = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> XMLHttpRequest()</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> ActiveObject !== <span class="string">'undefined'</span>) &#123;</div><div class="line">        createXHR = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ActiveObject(<span class="string">'Microsoft.XMLHTTP'</span>);</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'NO XHR object Available'</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> createXHR() <span class="comment">// important</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>方法二： 使用IIFE — 在声明函数时就指定适当的函数。这种情况下第一次调用函数不会损失性能，而在代码首次加载时会损失一点性能</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> createXHR = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> XMLHttpRequest !== <span class="string">'undefined'</span>) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">new</span> XMLHttpRequest()</div><div class="line">      &#125;</div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> ActiveObject !== <span class="string">'undefined'</span>) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">new</span> ActiveObject(<span class="string">'Microsoft.XMLHTTP'</span>);</div><div class="line">      &#125;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'No XHR Object available'</span>)</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line"> &#125;)()</div></pre></td></tr></table></figure>
+<h3 id="防篡改对象"><a href="#防篡改对象" class="headerlink" title="防篡改对象"></a>防篡改对象</h3><p>定义防篡改对象是为了防止代码无意被修改，但是需注意的是 一旦把对象定义为防篡改，就无法撤销了。<br>首先是关于对象的属性的属性描述符。对于对象的属性 可以使用Object.defineProperty(对象名，属性名)获取到，共有 value、writable、enumerable和configurable四种属性值。只有configurable是true时，才可以使用defineProperty()来修改属性描述符，并且configurable修改成false是单向的，不能修改回去。</p>
+<p>设置防篡改对象可以使用下面四种方法：<br>方法一：使用 writable:false configurable:false 来创建 不可修改、不可重定义、不可删除的 常量属性</p>
+<p>方法二：使用Object.preventExtensions(对象名)来禁止一个对象添加新属性</p>
+<p>方法三：使用Object.seal(对象名)来密封一个对象。即在一个对象上调用Object.preventExtensions()并把所有的属性标记为 configurable: false ，但是可以更改属性值</p>
+<p>方法四：使用Object.freeze(对象名)会冻结一个对象。 就是在Object.seal() 并把所有”数据访问”属性标记为writable: false<br>这个方法是可以应用在对象的级别的最高的不可变性，但也只是会禁止对象本身及其任意直接属性的修改</p>
+<h3 id="JSON-stringify-和-JSON-parse"><a href="#JSON-stringify-和-JSON-parse" class="headerlink" title="JSON.stringify 和 JSON.parse"></a>JSON.stringify 和 JSON.parse</h3><p> JSON.stringify(value[,replacer[,space]])</p>
+<p>对于replacer可以是函数，也可以是一个数组。如果第二个参数是一个函数，那么序列化过程中的每个属性都会被这个函数转化和处理</p>
+<p>如果第二个参数是一个数组，那么只有包含在这个数组中的属性才会被序列化到最终的JSON字符串中</p>
+<p>如果第二个参数是null，那作用上和空着没啥区别，但是不想设置第二个参数，只是想设置第三个参数的时候，就可以设置第二个参数为null</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> friend=&#123;  </div><div class="line">    <span class="string">"firstName"</span>: <span class="string">"Good"</span>,</div><div class="line">    <span class="string">"lastName"</span>: <span class="string">"Man"</span>,</div><div class="line">    <span class="string">"phone"</span>:<span class="string">"1234567"</span>,</div><div class="line">    <span class="string">"age"</span>:<span class="number">18</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> friendAfter=<span class="built_in">JSON</span>.stringify(friend,<span class="function"><span class="keyword">function</span>(<span class="params">key,value</span>)</span>&#123;  </div><div class="line">    <span class="keyword">if</span>(key===<span class="string">"phone"</span>)</div><div class="line">        <span class="keyword">return</span> <span class="string">"(000)"</span>+value;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">typeof</span> value === <span class="string">"number"</span>)</div><div class="line">        <span class="keyword">return</span> value + <span class="number">10</span>;</div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="keyword">return</span> value; <span class="comment">//如果你把这个else分句删除，那么结果会是undefined</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(friendAfter);  </div><div class="line"><span class="comment">//输出：&#123;"firstName":"Good","lastName":"Man","phone":"(000)1234567","age":28&#125;</span></div></pre></td></tr></table></figure>
+<p>JSON.stringify() 在序列化过程中会依据一些规则进行优化，会产生一些”意外”的情况，需要注意。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/js/">js</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lx15.github.io/2017/04/19/offer---(四)/" data-title="JavaScript盲点记录----(四) | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/04/23/sort-1/" title="与排序相关的问题">
+  <strong>上一篇：</strong><br/>
+  <span>
+  与排序相关的问题</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/04/15/DNS/"  title="DNS基础知识">
+ <strong>下一篇：</strong><br/> 
+ <span>DNS基础知识
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/04/19/offer---(四)/" data-title="JavaScript盲点记录----(四)" data-url="http://lx15.github.io/2017/04/19/offer---(四)/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安全的类型检测"><span class="toc-number">1.</span> <span class="toc-text">安全的类型检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作用域安全的构造函数"><span class="toc-number">2.</span> <span class="toc-text">作用域安全的构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#惰性载入函数"><span class="toc-number">3.</span> <span class="toc-text">惰性载入函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#防篡改对象"><span class="toc-number">4.</span> <span class="toc-text">防篡改对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSON-stringify-和-JSON-parse"><span class="toc-number">5.</span> <span class="toc-text">JSON.stringify 和 JSON.parse</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="https://github.com/Lx15" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/js/" title="js">js<sup>33</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ng/" title="ng">ng<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络/" title="网络">网络<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/html5/" title="html5">html5<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/http/" title="http">http<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/util/" title="util">util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/seo/" title="seo">seo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Lx15" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

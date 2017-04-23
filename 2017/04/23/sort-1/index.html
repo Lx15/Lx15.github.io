@@ -1,0 +1,535 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>与排序相关的问题 | Lx15的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="与排序有关的问题。 我发现在掌握了排序算法后，想到这些题目的思想也不难，而且实现也多是可以借鉴经典的排序算法的。 ^_^">
+<meta property="og:type" content="article">
+<meta property="og:title" content="与排序相关的问题">
+<meta property="og:url" content="http://lx15.github.io/2017/04/23/sort-1/index.html">
+<meta property="og:site_name" content="Lx15的博客">
+<meta property="og:description" content="与排序有关的问题。 我发现在掌握了排序算法后，想到这些题目的思想也不难，而且实现也多是可以借鉴经典的排序算法的。 ^_^">
+<meta property="og:updated_time" content="2017-04-23T03:50:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="与排序相关的问题">
+<meta name="twitter:description" content="与排序有关的问题。 我发现在掌握了排序算法后，想到这些题目的思想也不难，而且实现也多是可以借鉴经典的排序算法的。 ^_^">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15的博客" title="Lx15的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15的博客">Lx15的博客</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lx15.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/04/23/sort-1/" title="与排序相关的问题" itemprop="url">与排序相关的问题</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2017-04-22T16:00:00.000Z" itemprop="datePublished"> 发表于 2017-04-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#小范围排序练习题"><span class="toc-number">1.</span> <span class="toc-text">小范围排序练习题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重复值判断练习题"><span class="toc-number">2.</span> <span class="toc-text">重复值判断练习题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#荷兰国旗问题"><span class="toc-number">3.</span> <span class="toc-text">荷兰国旗问题</span></a></li></ol>
+		
+		</div>
+		
+		<p>与排序有关的问题。 我发现在掌握了排序算法后，想到这些题目的思想也不难，而且实现也多是可以借鉴经典的排序算法的。 ^_^</p>
+<a id="more"></a>
+<h3 id="小范围排序练习题"><a href="#小范围排序练习题" class="headerlink" title="小范围排序练习题"></a>小范围排序练习题</h3><p>已知一个几乎有序的数组，几乎有序是指，如果把数组排好顺序的话，每个元素移动的距离可以不超过k，并且k相对于数组来说比较小。请选择一个合适的排序算法针对这个数据进行排序。</p>
+<p><b>思想：</b></p>
+<p>因为k值比较小所以可以使用插入排序，时间复杂度是O(N*k)。 快排和归并排序和移动顺序无关。</p>
+<p>此题最好的方法是改进的堆排序。依次对k个数做小根堆，依次取出第1个数。 调整小根堆时间复杂度是O(lgK)，需要调整N次，整体时间复杂度是O( N* lgk)</p>
+<p><b>代码：</b></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">limitedExtendSort</span>(<span class="params">arr, k</span>) </span>&#123;</div><div class="line">    buildminheap(arr)</div><div class="line">    <span class="keyword">var</span> len = arr.length</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</div><div class="line">        minheapify(arr,i,k)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">buildminheap</span>(<span class="params">arr</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> parent = <span class="built_in">Math</span>.floor(arr.length/<span class="number">2</span><span class="number">-1</span>)</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=parent;i&gt;=<span class="number">0</span>;i--)&#123;</div><div class="line">        minheapify(arr,i,arr.length)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">minheapify</span>(<span class="params">arr, start, k</span>) </span>&#123;</div><div class="line">     <span class="keyword">var</span> len = (start+k)&gt;=arr.length ? arr.length:(start+k)</div><div class="line">      <span class="keyword">var</span> temp =[]</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i=start;i&lt;len;i++)&#123;</div><div class="line">             temp.push(arr[i])</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">var</span> left = <span class="number">1</span>, right = <span class="number">2</span>,min =<span class="number">0</span></div><div class="line"></div><div class="line">        <span class="keyword">if</span>(left&lt;=len &amp;&amp; temp[left]&lt;temp[<span class="number">0</span>])&#123;</div><div class="line">            min = left</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(right &lt;=len &amp;&amp; temp[right]&lt;temp[min])&#123;</div><div class="line">            min = right</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(min!== <span class="number">0</span>)&#123;</div><div class="line">            [temp[min],temp[<span class="number">0</span>]]=[temp[<span class="number">0</span>],temp[min]]</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">var</span> i=start;i&lt;len;i++)&#123;</div><div class="line">                arr[i] = temp[i-start]</div><div class="line">            &#125;</div><div class="line">            minheapify(arr,min, len)</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="重复值判断练习题"><a href="#重复值判断练习题" class="headerlink" title="重复值判断练习题"></a>重复值判断练习题</h3><p>判断数组中是否有重复值。必须保证额外空间复杂度为O(1)。<br>给定一个int数组A及它的大小n，请返回它是否有重复值。</p>
+<p><b>思想：</b></p>
+<p>判断是否有重复值，可以先进行排序，然后遍历一遍。题目要求使用空间复杂度是O(1)，考虑空间复杂度为o(1)的排序有冒泡、插入、选择、希尔、和堆排序。</p>
+<p>这个问题最好的方法是非递归实现的堆排序。 非递归的调整堆的过程如下：</p>
+<p><b>代码：</b></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">maxheapify</span>(<span class="params">arr,start,heapSize</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> largest = start,left,right</div><div class="line">    <span class="keyword">while</span>(start&lt;=heapSize)&#123;</div><div class="line">        left = <span class="number">2</span>*start+<span class="number">1</span></div><div class="line">        right = <span class="number">2</span>*start+<span class="number">2</span></div><div class="line">        <span class="keyword">if</span>(arr[start]&lt;arr[left]&amp;&amp; left&lt;=heapSize)&#123;</div><div class="line">            largest = left</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(arr[right]&gt;arr[largest] &amp;&amp; right&lt;=heapSize)&#123;</div><div class="line">            largest = right</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(largest!==start)&#123;</div><div class="line">            [arr[largest],arr[start]] = [arr[start],arr[largest]]</div><div class="line">            start = largest</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            start = heapSize+<span class="number">1</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="荷兰国旗问题"><a href="#荷兰国旗问题" class="headerlink" title="荷兰国旗问题"></a>荷兰国旗问题</h3><p>有一个只由0，1，2三种元素构成的整数数组，请使用交换、原地排序而不是使用计数进行排序。</p>
+<p><b>思想：</b></p>
+<p>这个问题类似于快排，可以使用快排中的partition 方法，在 数组左边建立一个空数组进行放0，在数组右边建立空数组放2，当中间索引遇到右边的数组时就停止。</p>
+<p><b>代码：</b></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">HollandFlag</span>(<span class="params">arr</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> left = <span class="number">-1</span>,right = arr.length</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;right;i++)&#123;</div><div class="line">        <span class="keyword">if</span>(arr[i] === <span class="number">0</span>)&#123;</div><div class="line">            left++</div><div class="line">            [arr[i],arr[left]]=[arr[left],arr[i]]</div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(arr[i] ===<span class="number">2</span>)&#123;</div><div class="line">            right--</div><div class="line">            [arr[i],arr[right]] =[arr[right],arr[i]]</div><div class="line">            i--</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> arr</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/js/">js</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lx15.github.io/2017/04/23/sort-1/" data-title="与排序相关的问题 | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/04/19/offer---(四)/"  title="JavaScript盲点记录----(四)">
+ <strong>下一篇：</strong><br/> 
+ <span>JavaScript盲点记录----(四)
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/04/23/sort-1/" data-title="与排序相关的问题" data-url="http://lx15.github.io/2017/04/23/sort-1/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#小范围排序练习题"><span class="toc-number">1.</span> <span class="toc-text">小范围排序练习题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#重复值判断练习题"><span class="toc-number">2.</span> <span class="toc-text">重复值判断练习题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#荷兰国旗问题"><span class="toc-number">3.</span> <span class="toc-text">荷兰国旗问题</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="https://github.com/Lx15" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/js/" title="js">js<sup>33</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ng/" title="ng">ng<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络/" title="网络">网络<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/html5/" title="html5">html5<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/http/" title="http">http<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/util/" title="util">util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/seo/" title="seo">seo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Lx15" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

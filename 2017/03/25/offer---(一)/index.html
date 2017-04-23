@@ -11,16 +11,16 @@
     
 
     
-    <meta name="description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下,这里是我自己的盲点，所以应该是断断续续的。这是第一篇，定要温故而知新 。^_^">
+    <meta name="description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下。这是第一篇，定要温故而知新 。^_^">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript盲点记录----(一)">
-<meta property="og:url" content="http://lx15.github.io/2017/03/25/JavaScript盲点---(一)/index.html">
+<meta property="og:url" content="http://lx15.github.io/2017/03/25/offer---(一)/index.html">
 <meta property="og:site_name" content="Lx15的博客">
-<meta property="og:description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下,这里是我自己的盲点，所以应该是断断续续的。这是第一篇，定要温故而知新 。^_^">
-<meta property="og:updated_time" content="2017-04-07T08:03:51.954Z">
+<meta property="og:description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下。这是第一篇，定要温故而知新 。^_^">
+<meta property="og:updated_time" content="2017-04-23T03:33:06.474Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript盲点记录----(一)">
-<meta name="twitter:description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下,这里是我自己的盲点，所以应该是断断续续的。这是第一篇，定要温故而知新 。^_^">
+<meta name="twitter:description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下。这是第一篇，定要温故而知新 。^_^">
 
     
     
@@ -78,7 +78,7 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/03/25/JavaScript盲点---(一)/" title="JavaScript盲点记录----(一)" itemprop="url">JavaScript盲点记录----(一)</a>
+      <a href="/2017/03/25/offer---(一)/" title="JavaScript盲点记录----(一)" itemprop="url">JavaScript盲点记录----(一)</a>
   </h1>
   <p class="article-author">By
        
@@ -98,7 +98,8 @@
 		
 		</div>
 		
-		<p>最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下,这里是我自己的盲点，所以应该是断断续续的。这是第一篇，定要温故而知新 。^_^<br><a id="more"></a></p>
+		<p>最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下。这是第一篇，定要温故而知新 。^_^</p>
+<a id="more"></a>
 <ol>
 <li><p>解析url ,window.location.search 是从？向后的部分</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUrlParam</span>(<span class="params">sUrl, sKey</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> search = sUrl.split(<span class="string">"?"</span>)[<span class="number">1</span>].split(<span class="string">"#"</span>)[<span class="number">0</span>];</div><div class="line">    <span class="keyword">var</span> searchArr = search.split(<span class="string">"&amp;"</span>);</div><div class="line">    <span class="keyword">var</span> result=&#123;&#125;;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; searchArr.length; i++) &#123;</div><div class="line">            <span class="keyword">var</span> temp = searchArr[i].split(<span class="string">"="</span>);</div><div class="line">            <span class="keyword">if</span>(temp[<span class="number">0</span>])&#123;</div><div class="line">                 <span class="keyword">if</span>(!result[temp[<span class="number">0</span>]])&#123;</div><div class="line">                     result[temp[<span class="number">0</span>]] =[];</div><div class="line">                 &#125;</div><div class="line">                 result[temp[<span class="number">0</span>]].push(<span class="built_in">decodeURIComponent</span>(temp[<span class="number">1</span>]));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">   <span class="keyword">if</span>(sKey)&#123;</div><div class="line">       <span class="keyword">if</span>(!result[sKey])&#123;</div><div class="line">           result =<span class="string">" "</span>;</div><div class="line">       &#125;<span class="keyword">else</span> <span class="keyword">if</span>(result[sKey].length ==<span class="number">1</span>)&#123;</div><div class="line">           result = result[sKey][<span class="number">0</span>];</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -129,7 +130,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">makeClosures</span>(<span class="params">arr, fn</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> result =[];</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">0</span>;i&lt;arr.length;i++)&#123;</div><div class="line">        result[i] =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">            <span class="keyword">return</span> fn(arr[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>关于arguments</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">        <span class="comment">// 将arguments变成数组</span></div><div class="line">        <span class="built_in">Array</span>.apply(<span class="literal">null</span>,<span class="built_in">arguments</span>);  </div><div class="line">        <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>,<span class="number">0</span>);  </div><div class="line">        <span class="built_in">Array</span>.prototype.splice.call(<span class="built_in">arguments</span>,<span class="number">0</span>,<span class="built_in">arguments</span>.length)</div><div class="line"></div><div class="line">        <span class="comment">// 取arguments的第一个值</span></div><div class="line">        [].push(<span class="built_in">arguments</span>)</div><div class="line">  <span class="string">``</span><span class="string">` </span></div><div class="line"></div><div class="line">11. Curry化是把接受多个参数的函数变换成接收一个单一参数（这个参数就是那个要接收多个参数的函数）的函数</div><div class="line">`<span class="string">``</span>javascript</div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">curryIt</span>(<span class="params">fn</span>) </span>&#123;     </div><div class="line">            <span class="keyword">var</span> n = fn.length;    </div><div class="line">            <span class="keyword">var</span> args = [];   </div><div class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">lx</span> (<span class="params">arg</span>) </span>&#123;</div><div class="line">              </div><div class="line">                args.push(arg);<span class="comment">// 只取一个参数值</span></div><div class="line">                <span class="keyword">if</span> (args.length &lt; n) &#123;</div><div class="line">                    <span class="keyword">return</span> lx;</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">return</span> fn.apply(<span class="literal">null</span>, args);</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">        <span class="comment">// 将arguments变成数组</span></div><div class="line">        <span class="built_in">Array</span>.apply(<span class="literal">null</span>,<span class="built_in">arguments</span>);  </div><div class="line">        <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>,<span class="number">0</span>);  </div><div class="line">        <span class="built_in">Array</span>.prototype.splice.call(<span class="built_in">arguments</span>,<span class="number">0</span>,<span class="built_in">arguments</span>.length)</div><div class="line"></div><div class="line">        <span class="comment">// 取arguments的第一个值</span></div><div class="line">        [].push(<span class="built_in">arguments</span>)</div><div class="line">  <span class="string">``</span><span class="string">` </span></div><div class="line">11. Curry化是把接受多个参数的函数变换成接收一个单一参数（这个参数就是那个要接收多个参数的函数）的函数</div><div class="line">  `<span class="string">``</span>javascript</div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">curryIt</span>(<span class="params">fn</span>) </span>&#123;     </div><div class="line">            <span class="keyword">var</span> n = fn.length;    </div><div class="line">            <span class="keyword">var</span> args = [];   </div><div class="line">            <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">lx</span> (<span class="params">arg</span>) </span>&#123;</div><div class="line">              </div><div class="line">                args.push(arg);<span class="comment">// 只取一个参数值</span></div><div class="line">                <span class="keyword">if</span> (args.length &lt; n) &#123;</div><div class="line">                    <span class="keyword">return</span> lx;</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">return</span> fn.apply(<span class="literal">null</span>, args);</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
 </li>
 <li><p>数组与对象的 深拷贝</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> cloneObj = <span class="function"><span class="keyword">function</span> (<span class="params">obj</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> str, newobj = obj.constructor === <span class="built_in">Array</span> ? [] : &#123;&#125;;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> obj !== <span class="string">'object'</span>) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">window</span>.JSON) &#123;</div><div class="line">        str = <span class="built_in">JSON</span>.stringify(obj), <span class="comment">//系列化对象</span></div><div class="line">            newobj = <span class="built_in">JSON</span>.parse(str); <span class="comment">//还原</span></div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> obj) &#123;</div><div class="line">            newobj[i] = <span class="keyword">typeof</span> obj[i] === <span class="string">'object'</span> ?</div><div class="line">                cloneObj(obj[i]) : obj[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> newobj;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
@@ -157,7 +158,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://lx15.github.io/2017/03/25/JavaScript盲点---(一)/" data-title="JavaScript盲点记录----(一) | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  <div data-url="http://lx15.github.io/2017/03/25/offer---(一)/" data-title="JavaScript盲点记录----(一) | Lx15的博客" data-tsina="undefined" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -191,7 +192,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2017/03/25/JavaScript盲点---(一)/" data-title="JavaScript盲点记录----(一)" data-url="http://lx15.github.io/2017/03/25/JavaScript盲点---(一)/"></div>
+	<div class="ds-thread" data-thread-key="2017/03/25/offer---(一)/" data-title="JavaScript盲点记录----(一)" data-url="http://lx15.github.io/2017/03/25/offer---(一)/"></div>
 </section>
 
 
@@ -227,7 +228,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/js/" title="js">js<sup>30</sup></a></li>
+				<li><a href="/tags/js/" title="js">js<sup>33</sup></a></li>
 			
 		
 			
@@ -239,15 +240,7 @@
 			
 		
 			
-				<li><a href="/tags/http/" title="http">http<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+				<li><a href="/tags/网络/" title="网络">网络<sup>3</sup></a></li>
 			
 		
 			
@@ -259,11 +252,19 @@
 			
 		
 			
-				<li><a href="/tags/util/" title="util">util<sup>2</sup></a></li>
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/http/" title="http">http<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
 			
 		
 			
@@ -283,15 +284,15 @@
 			
 		
 			
-				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+				<li><a href="/tags/util/" title="util">util<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
+				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
 			
 		
 			
@@ -299,9 +300,11 @@
 			
 		
 			
-				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 		</ul>

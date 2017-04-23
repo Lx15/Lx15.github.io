@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://lx15.github.io/2017/02/24/cookie&session/index.html">
 <meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="看过Cookie和Session的解析多次，但每次都是只站在前端的角度去看，缺少后端的使用经验，所以理解总是不到位，毕竟Cookie 和Session的多数操作都是在后端，所以对于Cookie和Session 的理解要前后端结合。 还有sessionStorage 和localStorage 这两个平日里也只是用来存储数据，对于我使用的场景到也都能实现，但他俩肯定是有区别的，不然有一个就够了啊。">
-<meta property="og:updated_time" content="2017-03-26T11:09:09.852Z">
+<meta property="og:updated_time" content="2017-04-22T02:23:54.204Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Cookie、Session Cookie 、Cookie-Session 、Session及Storage">
 <meta name="twitter:description" content="看过Cookie和Session的解析多次，但每次都是只站在前端的角度去看，缺少后端的使用经验，所以理解总是不到位，毕竟Cookie 和Session的多数操作都是在后端，所以对于Cookie和Session 的理解要前后端结合。 还有sessionStorage 和localStorage 这两个平日里也只是用来存储数据，对于我使用的场景到也都能实现，但他俩肯定是有区别的，不然有一个就够了啊。">
@@ -100,7 +100,9 @@
 		
 		<p> 看过Cookie和Session的解析多次，但每次都是只站在前端的角度去看，缺少后端的使用经验，所以理解总是不到位，毕竟Cookie 和Session的多数操作都是在后端，所以对于Cookie和Session 的理解要前后端结合。<br> 还有sessionStorage 和localStorage 这两个平日里也只是用来存储数据，对于我使用的场景到也都能实现，但他俩肯定是有区别的，不然有一个就够了啊。。。所以有了这篇笔记。。^_^<br><a id="more"></a></p>
 <h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>Cookie、Session等出现的原因就是为了克服http协议是个无状态协议的问题，这种缺点就导致了请求状态无法保持如用户的登录信息及个性化设置等。   </p>
-<p>Cookie 实现的思想就是服务器在http响应头中添加Set-Cookie信息，浏览器收到响应后会根据头中的字段保存cookie，下一次访问时在请求头中附带cookie内容，供服务器根据cookie值进行后续处理。<br>在Node + Express 4.x 中 使用<a href="https://github.com/expressjs/cookie-parser" target="_blank" rel="external"> cookie-parser</a> 模块。 </p>
+<p>Cookie 实现的思想就是服务器在http响应头中添加Set-Cookie信息，浏览器收到响应后会根据头中的字段保存cookie，下一次访问时在请求头中附带cookie内容，供服务器根据cookie值进行后续处理。</p>
+<p>Cookie 是保存在浏览器终端内存或磁盘上的一小块数据，只能保存字符类型，所有的cookie信息都会随着浏览器的请求而发送。 cookie分为： 持久cookie，数据保存在磁盘中，会话cookie,数据保存在内存中，浏览器关闭后将被清除。</p>
+<p>在Node + Express 4.x 中 使用<a href="https://github.com/expressjs/cookie-parser" target="_blank" rel="external"> cookie-parser</a> 模块。 </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</div><div class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</div><div class="line"><span class="keyword">var</span> app = express()</div><div class="line"><span class="keyword">var</span> router = express.Router()</div><div class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>)</div><div class="line"></div><div class="line">app.use(cookieParser())</div><div class="line">app.use(express.static(<span class="string">'./'</span>))</div><div class="line">app.all(<span class="string">'*'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</div><div class="line">    res.set(&#123;</div><div class="line">    <span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>,</div><div class="line">    <span class="string">'Access-Control-Allow-Origin'</span>:<span class="string">'*'</span></div><div class="line">    &#125;);</div><div class="line">&#125;)</div><div class="line">app.get(<span class="string">'/ajax'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</div><div class="line">    res.cookie(<span class="string">'rememberme'</span>, <span class="string">'1'</span>, &#123; expires: <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">Date</span>.now() + <span class="number">900000000000</span>)&#125;);</div><div class="line">    <span class="built_in">console</span>.log(req.cookies)</div><div class="line">    res.send(<span class="string">"hi..........."</span>);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
 <p>这种情况在前后端不分离的情况下是可以发送Cookie成功的，即有<code>app.use(express.static(&#39;./&#39;))</code>这个语句。</p>
 <p>若是没有这个语句，经将页面改成前后端分离的情况，cookie是不能够发送到浏览器端的。出现这种情况的原因是同源策略。 虽然浏览器的CORS可以处理跨源请求，但是 默认情况下，跨源请求是不会携带凭据的（cookie,HTTP认证及客户端SSL证明）</p>
@@ -110,13 +112,13 @@
 <p>path：表示 cookie 影响到的路径，匹配该路径才发送这个 cookie。<br>expires 和 maxAge：告诉浏览器这个 cookie 什么时候过期，expires 是 UTC 格式时间，maxAge 是 cookie 多久后过期的相对时间。当不设置这两个选项时，会产生 session cookie，session cookie 是 transient 的，当用户关闭浏览器时，就被清除。一般用来保存 session 的 session_id。<br>secure：当 secure 值为 true 时，cookie 在 HTTP 中是无效，在 HTTPS 中才有效。<br>httpOnly：浏览器不允许脚本操作 document.cookie 去更改 cookie。一般情况下都应该设置这个为 true，这样可以避免被 xss 攻击拿到 cookie。              </p>
 </blockquote>
 <p>对于httpOnly 这点，通常Web页面内还可以对Cookie进行读取操作，但使用Javascript的document.cookie就无法读取附加HttpOnly 属性后的Cookie 内容了。因此也就无法在XSS中利用Javascript劫持Cookie了。       </p>
-<p>Cookie 只存在于当前标签页，在其他标签页中不存在，另外Ｃｏｏｋｉｅ的生命周期取决于expires, 作用范围由domain 和 path决定。</p>
+<p>Cookie 只存在于当前标签页，在其他标签页中不存在，另外Cookie的生命周期取决于expires, 作用范围由domain 和 path决定。</p>
 <p>Cookie 可用于多个页面。即两个窗口中是都可以有的。</p>
 <p>Cookie 是可以自己独自使用的，不用和session同时使用就可以，但是因为session的使用会用到cookie，所以让我以为Cookie必定会用到session。</p>
 <h2 id="session-cookie"><a href="#session-cookie" class="headerlink" title="session cookie"></a>session cookie</h2><p><code>session_id</code> 在 cookie 中的存储方式是 session cookie。即当浏览器一关闭，浏览器中 cookie 中的 session_id 字段就会消失。但是根据你设置的cookie的maxAge 或者expire ，存储在Application 下的Cookies中的<code>session_id</code>不一定会消失。因为cookie的生命周期取决于maxAge或者expire 和浏览器关闭无关。</p>
 <h2 id="cookie-session"><a href="#cookie-session" class="headerlink" title="cookie-session"></a>cookie-session</h2><p>我之前是没有搞清楚 <code>session cookie</code> 和<code>cookie session</code>然后特意问了下<a href="https://github.com/alsotang/node-lessons/issues/126" target="_blank" rel="external">alsotang</a>老师，老师解释 <code>cookie-session</code> 说的是 session 中的大量数据是存在 cookie 而非 redis 中。</p>
 <h2 id="signedCookie"><a href="#signedCookie" class="headerlink" title="signedCookie"></a>signedCookie</h2><p>cookie的缺点是明文存储在浏览器端容易被修改，假如根据什么算法把它加个密再存储就好了。在计算机领域，有个<code>信息摘要算法</code>,说的是在服务器端设置个秘密字符串，然后把本来要明文发送的cookie，在首部添加上这个秘密的字符串然后经过这个算法得到一堆加密的字符串，然后再存储在cookie中。</p>
-<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2><p>cookie 的不安全的问题也有了session的出现。session 中的数据是保留在服务器端的。session 的使用通过一个 <code>session_id</code> 来进行，<code>session_id</code> 通常是存放在客户端的 cookie 中。这个<code>session_id</code>是服务端随机产生一个 1024 比特长的字符串，位数足够长并且是随机的，所以比较安全。<br>我觉得 Session 和 signedCookie 类似的是 将存储在cookie 中的明文进行加密了。</p>
+<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2><p>cookie 的不安全的问题也有了session的出现。session 是一种服务器端的机制，服务器使用一种类似散列表的结构来保存信息。<br>session 中的数据是保留在服务器端的。session 的使用通过一个 <code>session_id</code> 来进行，<code>session_id</code> 通常是存放在客户端的 cookie 中。这个<code>session_id</code>是服务端随机产生一个 1024 比特长的字符串，位数足够长并且是随机的，所以比较安全。<br>我觉得 Session 和 signedCookie 类似的是 将存储在cookie 中的明文进行加密了。</p>
 <h2 id="Storage类型"><a href="#Storage类型" class="headerlink" title="Storage类型"></a>Storage类型</h2><p>Storage 类型提供最大的存储空间来存储键值对。 存在如下方法：</p>
 <blockquote>
 <p>clear()<br>getItem(name)<br>key(index)<br>removeItem(name)<br>setItem(name,value)</p>
@@ -158,7 +160,7 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/02/26/浏览器缓存/" title="浏览器缓存与Express简单实现">
+ <a href="/2017/02/26/cache/" title="浏览器缓存与Express简单实现">
   <strong>上一篇：</strong><br/>
   <span>
   浏览器缓存与Express简单实现</span>
@@ -214,7 +216,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/js/" title="js">js<sup>30</sup></a></li>
+				<li><a href="/tags/js/" title="js">js<sup>33</sup></a></li>
 			
 		
 			
@@ -226,15 +228,7 @@
 			
 		
 			
-				<li><a href="/tags/http/" title="http">http<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+				<li><a href="/tags/网络/" title="网络">网络<sup>3</sup></a></li>
 			
 		
 			
@@ -246,11 +240,19 @@
 			
 		
 			
-				<li><a href="/tags/util/" title="util">util<sup>2</sup></a></li>
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/http/" title="http">http<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
 			
 		
 			
@@ -270,15 +272,15 @@
 			
 		
 			
-				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+				<li><a href="/tags/util/" title="util">util<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
+				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
 			
 		
 			
@@ -286,9 +288,11 @@
 			
 		
 			
-				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
 			
 		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
 			
 		
 		</ul>
