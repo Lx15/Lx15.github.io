@@ -1,0 +1,559 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>JavaScript盲点记录----(五) | Lx15的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Lx15">
+    
+
+    
+    <meta name="description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下。这是第五篇，定要温故而知新 。^_^">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript盲点记录----(五)">
+<meta property="og:url" content="http://lx15.github.io/2017/05/15/offer---(五)/index.html">
+<meta property="og:site_name" content="Lx15的博客">
+<meta property="og:description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下。这是第五篇，定要温故而知新 。^_^">
+<meta property="og:image" content="http://lx15.github.io/async和defer对比图.jpg">
+<meta property="og:updated_time" content="2017-05-28T02:02:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript盲点记录----(五)">
+<meta name="twitter:description" content="最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下。这是第五篇，定要温故而知新 。^_^">
+<meta name="twitter:image" content="http://lx15.github.io/async和defer对比图.jpg">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Lx15的博客" title="Lx15的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Lx15的博客">Lx15的博客</a></h1>
+				<h2 class="blog-motto">阿弥陀佛么么哒~~~</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lx15.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/05/15/offer---(五)/" title="JavaScript盲点记录----(五)" itemprop="url">JavaScript盲点记录----(五)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lx15" target="_blank" itemprop="author">Lx15</a>
+		
+  <p class="article-time">
+    <time datetime="2017-05-14T16:00:00.000Z" itemprop="datePublished"> 发表于 2017-05-15</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#实现once-函数，传入的函数参数只执行一次"><span class="toc-number">1.</span> <span class="toc-text">实现once 函数，传入的函数参数只执行一次</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分域名请求网站的内容原因-摘自知乎"><span class="toc-number">2.</span> <span class="toc-text">分域名请求网站的内容原因(摘自知乎)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成任意值到任意值之间的随机数"><span class="toc-number">3.</span> <span class="toc-text">生成任意值到任意值之间的随机数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组的随机排序（shuffle）"><span class="toc-number">4.</span> <span class="toc-text">数组的随机排序（shuffle）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步加载js-的方法"><span class="toc-number">5.</span> <span class="toc-text">异步加载js 的方法</span></a></li></ol>
+		
+		</div>
+		
+		<p>最近在练习JavaScript题目时发现有些实现自己立即并不能想出来，而且有些常见的方法的用法理解是有错误的如parseInt，所以记录一下。这是第五篇，定要温故而知新 。^_^</p>
+<a id="more"></a>
+<h2 id="实现once-函数，传入的函数参数只执行一次"><a href="#实现once-函数，传入的函数参数只执行一次" class="headerlink" title="实现once 函数，传入的函数参数只执行一次"></a>实现once 函数，传入的函数参数只执行一次</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> once = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   <span class="keyword">var</span> mem =[]</div><div class="line">   <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>)</span>&#123;</div><div class="line">      <span class="keyword">for</span>(<span class="keyword">var</span> key <span class="keyword">in</span> mem)&#123;</div><div class="line">          <span class="keyword">if</span>(mem[key].func === fn || mem[key].func.toString() === fn.toString())&#123;</div><div class="line">              <span class="keyword">return</span> mem[key].result</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">var</span> result = fn()</div><div class="line">       mem.push(&#123;func:fn,result:result&#125;)</div><div class="line">       <span class="keyword">return</span> result</div><div class="line">   &#125;</div><div class="line">&#125;)()</div></pre></td></tr></table></figure>
+<h2 id="分域名请求网站的内容原因-摘自知乎"><a href="#分域名请求网站的内容原因-摘自知乎" class="headerlink" title="分域名请求网站的内容原因(摘自知乎)"></a>分域名请求网站的内容原因(摘自<a href="https://www.zhihu.com/question/19997004" target="_blank" rel="external">知乎</a>)</h2><p>分域名请求的网站的内容主要是指网站的图片或者视频，接收，css。 </p>
+<p>原因之一： 节省带宽。比如对于twitter 的主站twitter.com ，用户的每次访问，都会带上自己的cookie，这个cookie比较大，如果twitter的图片放在主站域名下，那么用户每次访问图片时，request header 里都会带有自己的cookie,header里的cookie 还不能压缩，而图片时不需要知道用户的cookie的，所以这部分的带宽就白白浪费了。 在写主站程序时，set-cookie 也不要设置在图片的域名上。</p>
+<p>原因之二： 节约主域名的连接数，以提高客户端网络带宽的利用率，优化页面响应。因为老的浏览器，针对同一个域名只允许同时保持两个HTTP连接，将图片等资源请求分配到其他域名上，避免了大图片之类的并不一定重要的内容阻塞住主域名上其他后续资源的连接。</p>
+<h2 id="生成任意值到任意值之间的随机数"><a href="#生成任意值到任意值之间的随机数" class="headerlink" title="生成任意值到任意值之间的随机数"></a>生成任意值到任意值之间的随机数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="built_in">Math</span>.random()*(max-min+<span class="number">1</span>)+min,<span class="number">10</span>);</div><div class="line"><span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random()*(max-min+<span class="number">1</span>)+min);</div></pre></td></tr></table></figure>
+<h2 id="数组的随机排序（shuffle）"><a href="#数组的随机排序（shuffle）" class="headerlink" title="数组的随机排序（shuffle）"></a>数组的随机排序（shuffle）</h2><ul>
+<li>有问题的方法：Math.random</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">shuffle</span>(<span class="params">arr</span>)</span>&#123;</div><div class="line">    arr.sort(()=&gt;<span class="built_in">Math</span>.random()<span class="number">-0.5</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方法并不能真的使数组进行乱序排列。每个元素仍然有很大的几率在它原来的位置附近出现。原因是对于Array.prototype.sort(fn)方法 ：对于同一组a、b值，fn(a,b)需要总是返回相同的值。而对于上面的方法是不可以的。所以针对这一点的改进方法如下。(在v8中对于短数组排序是插入排序，对于长数组是快速排序)</p>
+<ul>
+<li>改进的方法：缓存随机数 </li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">shuffle</span>(<span class="params">err</span>)</span>&#123;</div><div class="line">  <span class="keyword">let</span> new_arr = arr.map(i =&gt; &#123;old:i,random:<span class="built_in">Math</span>.random&#125;)</div><div class="line">  new_arr.sort((a,b) =&gt; a.random - b.random)</div><div class="line">  arr.splice(<span class="number">0</span>,arr.length,...new_arr.map(i =&gt; i.old))</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方法就是保证了对于固定的a,b 传入sort 方法中的fn函数返回值总是一样。 但是这种方法由于需要多次遍历数组，所以效率较低。</p>
+<ul>
+<li>最好的方法：Fisher-Yates shuffle</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">shuffle</span>(<span class="params">arr</span>)</span>&#123;</div><div class="line">    <span class="keyword">let</span> len = arr.length</div><div class="line">    <span class="keyword">while</span>(len)&#123;</div><div class="line">        <span class="keyword">let</span> j= MAth.floor(<span class="built_in">Math</span>.random()*i--)</div><div class="line">        [arr[j],arr[i]] = [arr[i],arr[j]]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="异步加载js-的方法"><a href="#异步加载js-的方法" class="headerlink" title="异步加载js 的方法"></a>异步加载js 的方法</h2><p>参见文章<a href="http://www.cnblogs.com/zichi/p/4597766.html" target="_blank" rel="external">不得不说的JavaScript异步加载</a></p>
+<p>在浏览器中，JavaScript 主线程与UI渲染共用同一个线程。执行JavaScript的时候UI渲染是停滞的，渲染UI时，JavaScript是停滞的，两者互相阻塞。长时间执行JavaScript会造成UI停顿不响应。</p>
+<p>具体方案有：        </p>
+<ol>
+<li><p><code>Dynamic Script Element</code>： 动态创建的script标签被插入到页面的DOM树后，就会开始下载src属性指定的脚本。而且通过动态脚本元素下载脚本是异步的，不会阻塞页面的其他下载和处理过程，因此script标签插入<code>&lt;head&gt;</code>中也没问题 。 但这种加载方式在加载执行完之前会阻止 onload 事件的触发。 这种情况可以通过监听’load’事件，在触发这个事件时再执行JS加载解析。</p>
+</li>
+<li><p><code>XHR Eval</code> 或者 <code>XHR script</code>：通过XHR 下载了js文件，然后动态创建script 元素</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>);</div><div class="line">    script.type = <span class="string">"text/javascript"</span>;</div><div class="line">    script.text = request.responseText;</div><div class="line">    <span class="built_in">document</span>.body.appendChild(script);</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>async</code> 是和DOM解析异步下载，在加载结束后立即执行，在执行时DOM解析停止。 <code>defer</code>是和DOM解析过程异步下载，但是在下载结束后不立即解析执行，而是在DOM解析结束后再解析执行下载的JS文件。<br><img src="async和defer对比图.jpg" alt="async和defer 对比图"></p>
+</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/js/">js</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lx15.github.io/2017/05/15/offer---(五)/" data-title="JavaScript盲点记录----(五) | Lx15的博客" data-tsina="undefined" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/05/28/RegExp /" title="JavaScript正则表达式">
+  <strong>上一篇：</strong><br/>
+  <span>
+  JavaScript正则表达式</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/04/23/sort-1/"  title="与排序相关的问题">
+ <strong>下一篇：</strong><br/> 
+ <span>与排序相关的问题
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/05/15/offer---(五)/" data-title="JavaScript盲点记录----(五)" data-url="http://lx15.github.io/2017/05/15/offer---(五)/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#实现once-函数，传入的函数参数只执行一次"><span class="toc-number">1.</span> <span class="toc-text">实现once 函数，传入的函数参数只执行一次</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分域名请求网站的内容原因-摘自知乎"><span class="toc-number">2.</span> <span class="toc-text">分域名请求网站的内容原因(摘自知乎)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成任意值到任意值之间的随机数"><span class="toc-number">3.</span> <span class="toc-text">生成任意值到任意值之间的随机数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组的随机排序（shuffle）"><span class="toc-number">4.</span> <span class="toc-text">数组的随机排序（shuffle）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步加载js-的方法"><span class="toc-number">5.</span> <span class="toc-text">异步加载js 的方法</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="https://github.com/Lx15" data-width="220" data-height="119" data-theme="medium">
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+  </div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/js/" title="js">js<sup>35</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/css/" title="css">css<sup>10</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ng/" title="ng">ng<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/网络/" title="网络">网络<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ES6/" title="ES6">ES6<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/html5/" title="html5">html5<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/weex/" title="weex">weex<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nodejs/" title="nodejs">nodejs<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/http/" title="http">http<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/web/" title="web">web<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Cesium/" title="Cesium">Cesium<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/C/" title="C">C<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/工具集/" title="工具集">工具集<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/this/" title="this">this<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/util/" title="util">util<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/algo/" title="algo">algo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/seo/" title="seo">seo<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/h5/" title="h5">h5<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/DOM/" title="DOM">DOM<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Liu Xin. <br/>
+			Be happier,Be Braver.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/https://github.com/Lx15" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:938266124@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2017 
+		
+		<a href="/about" target="_blank" title="Lx15">Lx15</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"lx15"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

